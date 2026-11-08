@@ -1,428 +1,466 @@
-/* =============================================================
-   assets/app.js  — Shared vanilla JS for all pages
-   Phase 1: stubs + wiring only. Business logic in Phase 2.
-   ============================================================= */
-
+/* ==========================================================
+   public/assets/app.js — Shared frontend logic
+   Rice Order Tracker · Phase 7
+   ========================================================== */
 'use strict';
 
-/* ── Tiny helpers ─────────────────────────────────────────── */
+/* ── API helpers ─────────────────────────────────────────── */
 
 /**
- * Parse query-string parameters from the current URL.
- * @returns {URLSearchParams}
+ * POST JSON to a local API route.
+ * Throws an Error (with .message set to json.error) on non-2xx.
+ * @param {string} url
+ * @param {object} data
+ * @returns {Promise<object>}
  */
-function qs() {
-  return new URLSearchParams(window.location.search);
-}
-
-/**
- * POST JSON to a local API endpoint and return the parsed response.
- * @param {string} path   e.g. '/api/create-order'
- * @param {object} body
- * @returns {Promise<{ok: boolean, [key: string]: any}>}
- */
-async function apiPost(path, body) {
-  const res = await fetch(path, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+async function postJSON(url, data) {
+  const res  = await fetch(url, {
+    method:      'POST',
     credentials: 'include',
-    body: JSON.stringify(body),
+    headers:     { 'Content-Type': 'application/json' },
+    body:        JSON.stringify(data),
   });
-  const data = await res.json();
-  if (!res.ok) throw Object.assign(new Error(data.error || 'Request failed'), { status: res.status });
-  return data;
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
+  return json;
 }
 
 /**
- * GET from a local API endpoint and return the parsed response.
- * @param {string} path   e.g. '/api/list-orders?status=received'
- * @returns {Promise<{ok: boolean, [key: string]: any}>}
+ * GET from a local API route.
+ * Throws an Error (with .message set to json.error) on non-2xx.
+ * @param {string} url   Full URL including query string
+ * @returns {Promise<object>}
  */
-async function apiGet(path) {
-  const res = await fetch(path, { credentials: 'include' });
-  const data = await res.json();
-  if (!res.ok) throw Object.assign(new Error(data.error || 'Request failed'), { status: res.status });
-  return data;
+async function getJSON(url) {
+  const res  = await fetch(url, { credentials: 'include' });
+  const json = await res.json();
+  if (!res.ok) {
+    const err = new Error(json.error || `Request failed (${res.status})`);
+    err.status = res.status;
+    throw err;
+  }
+  return json;
 }
+
+/* ── XSS guard ───────────────────────────────────────────── */
 
 /**
- * Show a Bootstrap invalid-feedback for a form control.
- * @param {HTMLElement} el
- * @param {string} message
+ * Escape HTML special characters to prevent XSS when inserting
+ * user-supplied strings into innerHTML.
+ * @param {unknown} val
+ * @returns {string}
  */
-function setInvalid(el, message) {
-  el.classList.add('is-invalid');
-  const fb = el.closest('.mb-3')?.querySelector('.invalid-feedback');
-  if (fb && message) fb.textContent = message;
+function escapeHtml(val) {
+  return String(val ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-/** Remove all is-invalid classes inside a form. */
-function clearValidation(form) {
-  form.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+/* ── Status badge helper ─────────────────────────────────── */
+
+const STATUS_BADGE = {
+  placed:    'secondary',
+  shipped:   'info',
+  delivered: 'success',
+  cancelled: 'danger',
+};
+
+/**
+ * Returns a Bootstrap badge element string for a given order status.
+ * @param {string} status
+ * @returns {string}  HTML string
+ */
+function statusBadge(status) {
+  const colour = STATUS_BADGE[status] || 'secondary';
+  const label  = status ? status.charAt(0).toUpperCase() + status.slice(1) : '—';
+  return `<span class="badge bg-${colour}">${escapeHtml(label)}</span>`;
 }
 
-/* ── PAGE: index.html — Order form ────────────────────────── */
+/* ── Date formatter ──────────────────────────────────────── */
+
+/**
+ * Format an ISO timestamp to a readable local string, or return '—'.
+ * @param {string|null} iso
+ * @returns {string}
+ */
+function fmtDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleString('en-IN', {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+}
+
+/* ── Alert helper ────────────────────────────────────────── */
+
+/**
+ * Render a Bootstrap dismissible alert into a container element.
+ * @param {HTMLElement} el      Container to inject into
+ * @param {string}      msg     Message text
+ * @param {'danger'|'success'|'warning'} type  Bootstrap colour
+ */
+function showAlert(el, msg, type = 'danger') {
+  if (!el) return;
+  el.innerHTML = `
+    <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+      ${escapeHtml(msg)}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>`;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE: index.html — Order form
+   ══════════════════════════════════════════════════════════ */
 
 function initOrderForm() {
   const form      = document.getElementById('orderForm');
+  const alertBox  = document.getElementById('formAlert');
   const submitBtn = document.getElementById('submitBtn');
-  const errBanner = document.getElementById('formError');
-
   if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    clearValidation(form);
-    errBanner.classList.add('d-none');
+    if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
 
-    // Basic HTML5 validation
-    if (!form.checkValidity()) {
-      form.querySelectorAll(':invalid').forEach((el) => el.classList.add('is-invalid'));
-      return;
-    }
+    submitBtn.disabled    = true;
+    submitBtn.textContent = 'Placing order…';
+    if (alertBox) alertBox.innerHTML = '';
 
     const payload = {
-      name:     form.name.value.trim(),
-      phone:    form.phone.value.trim(),
-      address:  form.address.value.trim(),
-      riceType: form.riceType.value,
-      quantity: Number(form.quantity.value),
-      notes:    form.notes.value.trim(),
+      name:            form.elements.name.value.trim(),
+      phone:           form.elements.phone.value.trim(),
+      address:         form.elements.address.value.trim(),
+      product_details: form.elements.product_details.value.trim(),
+      amount:          parseFloat(form.elements.amount.value),
     };
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Placing order…';
-
     try {
-      const data = await apiPost('/api/create-order', payload);
-      // Build query string for thank-you page
-      const p = new URLSearchParams({
-        orderId:  data.orderId  || '',
-        token:    data.token    || '',
-        riceType: payload.riceType,
-        quantity: payload.quantity,
-        phone:    data.maskedPhone || '',
-      });
-      window.location.href = `thank-you.html?${p.toString()}`;
+      const data = await postJSON('/api/create-order', payload);
+      window.location.href = `thank-you.html?code=${encodeURIComponent(data.order_code)}`;
     } catch (err) {
-      errBanner.textContent = err.message || 'Something went wrong. Please try again.';
-      errBanner.classList.remove('d-none');
-      submitBtn.disabled = false;
+      showAlert(alertBox, err.message || 'Failed to place order. Please try again.');
+      submitBtn.disabled    = false;
       submitBtn.textContent = 'Place Order';
     }
   });
 }
 
-/* ── PAGE: thank-you.html ──────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   PAGE: thank-you.html
+   ══════════════════════════════════════════════════════════ */
 
 function initThankYou() {
-  const params  = qs();
-  const orderId = params.get('orderId');
-  const token   = params.get('token');
-
-  const sumCard = document.getElementById('orderSummary');
+  const params    = new URLSearchParams(window.location.search);
+  const code      = params.get('code') || '';
+  const codeEl    = document.getElementById('orderCode');
   const trackLink = document.getElementById('trackLink');
 
-  if (orderId || token) {
-    // Populate summary
-    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || '—'; };
-    set('sumOrderId',  orderId);
-    set('sumRiceType', params.get('riceType'));
-    set('sumQuantity', params.get('quantity') ? params.get('quantity') + ' kg' : '—');
-    set('sumPhone',    params.get('phone'));
-    sumCard?.classList.remove('d-none');
-
-    // Deep-link to track page
-    if (trackLink && token) {
-      trackLink.href = `track.html?token=${encodeURIComponent(token)}`;
-    }
+  if (codeEl)    codeEl.textContent = code || '—';
+  if (trackLink && code) {
+    trackLink.href = `track.html?code=${encodeURIComponent(code)}`;
   }
 }
 
-/* ── PAGE: track.html ─────────────────────────────────────── */
-
-/**
- * Render the status timeline in track.html.
- * @param {object} order  The order object returned by /api/track-order
- */
-function renderTrackStatus(order) {
-  const statusCard = document.getElementById('statusCard');
-  const lookupCard = document.getElementById('lookupCard');
-
-  if (!statusCard) return;
-  lookupCard?.classList.add('d-none');
-  statusCard.classList.remove('d-none');
-
-  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val || '—'; };
-  set('stOrderId',  order.id);
-  set('stPhone',    order.maskedPhone);
-  set('stRiceType', order.riceType);
-  set('stQuantity', order.quantity ? order.quantity + ' kg' : '—');
-
-  // Badge
-  const badge = document.getElementById('stBadge');
-  if (badge) {
-    const labels = { received: 'Received', confirmed: 'Confirmed', shipped: 'Shipped', delivered: 'Delivered' };
-    const classes = {
-      received:  'bg-primary',
-      confirmed: 'bg-warning text-dark',
-      shipped:   'bg-info text-dark',
-      delivered: 'bg-success',
-    };
-    badge.textContent = labels[order.status] || order.status;
-    badge.className   = 'badge ' + (classes[order.status] || 'bg-secondary');
-  }
-
-  // Timeline steps: each step is [liId, atId, statusesToActivate]
-  const steps = [
-    ['tlReceived',  'tlReceivedAt',  ['received', 'confirmed', 'shipped', 'delivered'], order.receivedAt],
-    ['tlConfirmed', 'tlConfirmedAt', ['confirmed', 'shipped', 'delivered'],             order.confirmedAt],
-    ['tlShipped',   'tlShippedAt',   ['shipped', 'delivered'],                          order.shippedAt],
-    ['tlDelivered', 'tlDeliveredAt', ['delivered'],                                     order.deliveredAt],
-  ];
-
-  const statusOrder = ['received', 'confirmed', 'shipped', 'delivered'];
-  const currentIdx  = statusOrder.indexOf(order.status);
-
-  steps.forEach(([liId, atId, doneStatuses, timestamp], i) => {
-    const li   = document.getElementById(liId);
-    const atEl = document.getElementById(atId);
-    if (!li) return;
-
-    if (i < currentIdx) {
-      li.classList.add('done');
-    } else if (i === currentIdx) {
-      li.classList.add('active');
-    }
-
-    if (atEl) {
-      atEl.textContent = timestamp
-        ? new Date(timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })
-        : (i <= currentIdx ? 'Now' : 'Pending');
-    }
-  });
-}
+/* ══════════════════════════════════════════════════════════
+   PAGE: track.html — Customer tracking
+   ══════════════════════════════════════════════════════════ */
 
 function initTrackPage() {
-  const trackForm  = document.getElementById('trackForm');
-  const tokenInput = document.getElementById('tokenInput');
-  const trackError = document.getElementById('trackError');
+  const form      = document.getElementById('trackForm');
+  const codeInput = document.getElementById('trackCode');
+  const phoneInput= document.getElementById('trackPhone');
+  const alertBox  = document.getElementById('trackAlert');
+  const resultsEl = document.getElementById('trackResults');
+  if (!form) return;
 
-  if (!trackForm) return;
-
-  // Auto-load if token in URL
-  const token = qs().get('token');
-  if (token) {
-    loadOrder(token);
+  // Auto-fill and auto-submit when ?code= is in URL
+  const params = new URLSearchParams(window.location.search);
+  const urlCode = params.get('code');
+  if (urlCode && codeInput) {
+    codeInput.value = urlCode;
+    doTrack(urlCode, '');
   }
 
-  trackForm.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
-    trackError?.classList.add('d-none');
-    const t = tokenInput?.value.trim();
-    if (!t) return;
-    // Update URL for shareable link
-    history.replaceState(null, '', `?token=${encodeURIComponent(t)}`);
-    loadOrder(t);
+    const code  = codeInput  ? codeInput.value.trim()  : '';
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+    if (!code && !phone) {
+      showAlert(alertBox, 'Please enter an Order Code or Phone number.');
+      return;
+    }
+    doTrack(code, phone);
   });
 
-  async function loadOrder(token) {
+  async function doTrack(code, phone) {
+    if (alertBox)  alertBox.innerHTML  = '';
+    if (resultsEl) resultsEl.innerHTML = '<p class="text-muted">Loading…</p>';
+
+    const qs = code
+      ? `code=${encodeURIComponent(code.toUpperCase())}`
+      : `phone=${encodeURIComponent(phone)}`;
+
     try {
-      const data = await apiGet(`/api/track-order?token=${encodeURIComponent(token)}`);
-      if (data.order) {
-        renderTrackStatus(data.order);
-      } else {
-        showTrackError('Order not found. Please check your Order ID.');
-      }
+      const data   = await getJSON(`/api/track-order?${qs}`);
+      const orders = data.orders || [];
+      renderTrackResults(orders);
     } catch (err) {
-      showTrackError(err.message || 'Failed to load order. Please try again.');
+      if (resultsEl) resultsEl.innerHTML = '';
+      showAlert(alertBox, err.message || 'Could not find order. Please check and try again.');
     }
   }
 
-  function showTrackError(msg) {
-    if (trackError) {
-      trackError.textContent = msg;
-      trackError.classList.remove('d-none');
+  function renderTrackResults(orders) {
+    if (!resultsEl) return;
+    if (!orders.length) {
+      resultsEl.innerHTML = '<p class="text-muted">No orders found.</p>';
+      return;
     }
+
+    resultsEl.innerHTML = orders.map((o) => {
+      const lrLine = o.lr_number
+        ? `<li class="list-group-item d-flex justify-content-between">
+             <span class="text-muted small">LR / Consignment</span>
+             <span class="fw-semibold small">${escapeHtml(o.lr_number)}
+               <span class="text-muted">(${escapeHtml(o.transporter || 'N/A')})</span>
+             </span>
+           </li>`
+        : '';
+
+      return `
+        <div class="card mb-3 shadow-sm">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span class="fw-bold font-monospace">${escapeHtml(o.order_code)}</span>
+            ${statusBadge(o.status)}
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="text-muted small">Customer</span>
+              <span class="small">${escapeHtml(o.customer_name)}&nbsp;
+                <span class="text-muted">${escapeHtml(o.customer_phone)}</span>
+              </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="text-muted small">Product</span>
+              <span class="small fw-semibold">${escapeHtml(o.product_details)}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="text-muted small">Amount</span>
+              <span class="small fw-semibold">₹${escapeHtml(String(o.amount))}</span>
+            </li>
+            ${lrLine}
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="text-muted small">Placed</span>
+              <span class="small">${escapeHtml(fmtDate(o.created_at))}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <span class="text-muted small">Shipped</span>
+              <span class="small">${escapeHtml(fmtDate(o.shipped_at))}</span>
+            </li>
+          </ul>
+        </div>`;
+    }).join('');
   }
 }
 
-/* ── PAGE: admin.html ─────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   PAGE: admin.html — Admin panel
+   ══════════════════════════════════════════════════════════ */
 
 function initAdminPage() {
-  const loginCard  = document.getElementById('loginCard');
-  const dashboard  = document.getElementById('dashboard');
-  const loginForm  = document.getElementById('loginForm');
-  const loginError = document.getElementById('loginError');
+  /* ── DOM refs ── */
+  const loginSection  = document.getElementById('loginSection');
+  const panelSection  = document.getElementById('panelSection');
+  const loginForm     = document.getElementById('loginForm');
+  const loginAlert    = document.getElementById('loginAlert');
+  const panelAlert    = document.getElementById('panelAlert');
+  const statusFilter  = document.getElementById('statusFilter');
+  const searchInput   = document.getElementById('searchInput');
+  const refreshBtn    = document.getElementById('refreshBtn');
+  const logoutBtn     = document.getElementById('logoutBtn');
+  const tableBody     = document.getElementById('ordersBody');
+  const tableWrapper  = document.getElementById('tableWrapper');
+  const tableEmpty    = document.getElementById('tableEmpty');
+  const tableLoading  = document.getElementById('tableLoading');
 
   if (!loginForm) return;
+
+  /* ── Show/hide helpers ── */
+  function showPanel()  { loginSection.classList.add('d-none');    panelSection.classList.remove('d-none'); }
+  function showLogin()  { panelSection.classList.add('d-none');    loginSection.classList.remove('d-none'); }
+  function showLoading(){ tableLoading.classList.remove('d-none'); tableWrapper.classList.add('d-none'); tableEmpty.classList.add('d-none'); }
+  function hideLoading(){ tableLoading.classList.add('d-none'); }
+
+  /* ── 401 handler: kick back to login ── */
+  function handle401() { showLogin(); }
 
   /* ── Login ── */
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    loginError?.classList.add('d-none');
-    const password = document.getElementById('adminPassword')?.value;
-
+    loginAlert.innerHTML = '';
+    const pwd = document.getElementById('adminPassword').value;
     try {
-      await apiPost('/api/admin-login', { password });
-      loginCard?.classList.add('d-none');
-      dashboard?.classList.remove('d-none');
+      await postJSON('/api/admin-login', { password: pwd });
+      showPanel();
       loadOrders();
     } catch (err) {
-      if (loginError) {
-        loginError.textContent = err.message || 'Login failed.';
-        loginError.classList.remove('d-none');
-      }
+      showAlert(loginAlert, err.message || 'Login failed.');
     }
   });
 
   /* ── Logout ── */
-  document.getElementById('logoutBtn')?.addEventListener('click', () => {
-    // Clear cookie client-side by expiring it; server-side clear is TODO in Phase 2
-    document.cookie = 'admin_token=; Max-Age=0; path=/';
-    dashboard?.classList.add('d-none');
-    loginCard?.classList.remove('d-none');
+  logoutBtn && logoutBtn.addEventListener('click', () => {
+    // Expire the cookie client-side
+    document.cookie = 'admin=; Max-Age=0; path=/; SameSite=Lax';
+    document.getElementById('adminPassword').value = '';
+    showLogin();
   });
 
   /* ── Refresh ── */
-  document.getElementById('refreshBtn')?.addEventListener('click', loadOrders);
-  document.getElementById('applyFilter')?.addEventListener('click', loadOrders);
+  refreshBtn && refreshBtn.addEventListener('click', loadOrders);
+
+  /* ── Debounced search ── */
+  let debounceTimer;
+  searchInput && searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(loadOrders, 350);
+  });
+
+  /* ── Status filter ── */
+  statusFilter && statusFilter.addEventListener('change', loadOrders);
 
   /* ── Load orders ── */
   async function loadOrders() {
-    const tableLoader  = document.getElementById('tableLoader');
-    const tableWrapper = document.getElementById('tableWrapper');
-    const tableEmpty   = document.getElementById('tableEmpty');
+    if (panelAlert) panelAlert.innerHTML = '';
+    showLoading();
 
-    tableLoader?.classList.remove('d-none');
-    tableWrapper?.classList.add('d-none');
-    tableEmpty?.classList.add('d-none');
-
-    const status = document.getElementById('filterStatus')?.value || '';
-    const search = document.getElementById('filterSearch')?.value.trim() || '';
-    const params = new URLSearchParams();
-    if (status) params.set('status', status);
-    if (search) params.set('q', search);
+    const qs = new URLSearchParams();
+    const status = statusFilter ? statusFilter.value : '';
+    const q      = searchInput  ? searchInput.value.trim() : '';
+    if (status) qs.set('status', status);
+    if (q)      qs.set('q', q);
 
     try {
-      const data = await apiGet('/api/list-orders?' + params.toString());
+      const data   = await getJSON(`/api/list-orders?${qs.toString()}`);
       const orders = data.orders || [];
-      renderOrdersTable(orders);
-      updateSummaryCards(orders);
+      hideLoading();
+      renderTable(orders, data.total || 0);
     } catch (err) {
-      tableLoader?.classList.add('d-none');
-      // If 401, show login again
-      if (err.status === 401) {
-        dashboard?.classList.add('d-none');
-        loginCard?.classList.remove('d-none');
-      }
+      hideLoading();
+      if (err.status === 401) { handle401(); return; }
+      showAlert(panelAlert, err.message || 'Failed to load orders.');
+      tableWrapper.classList.add('d-none');
+      tableEmpty.classList.add('d-none');
     }
   }
 
   /* ── Render table ── */
-  function renderOrdersTable(orders) {
-    const tableLoader  = document.getElementById('tableLoader');
-    const tableWrapper = document.getElementById('tableWrapper');
-    const tableEmpty   = document.getElementById('tableEmpty');
-    const tbody        = document.getElementById('ordersBody');
-
-    tableLoader?.classList.add('d-none');
+  function renderTable(orders, total) {
+    const countEl = document.getElementById('orderCount');
+    if (countEl) countEl.textContent = `${total} order${total !== 1 ? 's' : ''}`;
 
     if (!orders.length) {
-      tableEmpty?.classList.remove('d-none');
+      tableWrapper.classList.add('d-none');
+      tableEmpty.classList.remove('d-none');
       return;
     }
 
-    tableWrapper?.classList.remove('d-none');
-    if (!tbody) return;
+    tableEmpty.classList.add('d-none');
+    tableWrapper.classList.remove('d-none');
 
-    tbody.innerHTML = orders.map((o) => {
-      const statusBadge = {
-        received:  '<span class="badge badge-received">Received</span>',
-        confirmed: '<span class="badge badge-confirmed">Confirmed</span>',
-        shipped:   '<span class="badge badge-shipped">Shipped</span>',
-        delivered: '<span class="badge badge-delivered">Delivered</span>',
-      }[o.status] || `<span class="badge bg-secondary">${o.status}</span>`;
-
-      const placedAt = o.createdAt
-        ? new Date(o.createdAt).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' })
-        : '—';
-
-      // Build action buttons based on current status
-      const actions = buildActionButtons(o);
-
+    tableBody.innerHTML = orders.map((o) => {
+      const actions = buildActions(o);
       return `
         <tr>
-          <td class="font-monospace">${escHtml(o.id)}</td>
-          <td>${escHtml(o.name)}</td>
-          <td>${escHtml(o.maskedPhone || o.phone || '—')}</td>
-          <td>${escHtml(o.riceType)}</td>
-          <td>${escHtml(String(o.quantity))}</td>
-          <td>${statusBadge}</td>
-          <td class="text-muted">${placedAt}</td>
-          <td>${actions}</td>
+          <td class="font-monospace small">${escapeHtml(o.order_code)}</td>
+          <td>${escapeHtml(o.customer_name)}</td>
+          <td class="small text-muted">${escapeHtml(o.customer_phone)}</td>
+          <td>₹${escapeHtml(String(o.amount))}</td>
+          <td>${statusBadge(o.status)}</td>
+          <td class="small text-muted">${escapeHtml(o.lr_number || '—')}</td>
+          <td class="small text-muted">${escapeHtml(fmtDate(o.created_at))}</td>
+          <td class="text-nowrap">${actions}</td>
         </tr>`;
     }).join('');
 
-    // Attach action-button listeners
+    // Attach action listeners after render
     orders.forEach((o) => {
-      document.getElementById(`btn-ship-${o.id}`)?.addEventListener('click', () => openShipModal(o));
+      const confirmBtn = document.getElementById(`btn-confirm-${o.id}`);
+      const shipBtn    = document.getElementById(`btn-ship-${o.id}`);
+      if (confirmBtn) confirmBtn.addEventListener('click', () => onSendConfirmation(o));
+      if (shipBtn)    shipBtn.addEventListener('click',    () => onMarkShipped(o));
     });
   }
 
-  function buildActionButtons(order) {
+  /* ── Build action buttons per row ── */
+  function buildActions(o) {
     const btns = [];
-    if (order.status === 'received' || order.status === 'confirmed') {
-      btns.push(`<button class="btn btn-sm btn-brand" id="btn-ship-${escHtml(order.id)}">Mark Shipped</button>`);
+    if (o.status === 'placed') {
+      btns.push(
+        `<button id="btn-confirm-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-success me-1" title="Send WhatsApp confirmation">
+           📲 Confirm
+         </button>`,
+        `<button id="btn-ship-${escapeHtml(String(o.id))}" class="btn btn-sm btn-primary" title="Mark as Shipped">
+           🚚 Ship
+         </button>`
+      );
+    } else if (o.status === 'shipped') {
+      btns.push(
+        `<button id="btn-ship-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-primary" title="Update shipping info">
+           🚚 Re-ship
+         </button>`
+      );
     }
-    // Track link (always)
-    btns.push(`<a href="track.html?token=${encodeURIComponent(order.token || order.id)}" target="_blank" class="btn btn-sm btn-outline-secondary">Track</a>`);
-    return btns.join(' ');
+    return btns.join('') || '<span class="text-muted small">—</span>';
   }
 
-  /* ── Summary cards ── */
-  function updateSummaryCards(orders) {
-    const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-    set('cntTotal',     orders.length);
-    set('cntPending',   orders.filter((o) => o.status === 'received' || o.status === 'confirmed').length);
-    set('cntShipped',   orders.filter((o) => o.status === 'shipped').length);
-    set('cntDelivered', orders.filter((o) => o.status === 'delivered').length);
+  /* ── Send Confirmation (wa.me click-to-chat, opens tab) ── */
+  function onSendConfirmation(order) {
+    const business = 'Rice Traders'; // falls back; real name in env
+    const msg =
+      `Hi ${order.customer_name}, your rice order ${order.order_code} has been received. ` +
+      `Amount: ₹${order.amount}. We'll notify you when it ships. — ${business}`;
+    const phone  = order.customer_phone.replace(/\D/g, '');
+    const waLink = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(waLink, '_blank', 'noopener,noreferrer');
   }
 
-  /* ── Ship modal ── */
-  let currentShipOrderId = null;
-  const shipModal = new bootstrap.Modal(document.getElementById('shipModal'));
+  /* ── Mark Shipped flow ── */
+  async function onMarkShipped(order) {
+    const lr = window.prompt(
+      `Enter LR / Consignment Number for order ${order.order_code}:`
+    );
+    if (lr === null) return;              // user cancelled
+    if (!lr.trim()) {
+      alert('LR number is required to mark as shipped.');
+      return;
+    }
 
-  function openShipModal(order) {
-    currentShipOrderId = order.id;
-    // Reset WA link area
-    const waWrapper = document.getElementById('shipWaWrapper');
-    if (waWrapper) waWrapper.classList.add('d-none');
-    shipModal.show();
-  }
+    const transporter = window.prompt(
+      'Enter Transporter name:',
+      order.transporter || 'Navata'
+    );
+    if (transporter === null) return;     // user cancelled
 
-  document.getElementById('confirmShipBtn')?.addEventListener('click', async () => {
-    if (!currentShipOrderId) return;
     try {
-      const data = await apiPost('/api/mark-shipped', { orderId: currentShipOrderId });
-      if (data.waLink) {
-        const waLink    = document.getElementById('shipWaLink');
-        const waWrapper = document.getElementById('shipWaWrapper');
-        if (waLink)    waLink.href = data.waLink;
-        if (waWrapper) waWrapper.classList.remove('d-none');
-      }
-      loadOrders(); // Refresh table
-    } catch (err) {
-      alert('Failed to mark as shipped: ' + (err.message || 'unknown error'));
-    }
-  });
+      const data = await postJSON('/api/mark-shipped', {
+        order_id:    order.id,
+        lr_number:   lr.trim(),
+        transporter: transporter.trim() || 'Navata',
+      });
 
-  /* ── Helpers ── */
-  function escHtml(str) {
-    return String(str ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+      // Open WhatsApp in a new tab so admin can send manually
+      if (data.wa_link) {
+        window.open(data.wa_link, '_blank', 'noopener,noreferrer');
+      }
+
+      await loadOrders();
+    } catch (err) {
+      if (err.status === 401) { handle401(); return; }
+      showAlert(panelAlert, `Failed to mark order as shipped: ${err.message}`);
+    }
   }
 }

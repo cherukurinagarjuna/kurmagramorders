@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Order Rice | {{BUSINESS_NAME}}</title>
+  <title>Place Order — Rice Traders</title>
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -11,98 +11,100 @@
     crossorigin="anonymous"
   />
   <style>
-    body { background: #f8f4ee; }
-    .brand-green { color: #2e7d32; }
-    .btn-brand { background: #2e7d32; color: #fff; }
-    .btn-brand:hover { background: #1b5e20; color: #fff; }
-    .card { border: none; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+    body { background: #f5f5f5; }
+    .navbar-brand { font-size: 1.3rem; }
+    .card { border: none; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+    .btn-primary { background: #2e7d32; border-color: #2e7d32; }
+    .btn-primary:hover { background: #1b5e20; border-color: #1b5e20; }
+    .input-group-text { background: #e8f5e9; border-color: #c8e6c9; color: #2e7d32; font-weight: 600; }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-white border-bottom mb-4">
+  <nav class="navbar navbar-light bg-white border-bottom mb-4 shadow-sm">
     <div class="container">
-      <span class="navbar-brand fw-bold brand-green">🌾 Rice Traders</span>
+      <span class="navbar-brand fw-bold text-success">🌾 Rice Traders</span>
       <a href="track.html" class="btn btn-sm btn-outline-secondary">Track Order</a>
     </div>
   </nav>
 
-  <main class="container" style="max-width: 540px;">
-    <div class="card p-4">
-      <h1 class="h4 fw-bold mb-1 brand-green">Place Your Rice Order</h1>
-      <p class="text-muted small mb-4">Fill in the details below and we'll confirm via WhatsApp.</p>
+  <main class="container" style="max-width:560px">
+    <div class="card p-4 mb-4">
+      <h1 class="h5 fw-bold text-success mb-1">Place a Rice Order</h1>
+      <p class="text-muted small mb-4">Fill in the form — we'll confirm on WhatsApp.</p>
+
+      <div id="formAlert"></div>
 
       <form id="orderForm" novalidate>
-        <!-- Customer name -->
+
         <div class="mb-3">
           <label for="name" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
-          <input type="text" id="name" name="name" class="form-control" placeholder="e.g. Ramesh Kumar" required />
-          <div class="invalid-feedback">Please enter your name.</div>
+          <input
+            type="text" id="name" name="name"
+            class="form-control" placeholder="e.g. Ramesh Kumar"
+            minlength="2" maxlength="100" required
+          />
+          <div class="invalid-feedback">Name must be 2–100 characters.</div>
         </div>
 
-        <!-- WhatsApp number -->
         <div class="mb-3">
           <label for="phone" class="form-label fw-semibold">WhatsApp Number <span class="text-danger">*</span></label>
           <div class="input-group">
             <span class="input-group-text">+91</span>
             <input
-              type="tel"
-              id="phone"
-              name="phone"
+              type="tel" id="phone" name="phone"
               class="form-control"
-              placeholder="98765 43210"
-              maxlength="10"
-              pattern="\d{10}"
-              required
+              placeholder="9876543210"
+              pattern="\d{10}" maxlength="10" required
             />
           </div>
-          <div class="invalid-feedback">Enter a valid 10-digit Indian mobile number.</div>
+          <div class="invalid-feedback">Enter a valid 10-digit number starting with 6–9.</div>
         </div>
 
-        <!-- Address -->
         <div class="mb-3">
           <label for="address" class="form-label fw-semibold">Delivery Address <span class="text-danger">*</span></label>
-          <textarea id="address" name="address" class="form-control" rows="2" placeholder="House / Street / City / PIN" required></textarea>
-          <div class="invalid-feedback">Please enter your delivery address.</div>
+          <textarea
+            id="address" name="address"
+            class="form-control" rows="3"
+            placeholder="Door no., Street, City, PIN"
+            minlength="10" maxlength="500" required
+          ></textarea>
+          <div class="invalid-feedback">Address must be 10–500 characters.</div>
         </div>
 
-        <!-- Rice variety -->
         <div class="mb-3">
-          <label for="riceType" class="form-label fw-semibold">Rice Variety <span class="text-danger">*</span></label>
-          <select id="riceType" name="riceType" class="form-select" required>
-            <option value="">— Select —</option>
-            <option value="Sona Masoori">Sona Masoori</option>
-            <option value="Basmati">Basmati</option>
-            <option value="Ponni">Ponni</option>
-            <option value="IR64 Parboiled">IR64 Parboiled</option>
-            <option value="Other">Other (mention in notes)</option>
-          </select>
-          <div class="invalid-feedback">Please select a rice variety.</div>
+          <label for="product_details" class="form-label fw-semibold">Product Details <span class="text-danger">*</span></label>
+          <input
+            type="text" id="product_details" name="product_details"
+            class="form-control"
+            placeholder="e.g. Sona Masoori 25 kg"
+            minlength="3" maxlength="300" required
+          />
+          <div class="invalid-feedback">Product details must be 3–300 characters.</div>
         </div>
 
-        <!-- Quantity -->
-        <div class="mb-3">
-          <label for="quantity" class="form-label fw-semibold">Quantity (kg) <span class="text-danger">*</span></label>
-          <input type="number" id="quantity" name="quantity" class="form-control" placeholder="e.g. 25" min="1" max="1000" required />
-          <div class="invalid-feedback">Please enter a valid quantity (1–1000 kg).</div>
-        </div>
-
-        <!-- Notes -->
         <div class="mb-4">
-          <label for="notes" class="form-label fw-semibold">Additional Notes</label>
-          <textarea id="notes" name="notes" class="form-control" rows="2" placeholder="Delivery time preference, special requests…"></textarea>
+          <label for="amount" class="form-label fw-semibold">Amount (₹) <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text">₹</span>
+            <input
+              type="number" id="amount" name="amount"
+              class="form-control"
+              placeholder="1250.00"
+              min="1" step="0.01" required
+            />
+          </div>
+          <div class="invalid-feedback">Enter a valid amount (minimum ₹1).</div>
         </div>
 
-        <!-- Error banner -->
-        <div id="formError" class="alert alert-danger d-none" role="alert"></div>
-
-        <button type="submit" id="submitBtn" class="btn btn-brand w-100 py-2 fw-semibold">
+        <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-2 fw-semibold">
           Place Order
         </button>
       </form>
     </div>
 
-    <p class="text-center text-muted small mt-3">
-      Already ordered? <a href="track.html">Track your order →</a>
+    <p class="text-center text-muted small">
+      Already placed an order?
+      <a href="track.html" class="text-success">Track it here →</a>
     </p>
   </main>
 
@@ -112,8 +114,6 @@
     crossorigin="anonymous"
   ></script>
   <script src="assets/app.js"></script>
-  <script>
-    initOrderForm();
-  </script>
+  <script>initOrderForm();</script>
 </body>
 </html>

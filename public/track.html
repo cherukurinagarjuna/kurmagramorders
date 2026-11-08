@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Track Order | Rice Traders</title>
+  <title>Track Order — Rice Traders</title>
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -11,114 +11,73 @@
     crossorigin="anonymous"
   />
   <style>
-    body { background: #f8f4ee; }
-    .brand-green { color: #2e7d32; }
-    .card { border: none; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
-
-    /* Status timeline */
-    .timeline { list-style: none; padding: 0; margin: 0; }
-    .timeline li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding-bottom: 1rem;
-      position: relative;
+    body { background: #f5f5f5; }
+    .card { border: none; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+    .btn-success { background: #2e7d32; border-color: #2e7d32; }
+    .btn-success:hover { background: #1b5e20; border-color: #1b5e20; }
+    .divider-label {
+      display: flex; align-items: center; gap: .5rem;
+      color: #aaa; font-size: .8rem; margin: .75rem 0;
     }
-    .timeline li:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 11px; top: 24px;
-      width: 2px; bottom: 0;
-      background: #dee2e6;
+    .divider-label::before,
+    .divider-label::after {
+      content: ''; flex: 1; height: 1px; background: #dee2e6;
     }
-    .timeline li.done::after { background: #2e7d32; }
-    .tl-dot {
-      width: 24px; height: 24px; border-radius: 50%;
-      background: #dee2e6; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .75rem; color: #fff;
-      position: relative; z-index: 1;
-    }
-    .timeline li.done .tl-dot { background: #2e7d32; }
-    .timeline li.active .tl-dot { background: #f9a825; }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-white border-bottom mb-4">
+  <nav class="navbar navbar-light bg-white border-bottom mb-4 shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold brand-green" href="index.html">🌾 Rice Traders</a>
+      <a href="index.html" class="navbar-brand fw-bold text-success">🌾 Rice Traders</a>
+      <a href="index.html" class="btn btn-sm btn-outline-success">Place Order</a>
     </div>
   </nav>
 
-  <main class="container" style="max-width: 540px;">
-    <!-- Look-up form (shown when no token in URL) -->
-    <div class="card p-4 mb-3" id="lookupCard">
-      <h1 class="h5 fw-bold mb-1 brand-green">Track Your Order</h1>
-      <p class="text-muted small mb-3">Enter your Order ID or use the link we sent you.</p>
+  <main class="container" style="max-width:580px">
+
+    <!-- Search card -->
+    <div class="card p-4 mb-4">
+      <h1 class="h5 fw-bold text-success mb-1">Track Your Order</h1>
+      <p class="text-muted small mb-3">Enter your order code <strong>or</strong> WhatsApp number.</p>
+
+      <div id="trackAlert"></div>
+
       <form id="trackForm" novalidate>
-        <div class="input-group">
+        <!-- By order code -->
+        <div class="mb-2">
+          <label for="trackCode" class="form-label small fw-semibold">Order Code</label>
           <input
-            type="text"
-            id="tokenInput"
-            class="form-control"
-            placeholder="Order ID / tracking token"
-            required
+            type="text" id="trackCode"
+            class="form-control font-monospace text-uppercase"
+            placeholder="RICE-2026-0001"
+            autocomplete="off"
           />
-          <button type="submit" class="btn btn-success">Track</button>
         </div>
-        <div id="trackError" class="text-danger small mt-2 d-none"></div>
+
+        <div class="divider-label">OR</div>
+
+        <!-- By phone -->
+        <div class="mb-3">
+          <label for="trackPhone" class="form-label small fw-semibold">WhatsApp Number</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light">+91</span>
+            <input
+              type="tel" id="trackPhone"
+              class="form-control"
+              placeholder="9876543210"
+              maxlength="10"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 fw-semibold">
+          🔍 Track
+        </button>
       </form>
     </div>
 
-    <!-- Order status (hidden until loaded) -->
-    <div class="card p-4 d-none" id="statusCard">
-      <div class="d-flex justify-content-between align-items-start mb-3">
-        <div>
-          <h2 class="h6 fw-bold mb-0 brand-green">Order <span id="stOrderId">—</span></h2>
-          <span class="text-muted small">Mobile: <span id="stPhone">—</span></span>
-        </div>
-        <span id="stBadge" class="badge bg-warning text-dark">Processing</span>
-      </div>
-
-      <ul class="timeline mb-3" id="stTimeline">
-        <li id="tlReceived" class="done">
-          <span class="tl-dot">✓</span>
-          <div>
-            <div class="fw-semibold small">Order Received</div>
-            <div class="text-muted" style="font-size:.78rem;" id="tlReceivedAt">—</div>
-          </div>
-        </li>
-        <li id="tlConfirmed">
-          <span class="tl-dot">2</span>
-          <div>
-            <div class="fw-semibold small">Confirmed</div>
-            <div class="text-muted" style="font-size:.78rem;" id="tlConfirmedAt">Pending</div>
-          </div>
-        </li>
-        <li id="tlShipped">
-          <span class="tl-dot">3</span>
-          <div>
-            <div class="fw-semibold small">Shipped / Out for Delivery</div>
-            <div class="text-muted" style="font-size:.78rem;" id="tlShippedAt">Pending</div>
-          </div>
-        </li>
-        <li id="tlDelivered">
-          <span class="tl-dot">4</span>
-          <div>
-            <div class="fw-semibold small">Delivered</div>
-            <div class="text-muted" style="font-size:.78rem;" id="tlDeliveredAt">Pending</div>
-          </div>
-        </li>
-      </ul>
-
-      <hr />
-      <div class="row g-1 small">
-        <div class="col-5 text-muted">Rice Variety</div>
-        <div class="col-7" id="stRiceType">—</div>
-        <div class="col-5 text-muted">Quantity</div>
-        <div class="col-7" id="stQuantity">—</div>
-      </div>
-    </div>
+    <!-- Results injected here -->
+    <div id="trackResults"></div>
   </main>
 
   <script
@@ -127,8 +86,6 @@
     crossorigin="anonymous"
   ></script>
   <script src="assets/app.js"></script>
-  <script>
-    initTrackPage();
-  </script>
+  <script>initTrackPage();</script>
 </body>
 </html>

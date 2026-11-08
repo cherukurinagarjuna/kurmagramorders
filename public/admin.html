@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard | Rice Traders</title>
+  <title>Admin — Rice Traders</title>
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -11,168 +11,130 @@
     crossorigin="anonymous"
   />
   <style>
-    body { background: #f8f4ee; }
-    .brand-green { color: #2e7d32; }
-    .btn-brand { background: #2e7d32; color: #fff; }
-    .btn-brand:hover { background: #1b5e20; color: #fff; }
-    .card { border: none; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
-    #loginCard { max-width: 380px; margin: 6rem auto; }
+    body { background: #f5f5f5; }
+    .card  { border: none; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
+    .btn-primary { background: #2e7d32; border-color: #2e7d32; }
+    .btn-primary:hover { background: #1b5e20; border-color: #1b5e20; }
 
-    /* Status badges */
-    .badge-received  { background: #e3f2fd; color: #0d47a1; }
-    .badge-confirmed { background: #fff8e1; color: #e65100; }
-    .badge-shipped   { background: #e8f5e9; color: #1b5e20; }
-    .badge-delivered { background: #ede7f6; color: #4527a0; }
+    /* Login centred */
+    #loginSection {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+    }
+    #loginCard { width: 100%; max-width: 380px; }
 
-    /* WhatsApp button */
-    .btn-wa { background: #25d366; color: #fff; }
-    .btn-wa:hover { background: #1ebe5a; color: #fff; }
-
-    /* Table responsiveness */
-    #ordersTable th { font-size: .8rem; white-space: nowrap; }
-    #ordersTable td { font-size: .82rem; vertical-align: middle; }
+    /* Table tweaks */
+    #ordersTable th  { font-size: .78rem; white-space: nowrap; color: #555; }
+    #ordersTable td  { font-size: .82rem; vertical-align: middle; }
+    .font-monospace  { font-family: 'Courier New', monospace; }
   </style>
 </head>
 <body>
 
-  <!-- ── LOGIN SCREEN ──────────────────────────────────────────────────── -->
-  <div id="loginCard" class="card p-4">
-    <h1 class="h5 fw-bold brand-green mb-1">🌾 Admin Login</h1>
-    <p class="text-muted small mb-3">Enter your admin password to continue.</p>
-    <form id="loginForm" novalidate>
-      <div class="mb-3">
-        <input
-          type="password"
-          id="adminPassword"
-          class="form-control"
-          placeholder="Password"
-          required
-          autocomplete="current-password"
-        />
-      </div>
-      <div id="loginError" class="alert alert-danger d-none small py-2" role="alert"></div>
-      <button type="submit" class="btn btn-brand w-100">Log In</button>
-    </form>
+  <!-- ══════════════ LOGIN ══════════════ -->
+  <div id="loginSection">
+    <div id="loginCard" class="card p-4">
+      <h1 class="h5 fw-bold text-success mb-1">🌾 Admin Login</h1>
+      <p class="text-muted small mb-3">Enter your admin password to continue.</p>
+
+      <div id="loginAlert"></div>
+
+      <form id="loginForm" novalidate>
+        <div class="mb-3">
+          <label for="adminPassword" class="form-label small fw-semibold">Password</label>
+          <input
+            type="password" id="adminPassword"
+            class="form-control"
+            placeholder="Admin password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary w-100 fw-semibold">Log In</button>
+      </form>
+    </div>
   </div>
 
-  <!-- ── DASHBOARD (hidden until logged in) ───────────────────────────── -->
-  <div id="dashboard" class="d-none">
-    <nav class="navbar navbar-light bg-white border-bottom mb-4">
+  <!-- ══════════════ PANEL ══════════════ -->
+  <div id="panelSection" class="d-none">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-light bg-white border-bottom shadow-sm mb-4">
       <div class="container-fluid px-4">
-        <span class="navbar-brand fw-bold brand-green">🌾 Rice Traders — Admin</span>
+        <span class="navbar-brand fw-bold text-success">🌾 Rice Traders — Admin</span>
         <div class="d-flex gap-2 align-items-center">
+          <span id="orderCount" class="text-muted small me-2"></span>
           <button id="refreshBtn" class="btn btn-sm btn-outline-secondary">⟳ Refresh</button>
-          <button id="logoutBtn" class="btn btn-sm btn-outline-danger">Logout</button>
+          <button id="logoutBtn"  class="btn btn-sm btn-outline-danger">Logout</button>
         </div>
       </div>
     </nav>
 
     <div class="container-fluid px-4">
-      <!-- Summary cards -->
-      <div class="row g-3 mb-4" id="summaryCards">
-        <div class="col-6 col-md-3">
-          <div class="card p-3 text-center">
-            <div class="fs-3 fw-bold brand-green" id="cntTotal">—</div>
-            <div class="small text-muted">Total Orders</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="card p-3 text-center">
-            <div class="fs-3 fw-bold text-warning" id="cntPending">—</div>
-            <div class="small text-muted">Pending</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="card p-3 text-center">
-            <div class="fs-3 fw-bold text-info" id="cntShipped">—</div>
-            <div class="small text-muted">Shipped</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="card p-3 text-center">
-            <div class="fs-3 fw-bold text-success" id="cntDelivered">—</div>
-            <div class="small text-muted">Delivered</div>
-          </div>
-        </div>
-      </div>
+
+      <!-- Alerts for panel-level errors -->
+      <div id="panelAlert" class="mb-3"></div>
 
       <!-- Filters -->
       <div class="card p-3 mb-3">
         <div class="row g-2 align-items-end">
           <div class="col-sm-auto">
-            <label class="form-label small mb-1">Status</label>
-            <select id="filterStatus" class="form-select form-select-sm">
-              <option value="">All</option>
-              <option value="received">Received</option>
-              <option value="confirmed">Confirmed</option>
+            <label for="statusFilter" class="form-label small mb-1 fw-semibold">Status</label>
+            <select id="statusFilter" class="form-select form-select-sm">
+              <option value="">All statuses</option>
+              <option value="placed">Placed</option>
               <option value="shipped">Shipped</option>
               <option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
             </select>
           </div>
           <div class="col-sm">
-            <label class="form-label small mb-1">Search (name / phone)</label>
-            <input type="text" id="filterSearch" class="form-control form-control-sm" placeholder="Search…" />
-          </div>
-          <div class="col-sm-auto">
-            <button id="applyFilter" class="btn btn-sm btn-brand">Apply</button>
+            <label for="searchInput" class="form-label small mb-1 fw-semibold">Search</label>
+            <input
+              type="text" id="searchInput"
+              class="form-control form-control-sm"
+              placeholder="Order code, name, or phone…"
+            />
           </div>
         </div>
       </div>
 
-      <!-- Orders table -->
-      <div class="card p-0 overflow-hidden">
-        <div id="tableLoader" class="text-center py-5 text-muted">Loading orders…</div>
+      <!-- Table -->
+      <div class="card p-0 overflow-hidden mb-4">
+
+        <!-- Loading state -->
+        <div id="tableLoading" class="text-center py-5 text-muted">
+          <div class="spinner-border spinner-border-sm text-secondary me-2" role="status"></div>
+          Loading orders…
+        </div>
+
+        <!-- Empty state -->
+        <div id="tableEmpty" class="text-center py-5 text-muted d-none">
+          No orders match your filter.
+        </div>
+
+        <!-- Orders table -->
         <div class="table-responsive d-none" id="tableWrapper">
           <table class="table table-hover mb-0" id="ordersTable">
             <thead class="table-light">
               <tr>
-                <th>Order ID</th>
+                <th>Code</th>
                 <th>Name</th>
                 <th>Phone</th>
-                <th>Variety</th>
-                <th>Qty (kg)</th>
+                <th>Amount</th>
                 <th>Status</th>
-                <th>Placed At</th>
+                <th>LR #</th>
+                <th>Placed</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody id="ordersBody">
-              <!-- Rows injected by JS -->
-            </tbody>
+            <tbody id="ordersBody"></tbody>
           </table>
         </div>
-        <div id="tableEmpty" class="text-center py-5 text-muted d-none">No orders found.</div>
       </div>
-    </div>
-  </div>
 
-  <!-- ── MARK-SHIPPED MODAL ────────────────────────────────────────────── -->
-  <div class="modal fade" id="shipModal" tabindex="-1" aria-labelledby="shipModalLabel" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="shipModalLabel">Mark as Shipped</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p class="mb-3">
-            After clicking <strong>Mark Shipped</strong>, a WhatsApp link will appear below.
-            Open it to send the customer a manual notification.
-          </p>
-          <div id="shipWaWrapper" class="d-none text-center">
-            <p class="small text-muted mb-2">Tap the button to open WhatsApp and notify the customer:</p>
-            <a id="shipWaLink" href="#" target="_blank" rel="noopener" class="btn btn-wa w-100">
-              📲 Open WhatsApp to Notify Customer
-            </a>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-brand" id="confirmShipBtn">Mark Shipped</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    </div><!-- /container -->
+  </div><!-- /panelSection -->
 
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -180,8 +142,6 @@
     crossorigin="anonymous"
   ></script>
   <script src="assets/app.js"></script>
-  <script>
-    initAdminPage();
-  </script>
+  <script>initAdminPage();</script>
 </body>
 </html>
