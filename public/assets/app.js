@@ -62,10 +62,11 @@ function escapeHtml(val) {
 /* ── Status badge helper ─────────────────────────────────── */
 
 const STATUS_BADGE = {
-  placed:    'secondary',
-  shipped:   'info',
-  delivered: 'success',
-  cancelled: 'danger',
+  placed:           'secondary',
+  shipped:          'info',
+  out_for_delivery: 'warning',
+  delivered:        'success',
+  cancelled:        'danger',
 };
 
 /**
@@ -75,8 +76,16 @@ const STATUS_BADGE = {
  */
 function statusBadge(status) {
   const colour = STATUS_BADGE[status] || 'secondary';
-  const label  = status ? status.charAt(0).toUpperCase() + status.slice(1) : '—';
-  return `<span class="badge bg-${colour}">${escapeHtml(label)}</span>`;
+  const labelMap = {
+    placed:           'Placed',
+    shipped:          'Shipped',
+    out_for_delivery: 'Out for Delivery',
+    delivered:        'Delivered',
+    cancelled:        'Cancelled',
+  };
+  const label = labelMap[status] || (status ? status.charAt(0).toUpperCase() + status.slice(1) : '—');
+  const textClass = (colour === 'warning' || colour === 'info') ? 'text-dark' : '';
+  return `<span class="badge bg-${colour} ${textClass}">${escapeHtml(label)}</span>`;
 }
 
 /* ── Date formatter ──────────────────────────────────────── */
@@ -390,8 +399,13 @@ function initAdminPage() {
     orders.forEach((o) => {
       const confirmBtn = document.getElementById(`btn-confirm-${o.id}`);
       const shipBtn    = document.getElementById(`btn-ship-${o.id}`);
+      const ofdBtn     = document.getElementById(`btn-ofd-${o.id}`);
+      const delBtn     = document.getElementById(`btn-del-${o.id}`);
+
       if (confirmBtn) confirmBtn.addEventListener('click', () => onSendConfirmation(o));
       if (shipBtn)    shipBtn.addEventListener('click',    () => onMarkShipped(o));
+      if (ofdBtn)     ofdBtn.addEventListener('click',     () => onUpdateStatus(o, 'out_for_delivery', 'Mark order out for delivery?'));
+      if (delBtn)     delBtn.addEventListener('click',     () => onUpdateStatus(o, 'delivered', 'Mark order as delivered?'));
     });
   }
 
@@ -409,12 +423,42 @@ function initAdminPage() {
       );
     } else if (o.status === 'shipped') {
       btns.push(
-        `<button id="btn-ship-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-primary" title="Update shipping info">
-           🚚 Re-ship
+        `<button id="btn-ofd-${escapeHtml(String(o.id))}" class="btn btn-sm btn-warning text-dark me-1" title="Out for Delivery">
+           🛵 Out for Delivery
+         </button>`,
+        `<button id="btn-ship-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-secondary" title="Update LR / Shipping info">
+           ✏️ Edit LR
+         </button>`
+      );
+    } else if (o.status === 'out_for_delivery') {
+      btns.push(
+        `<button id="btn-del-${escapeHtml(String(o.id))}" class="btn btn-sm btn-success" title="Mark Delivered">
+           ✅ Mark Delivered
          </button>`
       );
     }
     return btns.join('') || '<span class="text-muted small">—</span>';
+  }
+
+  /* ── Generic update status helper ── */
+  async function onUpdateStatus(order, newStatus, promptMsg) {
+    if (!window.confirm(`${promptMsg}\nOrder: ${order.order_code}`)) return;
+
+    try {
+      const data = await postJSON('/api/update-status', {
+        order_id: order.id,
+        status:   newStatus,
+      });
+
+      if (data.wa_link) {
+        window.open(data.wa_link, '_blank', 'noopener,noreferrer');
+      }
+
+      await loadOrders();
+    } catch (err) {
+      if (err.status === 401) { handle401(); return; }
+      showAlert(panelAlert, `Failed to update status: ${err.message}`);
+    }
   }
 
   /* ── Send Confirmation (wa.me click-to-chat, opens tab) ── */

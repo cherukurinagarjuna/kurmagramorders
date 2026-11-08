@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS orders (
 
   -- Workflow state
   status           TEXT        NOT NULL DEFAULT 'placed'
-                   CHECK (status IN ('placed', 'shipped', 'delivered', 'cancelled')),
+                   CHECK (status IN ('placed', 'shipped', 'out_for_delivery', 'delivered', 'cancelled')),
 
   -- Logistics
   lr_number        TEXT,                   -- Lorry Receipt / consignment number
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS notification_log (
   order_id     INTEGER REFERENCES orders(id) ON DELETE SET NULL,
   channel      TEXT NOT NULL DEFAULT 'whatsapp',
   message_type TEXT NOT NULL
-               CHECK (message_type IN ('order_confirmation', 'shipping_notice')),
+               CHECK (message_type IN ('order_confirmation', 'shipping_notice', 'out_for_delivery_notice', 'delivery_notice')),
   phone        TEXT,
   message_body TEXT,
 
