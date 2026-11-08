@@ -412,8 +412,13 @@ function initAdminPage() {
   /* ── Build action buttons per row ── */
   function buildActions(o) {
     const btns = [];
+    const printBtn = `<a href="slip.html?id=${encodeURIComponent(o.id)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-dark me-1" title="Print Courier Slip">
+      📄 Print Slip
+    </a>`;
+
     if (o.status === 'placed') {
       btns.push(
+        printBtn,
         `<button id="btn-confirm-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-success me-1" title="Send WhatsApp confirmation">
            📲 Confirm
          </button>`,
@@ -423,6 +428,7 @@ function initAdminPage() {
       );
     } else if (o.status === 'shipped') {
       btns.push(
+        printBtn,
         `<button id="btn-ofd-${escapeHtml(String(o.id))}" class="btn btn-sm btn-warning text-dark me-1" title="Out for Delivery">
            🛵 Out for Delivery
          </button>`,
@@ -432,10 +438,13 @@ function initAdminPage() {
       );
     } else if (o.status === 'out_for_delivery') {
       btns.push(
+        printBtn,
         `<button id="btn-del-${escapeHtml(String(o.id))}" class="btn btn-sm btn-success" title="Mark Delivered">
            ✅ Mark Delivered
          </button>`
       );
+    } else {
+      btns.push(printBtn);
     }
     return btns.join('') || '<span class="text-muted small">—</span>';
   }
