@@ -156,13 +156,8 @@
   <main class="py-5" id="rice-section">
     <div class="container">
 
-      <!-- SHIPPING NOTICE BANNER -->
-      <div class="shipping-alert-banner d-flex align-items-center gap-3">
-        <span class="fs-3">🚚</span>
-        <div>
-          <strong>Shipping Notice:</strong> Shipping charges are extra and calculated based on <strong>Navata Transport</strong> freight rates (Volume-based). Charges will be payable upon delivery or updated via WhatsApp dispatch notification.
-        </div>
-      </div>
+      <!-- SHIPPING NOTICE & ESTIMATOR BANNER -->
+      <div id="navataCalculatorContainer" class="mb-4"></div>
 
       <!-- SECTION: RICE PRODUCTS (AVAILABLE NOW) -->
       <div class="mb-5">
@@ -378,8 +373,13 @@
 
   <!-- App logic -->
   <script src="assets/app.js"></script>
+  <script src="assets/shipping.js"></script>
 
   <script>
+    // Initialize Navata Freight Calculator
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavataCalculator('navataCalculatorContainer', 25);
+    });
     // ── Dynamic price for Product 1 (5kg minimum at 130/kg)
     function adjustKg(delta) {
       const input = document.getElementById('p1-qty');
