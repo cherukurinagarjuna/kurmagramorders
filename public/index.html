@@ -1,119 +1,344 @@
 <!doctype html>
-<html lang="en">
+<html lang="te">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Place Order — Rice Traders</title>
+  <title>కూర్మగ్రామము — Natural Products | Kurmagramamu</title>
+  <meta name="description" content="100% Natural, Chemical-Free & Traditional Products from Kurmagramamu Vedic Village. Rice, Ganuga Oils, Ayurvedic products." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous"
   />
-  <style>
-    body { background: #f5f5f5; }
-    .navbar-brand { font-size: 1.3rem; }
-    .card { border: none; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
-    .btn-primary { background: #2e7d32; border-color: #2e7d32; }
-    .btn-primary:hover { background: #1b5e20; border-color: #1b5e20; }
-    .input-group-text { background: #e8f5e9; border-color: #c8e6c9; color: #2e7d32; font-weight: 600; }
-  </style>
+
+  <!-- Custom Theme -->
+  <link rel="stylesheet" href="assets/style.css" />
 </head>
 <body>
-  <nav class="navbar navbar-light bg-white border-bottom mb-4 shadow-sm">
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <nav class="navbar navbar-kg sticky-top" id="mainNav">
     <div class="container">
-      <span class="navbar-brand fw-bold text-success">🌾 Rice Traders</span>
-      <a href="track.html" class="btn btn-sm btn-outline-secondary">Track Order</a>
+      <a class="navbar-brand" href="#">
+        <img src="assets/images/logo.png" alt="Kurmagramamu Logo" class="brand-logo"
+             onerror="this.style.display='none'" />
+        <span class="brand-text">
+          <span class="brand-telugu">కూర్మగ్రామము</span>
+          <span class="brand-english">Kurmagramamu</span>
+        </span>
+      </a>
+      <div class="d-flex gap-2 align-items-center">
+        <a href="track.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3 d-none d-sm-inline-block">
+          📦 Track Order
+        </a>
+        <a href="#products" class="btn btn-shop-now">Shop Now</a>
+      </div>
     </div>
   </nav>
 
-  <main class="container" style="max-width:560px">
-    <div class="card p-4 mb-4">
-      <h1 class="h5 fw-bold text-success mb-1">Place a Rice Order</h1>
-      <p class="text-muted small mb-4">Fill in the form — we'll confirm on WhatsApp.</p>
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero">
+    <span class="hero-leaf left">🌿</span>
+    <span class="hero-leaf right">🌾</span>
 
-      <div id="formAlert"></div>
-
-      <form id="orderForm" novalidate>
-
-        <div class="mb-3">
-          <label for="name" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
-          <input
-            type="text" id="name" name="name"
-            class="form-control" placeholder="e.g. Ramesh Kumar"
-            minlength="2" maxlength="100" required
-          />
-          <div class="invalid-feedback">Name must be 2–100 characters.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="phone" class="form-label fw-semibold">WhatsApp Number <span class="text-danger">*</span></label>
-          <div class="input-group">
-            <span class="input-group-text">+91</span>
-            <input
-              type="tel" id="phone" name="phone"
-              class="form-control"
-              placeholder="9876543210"
-              pattern="\d{10}" maxlength="10" required
-            />
-          </div>
-          <div class="invalid-feedback">Enter a valid 10-digit number starting with 6–9.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="address" class="form-label fw-semibold">Delivery Address <span class="text-danger">*</span></label>
-          <textarea
-            id="address" name="address"
-            class="form-control" rows="3"
-            placeholder="Door no., Street, City, PIN"
-            minlength="10" maxlength="500" required
-          ></textarea>
-          <div class="invalid-feedback">Address must be 10–500 characters.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="product_details" class="form-label fw-semibold">Product Details <span class="text-danger">*</span></label>
-          <input
-            type="text" id="product_details" name="product_details"
-            class="form-control"
-            placeholder="e.g. Sona Masoori 25 kg"
-            minlength="3" maxlength="300" required
-          />
-          <div class="invalid-feedback">Product details must be 3–300 characters.</div>
-        </div>
-
-        <div class="mb-4">
-          <label for="amount" class="form-label fw-semibold">Amount (₹) <span class="text-danger">*</span></label>
-          <div class="input-group">
-            <span class="input-group-text">₹</span>
-            <input
-              type="number" id="amount" name="amount"
-              class="form-control"
-              placeholder="1250.00"
-              min="1" step="0.01" required
-            />
-          </div>
-          <div class="invalid-feedback">Enter a valid amount (minimum ₹1).</div>
-        </div>
-
-        <button type="submit" id="submitBtn" class="btn btn-primary w-100 py-2 fw-semibold">
-          Place Order
-        </button>
-      </form>
+    <div class="hero-content">
+      <div class="hero-badge">🙏 ISKCON Inspired Vedic Village</div>
+      <p class="hero-greeting">హరే కృష్ణ !</p>
+      <h1>
+        Welcome to
+        <span class="telugu-highlight">కూర్మగ్రామము</span>
+      </h1>
+      <p class="hero-subtitle">
+        100% Natural, Chemical-Free &amp; Traditional Products<br />
+        from our Self-Sustainable Vedic Village, Srikakulam
+      </p>
+      <a href="#products" class="btn btn-hero">
+        🌾 Explore Our Products
+      </a>
     </div>
+  </section>
 
-    <p class="text-center text-muted small">
-      Already placed an order?
-      <a href="track.html" class="text-success">Track it here →</a>
-    </p>
-  </main>
+  <!-- ══════════════ TRUST BAR ══════════════ -->
+  <section class="trust-bar">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-6 col-md-3">
+          <div class="trust-item">
+            <span class="trust-icon">🌱</span>
+            <span class="trust-label">100% Natural</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="trust-item">
+            <span class="trust-icon">🐄</span>
+            <span class="trust-label">Cow-Based Farming</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="trust-item">
+            <span class="trust-icon">🏺</span>
+            <span class="trust-label">Traditional Methods</span>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="trust-item">
+            <span class="trust-icon">💚</span>
+            <span class="trust-label">Chemical Free</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- ══════════════ PRODUCTS ══════════════ -->
+  <section id="products" class="py-5">
+    <div class="container">
+      <h2 class="section-title">Our Products</h2>
+      <hr class="section-divider" />
+      <p class="section-subtitle">
+        Pure, traditional, and made with love — directly from our village to your home.
+      </p>
+
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" data-category="">All Products</button>
+        <button class="category-tab" data-category="Rice">🌾 Rice</button>
+        <button class="category-tab" data-category="Ganuga Oils">🏺 Ganuga Oils</button>
+        <button class="category-tab" data-category="Ayurvedic">🌿 Ayurvedic</button>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="products-loading" id="productsLoading">
+        <div class="spinner-border text-success mb-3" role="status"></div>
+        <p>Loading products…</p>
+      </div>
+      <div class="row g-4" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════ ORDER FORM ══════════════ -->
+  <section class="order-section py-5" id="orderSection">
+    <div class="container" style="max-width: 620px;">
+      <h2 class="section-title">Place Your Order</h2>
+      <hr class="section-divider" />
+      <p class="section-subtitle">
+        Fill in your details — we'll confirm your order on WhatsApp.
+      </p>
+
+      <div class="order-card">
+        <div id="formAlert"></div>
+
+        <form id="orderForm" novalidate>
+
+          <!-- Product (auto-filled or manual) -->
+          <div class="mb-3">
+            <label for="product_details" class="form-label">Product <span class="text-danger">*</span></label>
+            <input
+              type="text" id="product_details" name="product_details"
+              class="form-control"
+              placeholder="e.g. Sona Masoori Rice 25kg"
+              minlength="3" maxlength="300" required
+            />
+            <div class="invalid-feedback">Please specify the product you'd like to order.</div>
+          </div>
+
+          <!-- Amount (auto-filled or manual) -->
+          <div class="mb-3">
+            <label for="amount" class="form-label">Amount (₹) <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text">₹</span>
+              <input
+                type="number" id="amount" name="amount"
+                class="form-control"
+                placeholder="1500"
+                min="1" step="0.01" required
+              />
+            </div>
+            <div class="invalid-feedback">Please enter a valid amount.</div>
+          </div>
+
+          <hr class="my-4" style="border-color: #e0ddd5;" />
+
+          <!-- Full Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+            <input
+              type="text" id="name" name="name"
+              class="form-control"
+              placeholder="e.g. Ramesh Kumar"
+              minlength="2" maxlength="100" required
+            />
+            <div class="invalid-feedback">Name must be 2–100 characters.</div>
+          </div>
+
+          <!-- WhatsApp Number -->
+          <div class="mb-3">
+            <label for="phone" class="form-label">WhatsApp Number <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text">+91</span>
+              <input
+                type="tel" id="phone" name="phone"
+                class="form-control"
+                placeholder="9876543210"
+                pattern="\d{10}" maxlength="10" required
+              />
+            </div>
+            <div class="invalid-feedback">Enter a valid 10-digit mobile number.</div>
+          </div>
+
+          <!-- Address -->
+          <div class="mb-4">
+            <label for="address" class="form-label">Delivery Address <span class="text-danger">*</span></label>
+            <textarea
+              id="address" name="address"
+              class="form-control" rows="3"
+              placeholder="Door no., Street, City, PIN code"
+              minlength="10" maxlength="500" required
+            ></textarea>
+            <div class="invalid-feedback">Address must be 10–500 characters.</div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-place-order">
+            🛒 Place Order
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer-kg">
+    <div class="container">
+      <p class="footer-tagline">హరే కృష్ణ 🙏</p>
+      <p>© 2026 కూర్మగ్రామము (Kurmagramamu) · Srikakulam, Andhra Pradesh</p>
+      <p class="mt-1">
+        <a href="track.html">Track Order</a>
+        &nbsp;·&nbsp;
+        <a href="admin.html">Admin</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmL3JCzNNUqV1dqe/9uFV7hqj/"
     crossorigin="anonymous"
   ></script>
+
+  <!-- App logic -->
   <script src="assets/app.js"></script>
-  <script>initOrderForm();</script>
+
+  <script>
+    /* ── Navbar scroll shadow ── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('mainNav')
+        .classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /* ── Load & render products ── */
+    let allProducts = [];
+
+    async function loadProducts() {
+      try {
+        const data = await getJSON('/api/get-products');
+        allProducts = data.products || [];
+        renderProducts(allProducts);
+      } catch (err) {
+        document.getElementById('productsLoading').innerHTML =
+          '<p class="text-danger">Failed to load products. Please refresh.</p>';
+      }
+    }
+
+    function renderProducts(products) {
+      const grid    = document.getElementById('productGrid');
+      const loading = document.getElementById('productsLoading');
+      loading.classList.add('d-none');
+
+      if (!products.length) {
+        grid.innerHTML = '<div class="col-12 text-center text-muted py-4">No products available.</div>';
+        return;
+      }
+
+      const categoryEmojis = {
+        'Rice':        { emoji: '🌾', bgClass: 'rice' },
+        'Ganuga Oils': { emoji: '🏺', bgClass: 'oil' },
+        'Ayurvedic':   { emoji: '🌿', bgClass: 'herbal' },
+      };
+
+      grid.innerHTML = products.map((p) => {
+        const cat = categoryEmojis[p.category] || { emoji: '📦', bgClass: 'rice' };
+        const imgHtml = p.image_url
+          ? `<img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" loading="lazy" />`
+          : `<div class="product-img-placeholder ${cat.bgClass}">${cat.emoji}</div>`;
+
+        return `
+          <div class="col-sm-6 col-lg-4 col-xl-3 product-col" data-category="${escapeHtml(p.category)}">
+            <div class="product-card">
+              <div class="product-img-wrapper">
+                ${imgHtml}
+                <span class="product-category-tag">${escapeHtml(p.category)}</span>
+              </div>
+              <div class="product-body">
+                <h3 class="product-name">${escapeHtml(p.name)}</h3>
+                <p class="product-desc">${escapeHtml(p.description || '')}</p>
+                <div class="product-footer">
+                  <span class="product-price">₹${escapeHtml(String(p.price))}</span>
+                  <button
+                    class="btn btn-order-now"
+                    onclick="selectProduct('${escapeHtml(p.name).replace(/'/g, "\\'")}', ${p.price})"
+                  >Order Now</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    /* ── Category tab filtering ── */
+    document.getElementById('categoryTabs').addEventListener('click', (e) => {
+      if (!e.target.classList.contains('category-tab')) return;
+      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+      e.target.classList.add('active');
+      const cat = e.target.dataset.category;
+      const filtered = cat ? allProducts.filter(p => p.category === cat) : allProducts;
+      renderProducts(filtered);
+    });
+
+    /* ── Select product → scroll to form ── */
+    function selectProduct(name, price) {
+      document.getElementById('product_details').value = name;
+      document.getElementById('amount').value = price;
+
+      // Smooth scroll to order form
+      document.getElementById('orderSection').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+
+      // Flash the product field briefly
+      const el = document.getElementById('product_details');
+      el.style.borderColor = '#c9a84c';
+      el.style.boxShadow   = '0 0 0 3px rgba(201,168,76,0.25)';
+      setTimeout(() => {
+        el.style.borderColor = '';
+        el.style.boxShadow   = '';
+      }, 1500);
+    }
+
+    /* ── Order form submit ── */
+    initOrderForm();
+
+    /* ── Load products on page load ── */
+    loadProducts();
+  </script>
 </body>
 </html>
