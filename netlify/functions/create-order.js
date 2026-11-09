@@ -109,7 +109,7 @@ exports.handler = async (event) => {
     const orderId = insertOrder.rows[0].id;
 
     // 4. Build WhatsApp notification link for customer
-    const businessPhone = (process.env.BUSINESS_WHATSAPP || '918074724717').replace(/\D/g, '');
+    const businessPhone = (process.env.BUSINESS_WHATSAPP || '').replace(/\D/g, '');
     const siteUrl = (process.env.SITE_URL || '').replace(/\/$/, '');
     const trackLink = siteUrl ? `${siteUrl}/track.html?code=${order_code}` : '';
 
