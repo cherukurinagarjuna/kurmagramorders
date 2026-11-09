@@ -5,37 +5,24 @@ const { json }     = require('./lib/helpers');
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GET /api/get-products
-// Public endpoint — returns all active products grouped for display.
-// Optional query: ?category=Rice
+// Public endpoint — returns all active products.
 // ─────────────────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
   if (event.httpMethod !== 'GET') {
     return json(405, { ok: false, error: 'Method Not Allowed' });
   }
 
-  const params   = event.queryStringParameters || {};
-  const category = (params.category || '').trim();
-
   const pool = getPool();
   let client;
 
   try {
     client = await pool.connect();
-
-    let query  = 'SELECT id, name, description, price, category, image_url FROM products WHERE is_active = true';
-    const vals = [];
-
-    if (category) {
-      vals.push(category);
-      query += ` AND category = $${vals.length}`;
-    }
-
-    query += ' ORDER BY category, id';
-
-    const result = await client.query(query, vals);
+    const result = await client.query(
+      'SELECT id, name, description, price, category, unit, min_qty, image_url FROM products WHERE is_active = true ORDER BY id'
+    );
 
     return json(200, {
-      ok:       true,
+      ok: true,
       products: result.rows,
     });
   } catch (err) {

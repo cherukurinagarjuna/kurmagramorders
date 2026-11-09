@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>కూర్మగ్రామము — Natural Products | Kurmagramamu</title>
-  <meta name="description" content="100% Natural, Chemical-Free & Traditional Products from Kurmagramamu Vedic Village. Rice, Ganuga Oils, Ayurvedic products." />
+  <title>కూర్మగ్రామము — Natural Rice &amp; Village Products | Kurmagramamu</title>
+  <meta name="description" content="100% Natural, Chemical-Free Traditional Rice from Kurmagramamu Vedic Village, Srikakulam. Order fresh farm-harvested rice with manual WhatsApp tracking." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,25 +21,80 @@
 
   <!-- Custom Theme -->
   <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .shipping-alert-banner {
+      background: #fff8e1;
+      border-left: 5px solid #ffa000;
+      color: #5d4037;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .coming-soon-card {
+      background: #ffffff;
+      border: 1px dashed #d1c7b7;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      opacity: 0.88;
+    }
+    .coming-soon-card:hover {
+      opacity: 1;
+      border-color: var(--clr-gold);
+      transform: translateY(-3px);
+    }
+    .coming-soon-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #f0e9d9;
+      color: #8c6d1f;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+    .qty-input-group {
+      max-width: 140px;
+    }
+    .btn-qty {
+      background: var(--clr-cream);
+      border: 1px solid #ddd;
+      color: var(--clr-forest);
+      font-weight: bold;
+      width: 36px;
+    }
+    .btn-qty:hover {
+      background: var(--clr-cream-dark);
+    }
+  </style>
 </head>
 <body>
 
   <!-- ══════════════ NAVBAR ══════════════ -->
   <nav class="navbar navbar-kg sticky-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="assets/images/logo.png" alt="Kurmagramamu Logo" class="brand-logo"
-             onerror="this.style.display='none'" />
+      <a class="navbar-brand" href="index.html">
+        <img src="assets/images/logo.png" alt="Kurmagramamu Logo" class="brand-logo" onerror="this.style.display='none'" />
         <span class="brand-text">
           <span class="brand-telugu">కూర్మగ్రామము</span>
           <span class="brand-english">Kurmagramamu</span>
         </span>
       </a>
+
       <div class="d-flex gap-2 align-items-center">
         <a href="track.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3 d-none d-sm-inline-block">
           📦 Track Order
         </a>
-        <a href="#products" class="btn btn-shop-now">Shop Now</a>
+        <a href="cart.html" class="btn btn-shop-now position-relative">
+          Cart 🛒 (<span id="cart-count">0</span>)
+        </a>
       </div>
     </div>
   </nav>
@@ -50,18 +105,17 @@
     <span class="hero-leaf right">🌾</span>
 
     <div class="hero-content">
-      <div class="hero-badge">🙏 ISKCON Inspired Vedic Village</div>
+      <div class="hero-badge">🙏 ISKCON Inspired Vedic Village · Srikakulam</div>
       <p class="hero-greeting">హరే కృష్ణ !</p>
       <h1>
-        Welcome to
         <span class="telugu-highlight">కూర్మగ్రామము</span>
       </h1>
       <p class="hero-subtitle">
-        100% Natural, Chemical-Free &amp; Traditional Products<br />
-        from our Self-Sustainable Vedic Village, Srikakulam
+        100% Natural, Chemical-Free &amp; Traditional Vedic Farming Products.<br />
+        Fresh from our cows, fields, and traditional wooden ghani.
       </p>
-      <a href="#products" class="btn btn-hero">
-        🌾 Explore Our Products
+      <a href="#rice-section" class="btn btn-hero">
+        🌾 Order Farm-Fresh Rice
       </a>
     </div>
   </section>
@@ -79,140 +133,226 @@
         <div class="col-6 col-md-3">
           <div class="trust-item">
             <span class="trust-icon">🐄</span>
-            <span class="trust-label">Cow-Based Farming</span>
+            <span class="trust-label">Desi Cow-Based</span>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="trust-item">
-            <span class="trust-icon">🏺</span>
-            <span class="trust-label">Traditional Methods</span>
+            <span class="trust-icon">🚚</span>
+            <span class="trust-label">Navata Transport</span>
           </div>
         </div>
         <div class="col-6 col-md-3">
           <div class="trust-item">
             <span class="trust-icon">💚</span>
-            <span class="trust-label">Chemical Free</span>
+            <span class="trust-label">Zero Chemicals</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════ PRODUCTS ══════════════ -->
-  <section id="products" class="py-5">
+  <!-- ══════════════ MAIN CONTENT ══════════════ -->
+  <main class="py-5" id="rice-section">
     <div class="container">
-      <h2 class="section-title">Our Products</h2>
-      <hr class="section-divider" />
-      <p class="section-subtitle">
-        Pure, traditional, and made with love — directly from our village to your home.
-      </p>
 
-      <!-- Category Tabs -->
-      <div class="category-tabs" id="categoryTabs">
-        <button class="category-tab active" data-category="">All Products</button>
-        <button class="category-tab" data-category="Rice">🌾 Rice</button>
-        <button class="category-tab" data-category="Ganuga Oils">🏺 Ganuga Oils</button>
-        <button class="category-tab" data-category="Ayurvedic">🌿 Ayurvedic</button>
+      <!-- SHIPPING NOTICE BANNER -->
+      <div class="shipping-alert-banner d-flex align-items-center gap-3">
+        <span class="fs-3">🚚</span>
+        <div>
+          <strong>Shipping Notice:</strong> Shipping charges are extra and calculated based on <strong>Navata Transport</strong> freight rates (Volume-based). Charges will be payable upon delivery or updated via WhatsApp dispatch notification.
+        </div>
       </div>
 
-      <!-- Product Grid -->
-      <div class="products-loading" id="productsLoading">
-        <div class="spinner-border text-success mb-3" role="status"></div>
-        <p>Loading products…</p>
-      </div>
-      <div class="row g-4" id="productGrid"></div>
-    </div>
-  </section>
+      <!-- SECTION: RICE PRODUCTS (AVAILABLE NOW) -->
+      <div class="mb-5">
+        <div class="text-center mb-4">
+          <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill fw-semibold mb-2">Available for Immediate Order</span>
+          <h2 class="section-title">Farm-Fresh Natural Rice</h2>
+          <hr class="section-divider" />
+          <p class="section-subtitle">
+            Cultivated using Vedic zero-chemical farming methods. Healthy, aromatic, and rich in natural nutrients.
+          </p>
+        </div>
 
-  <!-- ══════════════ ORDER FORM ══════════════ -->
-  <section class="order-section py-5" id="orderSection">
-    <div class="container" style="max-width: 620px;">
-      <h2 class="section-title">Place Your Order</h2>
-      <hr class="section-divider" />
-      <p class="section-subtitle">
-        Fill in your details — we'll confirm your order on WhatsApp.
-      </p>
+        <div class="row g-4 justify-content-center">
 
-      <div class="order-card">
-        <div id="formAlert"></div>
+          <!-- PRODUCT 1: 5KG MINIMUM (FLEXIBLE KG) -->
+          <div class="col-md-6 col-lg-5">
+            <div class="product-card">
+              <div class="product-img-wrapper">
+                <div class="product-img-placeholder rice">🌾</div>
+                <span class="product-category-tag">Rice · Loose / Bag</span>
+              </div>
+              <div class="product-body">
+                <h3 class="product-name">Premium Rice (5kg Minimum)</h3>
+                <p class="product-desc">
+                  Pure traditional rice grown with cow-based manure. Minimum order is 5 kg. Choose any quantity you need at ₹130 per kg.
+                </p>
 
-        <form id="orderForm" novalidate>
+                <!-- Dynamic Qty & Calculator -->
+                <div class="bg-light p-3 rounded-3 mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold small text-muted">Select Quantity:</span>
+                    <div class="input-group qty-input-group">
+                      <button class="btn btn-qty" type="button" onclick="adjustKg(-1)">−</button>
+                      <input type="number" id="p1-qty" class="form-control text-center fw-bold" value="5" min="5" max="500" onchange="updateP1Price()" />
+                      <button class="btn btn-qty" type="button" onclick="adjustKg(1)">+</button>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <span class="small text-muted">Rate: ₹130/kg</span>
+                    <span class="fw-bold fs-5 text-success">Total: ₹<span id="p1-total">650</span></span>
+                  </div>
+                </div>
 
-          <!-- Product (auto-filled or manual) -->
-          <div class="mb-3">
-            <label for="product_details" class="form-label">Product <span class="text-danger">*</span></label>
-            <input
-              type="text" id="product_details" name="product_details"
-              class="form-control"
-              placeholder="e.g. Sona Masoori Rice 25kg"
-              minlength="3" maxlength="300" required
-            />
-            <div class="invalid-feedback">Please specify the product you'd like to order.</div>
-          </div>
-
-          <!-- Amount (auto-filled or manual) -->
-          <div class="mb-3">
-            <label for="amount" class="form-label">Amount (₹) <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text">₹</span>
-              <input
-                type="number" id="amount" name="amount"
-                class="form-control"
-                placeholder="1500"
-                min="1" step="0.01" required
-              />
+                <div class="product-footer">
+                  <span class="product-price">₹130 <small>/ kg</small></span>
+                  <button class="btn btn-order-now" onclick="addP1ToCart()">
+                    🛒 Add to Cart
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="invalid-feedback">Please enter a valid amount.</div>
           </div>
 
-          <hr class="my-4" style="border-color: #e0ddd5;" />
+          <!-- PRODUCT 2: 25KG BAG -->
+          <div class="col-md-6 col-lg-5">
+            <div class="product-card">
+              <div class="product-img-wrapper">
+                <div class="product-img-placeholder rice">🌾</div>
+                <span class="product-category-tag">Rice · 25kg Bag</span>
+              </div>
+              <div class="product-body">
+                <h3 class="product-name">Premium Rice (25kg Bag)</h3>
+                <p class="product-desc">
+                  Full 25kg bulk sealed bag of natural farm-fresh rice. Ideal for monthly family requirements. Complete bag at fixed price.
+                </p>
 
-          <!-- Full Name -->
-          <div class="mb-3">
-            <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
-            <input
-              type="text" id="name" name="name"
-              class="form-control"
-              placeholder="e.g. Ramesh Kumar"
-              minlength="2" maxlength="100" required
-            />
-            <div class="invalid-feedback">Name must be 2–100 characters.</div>
-          </div>
+                <div class="bg-light p-3 rounded-3 mb-3">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="fw-semibold small text-muted">Number of Bags:</span>
+                    <div class="input-group qty-input-group">
+                      <button class="btn btn-qty" type="button" onclick="adjustBags(-1)">−</button>
+                      <input type="number" id="p2-qty" class="form-control text-center fw-bold" value="1" min="1" max="50" onchange="updateP2Price()" />
+                      <button class="btn btn-qty" type="button" onclick="adjustBags(1)">+</button>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                    <span class="small text-muted">Rate: ₹3000 / bag</span>
+                    <span class="fw-bold fs-5 text-success">Total: ₹<span id="p2-total">3000</span></span>
+                  </div>
+                </div>
 
-          <!-- WhatsApp Number -->
-          <div class="mb-3">
-            <label for="phone" class="form-label">WhatsApp Number <span class="text-danger">*</span></label>
-            <div class="input-group">
-              <span class="input-group-text">+91</span>
-              <input
-                type="tel" id="phone" name="phone"
-                class="form-control"
-                placeholder="9876543210"
-                pattern="\d{10}" maxlength="10" required
-              />
+                <div class="product-footer">
+                  <span class="product-price">₹3,000 <small>/ 25kg bag</small></span>
+                  <button class="btn btn-order-now" onclick="addP2ToCart()">
+                    🛒 Add to Cart
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="invalid-feedback">Enter a valid 10-digit mobile number.</div>
           </div>
 
-          <!-- Address -->
-          <div class="mb-4">
-            <label for="address" class="form-label">Delivery Address <span class="text-danger">*</span></label>
-            <textarea
-              id="address" name="address"
-              class="form-control" rows="3"
-              placeholder="Door no., Street, City, PIN code"
-              minlength="10" maxlength="500" required
-            ></textarea>
-            <div class="invalid-feedback">Address must be 10–500 characters.</div>
-          </div>
-
-          <button type="submit" id="submitBtn" class="btn btn-place-order">
-            🛒 Place Order
-          </button>
-        </form>
+        </div>
       </div>
+
+      <!-- COMING SOON SECTION -->
+      <div class="pt-4 border-top">
+        <div class="text-center mb-4">
+          <span class="badge bg-secondary-subtle text-secondary px-3 py-2 rounded-pill fw-semibold mb-2">Under Preparation at Village</span>
+          <h2 class="section-title">Coming Soon — సాంప్రదాయ ఉత్పత్తులు</h2>
+          <hr class="section-divider" />
+          <p class="section-subtitle">
+            Our traditional handmade and ghani products will be available online soon. Stay tuned!
+          </p>
+        </div>
+
+        <div class="row g-3">
+          <!-- 1. సున్నిపిండి -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🌿</div>
+              <h4 class="h6 fw-bold mb-1">సున్నిపిండి</h4>
+              <p class="small text-muted mb-0">Sunnipindi (Herbal Bath Powder)</p>
+            </div>
+          </div>
+
+          <!-- 2. గో అంజన్ భాం -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🐄</div>
+              <h4 class="h6 fw-bold mb-1">గో అంజన్ భాం</h4>
+              <p class="small text-muted mb-0">Go Anjan Balm (Pain &amp; Cold Relief)</p>
+            </div>
+          </div>
+
+          <!-- 3. వార్మ్ ఆర్క్ -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🧪</div>
+              <h4 class="h6 fw-bold mb-1">వార్మ్ ఆర్క్</h4>
+              <p class="small text-muted mb-0">Worm Ark (Deworming Tonic)</p>
+            </div>
+          </div>
+
+          <!-- 4. గో ఆర్క్ -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🍶</div>
+              <h4 class="h6 fw-bold mb-1">గో ఆర్క్</h4>
+              <p class="small text-muted mb-0">Desi Cow Ark (Distilled Health Tonic)</p>
+            </div>
+          </div>
+
+          <!-- 5. పెయిన్ ఆయిల్ -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🪔</div>
+              <h4 class="h6 fw-bold mb-1">పెయిన్ ఆయిల్</h4>
+              <p class="small text-muted mb-0">Herbal Pain Relief Oil</p>
+            </div>
+          </div>
+
+          <!-- 6. బ్రౌన్ రైస్ -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🌾</div>
+              <h4 class="h6 fw-bold mb-1">బ్రౌన్ రైస్</h4>
+              <p class="small text-muted mb-0">Unpolished Natural Brown Rice</p>
+            </div>
+          </div>
+
+          <!-- 7. నువ్వుల నూనె -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🏺</div>
+              <h4 class="h6 fw-bold mb-1">నువ్వుల నూనె</h4>
+              <p class="small text-muted mb-0">గానుగ నూనె (Wood-Pressed Sesame Oil)</p>
+            </div>
+          </div>
+
+          <!-- 8. పల్లి నూనె -->
+          <div class="col-6 col-md-4 col-lg-3">
+            <div class="coming-soon-card">
+              <span class="coming-soon-badge">Coming Soon</span>
+              <div class="fs-1 mb-2">🥜</div>
+              <h4 class="h6 fw-bold mb-1">పల్లి నూనె</h4>
+              <p class="small text-muted mb-0">గానుగ నూనె (Wood-Pressed Groundnut Oil)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </main>
 
   <!-- ══════════════ FOOTER ══════════════ -->
   <footer class="footer-kg">
@@ -220,6 +360,8 @@
       <p class="footer-tagline">హరే కృష్ణ 🙏</p>
       <p>© 2026 కూర్మగ్రామము (Kurmagramamu) · Srikakulam, Andhra Pradesh</p>
       <p class="mt-1">
+        <a href="cart.html">View Cart</a>
+        &nbsp;·&nbsp;
         <a href="track.html">Track Order</a>
         &nbsp;·&nbsp;
         <a href="admin.html">Admin</a>
@@ -238,107 +380,67 @@
   <script src="assets/app.js"></script>
 
   <script>
-    /* ── Navbar scroll shadow ── */
-    window.addEventListener('scroll', () => {
-      document.getElementById('mainNav')
-        .classList.toggle('scrolled', window.scrollY > 20);
-    });
-
-    /* ── Load & render products ── */
-    let allProducts = [];
-
-    async function loadProducts() {
-      try {
-        const data = await getJSON('/api/get-products');
-        allProducts = data.products || [];
-        renderProducts(allProducts);
-      } catch (err) {
-        document.getElementById('productsLoading').innerHTML =
-          '<p class="text-danger">Failed to load products. Please refresh.</p>';
-      }
+    // ── Dynamic price for Product 1 (5kg minimum at 130/kg)
+    function adjustKg(delta) {
+      const input = document.getElementById('p1-qty');
+      let val = (parseInt(input.value, 10) || 5) + delta;
+      if (val < 5) val = 5;
+      input.value = val;
+      updateP1Price();
     }
 
-    function renderProducts(products) {
-      const grid    = document.getElementById('productGrid');
-      const loading = document.getElementById('productsLoading');
-      loading.classList.add('d-none');
-
-      if (!products.length) {
-        grid.innerHTML = '<div class="col-12 text-center text-muted py-4">No products available.</div>';
-        return;
+    function updateP1Price() {
+      const input = document.getElementById('p1-qty');
+      let qty = parseInt(input.value, 10) || 5;
+      if (qty < 5) {
+        qty = 5;
+        input.value = 5;
       }
-
-      const categoryEmojis = {
-        'Rice':        { emoji: '🌾', bgClass: 'rice' },
-        'Ganuga Oils': { emoji: '🏺', bgClass: 'oil' },
-        'Ayurvedic':   { emoji: '🌿', bgClass: 'herbal' },
-      };
-
-      grid.innerHTML = products.map((p) => {
-        const cat = categoryEmojis[p.category] || { emoji: '📦', bgClass: 'rice' };
-        const imgHtml = p.image_url
-          ? `<img src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.name)}" loading="lazy" />`
-          : `<div class="product-img-placeholder ${cat.bgClass}">${cat.emoji}</div>`;
-
-        return `
-          <div class="col-sm-6 col-lg-4 col-xl-3 product-col" data-category="${escapeHtml(p.category)}">
-            <div class="product-card">
-              <div class="product-img-wrapper">
-                ${imgHtml}
-                <span class="product-category-tag">${escapeHtml(p.category)}</span>
-              </div>
-              <div class="product-body">
-                <h3 class="product-name">${escapeHtml(p.name)}</h3>
-                <p class="product-desc">${escapeHtml(p.description || '')}</p>
-                <div class="product-footer">
-                  <span class="product-price">₹${escapeHtml(String(p.price))}</span>
-                  <button
-                    class="btn btn-order-now"
-                    onclick="selectProduct('${escapeHtml(p.name).replace(/'/g, "\\'")}', ${p.price})"
-                  >Order Now</button>
-                </div>
-              </div>
-            </div>
-          </div>`;
-      }).join('');
+      document.getElementById('p1-total').textContent = (qty * 130).toLocaleString('en-IN');
     }
 
-    /* ── Category tab filtering ── */
-    document.getElementById('categoryTabs').addEventListener('click', (e) => {
-      if (!e.target.classList.contains('category-tab')) return;
-      document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-      e.target.classList.add('active');
-      const cat = e.target.dataset.category;
-      const filtered = cat ? allProducts.filter(p => p.category === cat) : allProducts;
-      renderProducts(filtered);
-    });
-
-    /* ── Select product → scroll to form ── */
-    function selectProduct(name, price) {
-      document.getElementById('product_details').value = name;
-      document.getElementById('amount').value = price;
-
-      // Smooth scroll to order form
-      document.getElementById('orderSection').scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+    function addP1ToCart() {
+      const qty = parseInt(document.getElementById('p1-qty').value, 10) || 5;
+      addToCart({
+        id:       1,
+        name:     'Premium Rice (5kg Minimum)',
+        price:    130,
+        quantity: qty,
+        unit:     'kg',
+        min_qty:  5,
       });
-
-      // Flash the product field briefly
-      const el = document.getElementById('product_details');
-      el.style.borderColor = '#c9a84c';
-      el.style.boxShadow   = '0 0 0 3px rgba(201,168,76,0.25)';
-      setTimeout(() => {
-        el.style.borderColor = '';
-        el.style.boxShadow   = '';
-      }, 1500);
     }
 
-    /* ── Order form submit ── */
-    initOrderForm();
+    // ── Dynamic price for Product 2 (25kg bag at 3000/bag)
+    function adjustBags(delta) {
+      const input = document.getElementById('p2-qty');
+      let val = (parseInt(input.value, 10) || 1) + delta;
+      if (val < 1) val = 1;
+      input.value = val;
+      updateP2Price();
+    }
 
-    /* ── Load products on page load ── */
-    loadProducts();
+    function updateP2Price() {
+      const input = document.getElementById('p2-qty');
+      let qty = parseInt(input.value, 10) || 1;
+      if (qty < 1) {
+        qty = 1;
+        input.value = 1;
+      }
+      document.getElementById('p2-total').textContent = (qty * 3000).toLocaleString('en-IN');
+    }
+
+    function addP2ToCart() {
+      const qty = parseInt(document.getElementById('p2-qty').value, 10) || 1;
+      addToCart({
+        id:       2,
+        name:     'Premium Rice (25kg Bag)',
+        price:    3000,
+        quantity: qty,
+        unit:     'bag',
+        min_qty:  1,
+      });
+    }
   </script>
 </body>
 </html>

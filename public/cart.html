@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="te">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shopping Cart — కూర్మగ్రామము | Kurmagramamu</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+
+  <link rel="stylesheet" href="assets/style.css" />
+  <style>
+    .cart-table th {
+      background: #faf6ef;
+      color: #1a3c28;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cart-table td {
+      vertical-align: middle;
+    }
+    .shipping-notice-box {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      color: #6d4c41;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <nav class="navbar navbar-kg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="assets/images/logo.png" alt="Kurmagramamu Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <span class="brand-text">
+          <span class="brand-telugu">కూర్మగ్రామము</span>
+          <span class="brand-english">Kurmagramamu</span>
+        </span>
+      </a>
+
+      <div class="d-flex gap-2 align-items-center">
+        <a href="index.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+          ← Continue Shopping
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════ CART CONTENT ══════════════ -->
+  <main class="container py-5" style="max-width: 860px;">
+    <h1 class="h3 fw-bold mb-1" style="color: var(--clr-forest); font-family: var(--font-heading);">
+      🛒 Your Shopping Cart
+    </h1>
+    <p class="text-muted small mb-4">Review your natural rice products before proceeding to checkout.</p>
+
+    <!-- Empty Cart State -->
+    <div id="emptyCart" class="card border-0 shadow-sm rounded-4 p-5 text-center d-none">
+      <div class="fs-1 mb-3">🌾</div>
+      <h2 class="h5 fw-bold text-muted mb-2">Your cart is currently empty</h2>
+      <p class="text-muted small mb-4">Add some fresh traditional rice from our village farm.</p>
+      <div>
+        <a href="index.html" class="btn btn-hero px-4 py-2">
+          Shop Farm-Fresh Rice
+        </a>
+      </div>
+    </div>
+
+    <!-- Active Cart State -->
+    <div id="activeCart" class="d-none">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+        <div class="table-responsive">
+          <table class="table cart-table mb-0">
+            <thead>
+              <tr>
+                <th style="min-width: 220px;">Product</th>
+                <th class="text-center" style="width: 130px;">Quantity</th>
+                <th class="text-end" style="width: 110px;">Price</th>
+                <th class="text-end" style="width: 120px;">Subtotal</th>
+                <th class="text-center" style="width: 60px;"></th>
+              </tr>
+            </thead>
+            <tbody id="cartTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="card-footer bg-white p-4 border-top">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="fs-5 fw-bold" style="color: var(--clr-forest);">Items Subtotal:</span>
+            <span class="fs-4 fw-bold text-success">₹<span id="cartSubtotal">0</span></span>
+          </div>
+
+          <!-- Shipping Notice -->
+          <div class="shipping-notice-box d-flex gap-3 align-items-center mb-4">
+            <span class="fs-3">🚚</span>
+            <div class="small">
+              <strong>Navata Transport Notice:</strong> Shipping charges are <strong>NOT included</strong> in this total. They will be calculated separately based on Navata Transport volume/weight freight rates and communicated upon dispatch.
+            </div>
+          </div>
+
+          <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
+            <a href="index.html" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold order-2 order-sm-1">
+              ← Add More Items
+            </a>
+            <a href="checkout.html" class="btn btn-place-order w-auto px-5 py-2 fw-bold order-1 order-sm-2 text-center" style="background: var(--clr-forest);">
+              Proceed to Checkout →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer-kg mt-auto">
+    <div class="container text-center">
+      <p class="footer-tagline">హరే కృష్ణ 🙏</p>
+      <p>© 2026 కూర్మగ్రామము (Kurmagramamu) · Srikakulam</p>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+  <script>
+    function renderCartPage() {
+      const cart = getCart();
+      const emptyDiv  = document.getElementById('emptyCart');
+      const activeDiv = document.getElementById('activeCart');
+      const tbody     = document.getElementById('cartTableBody');
+      const subtotalEl= document.getElementById('cartSubtotal');
+
+      if (!cart || cart.length === 0) {
+        emptyDiv.classList.remove('d-none');
+        activeDiv.classList.add('d-none');
+        return;
+      }
+
+      emptyDiv.classList.add('d-none');
+      activeDiv.classList.remove('d-none');
+
+      let subtotal = 0;
+      tbody.innerHTML = cart.map(item => {
+        const itemSubtotal = Number(item.price) * (item.quantity || 1);
+        subtotal += itemSubtotal;
+        const unitText = item.unit ? ` (${item.unit})` : '';
+
+        return `
+          <tr>
+            <td>
+              <div class="fw-bold" style="color: var(--clr-forest);">${escapeHtml(item.name)}</div>
+              <div class="small text-muted">₹${item.price} / ${item.unit || 'unit'}</div>
+            </td>
+            <td class="text-center">
+              <div class="d-flex align-items-center justify-content-center gap-1">
+                <button class="btn btn-sm btn-light border" onclick="changeQty(${item.id}, -1)">−</button>
+                <span class="fw-bold px-2">${item.quantity}${unitText}</span>
+                <button class="btn btn-sm btn-light border" onclick="changeQty(${item.id}, 1)">+</button>
+              </div>
+            </td>
+            <td class="text-end fw-semibold">₹${item.price}</td>
+            <td class="text-end fw-bold text-success">₹${itemSubtotal.toLocaleString('en-IN')}</td>
+            <td class="text-center">
+              <button class="btn btn-sm text-danger border-0" onclick="deleteItem(${item.id})" title="Remove item">
+                ✕
+              </button>
+            </td>
+          </tr>`;
+      }).join('');
+
+      subtotalEl.textContent = subtotal.toLocaleString('en-IN');
+    }
+
+    function changeQty(id, delta) {
+      const cart = getCart();
+      const item = cart.find(i => i.id === id);
+      if (item) {
+        let step = (item.unit === 'kg' && item.min_qty === 5) ? 1 : 1;
+        let newQty = item.quantity + (delta * step);
+        if (newQty < (item.min_qty || 1)) {
+          if (confirm(`Remove "${item.name}" from cart?`)) {
+            removeFromCart(id);
+          }
+        } else {
+          item.quantity = newQty;
+          saveCart(cart);
+        }
+        renderCartPage();
+      }
+    }
+
+    function deleteItem(id) {
+      removeFromCart(id);
+      renderCartPage();
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCartPage);
+  </script>
+</body>
+</html>
