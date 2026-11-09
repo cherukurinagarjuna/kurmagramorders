@@ -274,7 +274,7 @@ function initTrackPage() {
       : `phone=${encodeURIComponent(phone)}`;
 
     try {
-      const data   = await getJSON(`/api/track-order?${qs}`);
+      const data   = await getJSON(`/.netlify/functions/track-order?${qs}`);
       const orders = data.orders || [];
       renderTrackResults(orders);
     } catch (err) {
@@ -370,7 +370,7 @@ function initAdminPage() {
     if (loginAlert) loginAlert.innerHTML = '';
     const pwd = document.getElementById('adminPassword').value;
     try {
-      await postJSON('/api/admin-login', { password: pwd });
+      await postJSON('/.netlify/functions/admin-login', { password: pwd });
       showPanel();
       loadOrders();
     } catch (err) {
@@ -411,7 +411,7 @@ function initAdminPage() {
     if (q)      qs.set('q', q);
 
     try {
-      const data   = await getJSON(`/api/list-orders?${qs.toString()}`);
+      const data   = await getJSON(`/.netlify/functions/list-orders?${qs.toString()}`);
       const orders = data.orders || [];
       hideLoading();
       renderTable(orders, data.total || 0);
@@ -528,7 +528,7 @@ function initAdminPage() {
     if (transporter === null) return;
 
     try {
-      const data = await postJSON('/api/mark-shipped', {
+      const data = await postJSON('/.netlify/functions/mark-shipped', {
         order_id:    order.id,
         lr_number:   lr.trim(),
         transporter: transporter.trim() || 'Navata',
@@ -549,7 +549,7 @@ function initAdminPage() {
     if (!window.confirm(`${promptMsg}\nOrder: ${order.order_code}`)) return;
 
     try {
-      const data = await postJSON('/api/update-status', {
+      const data = await postJSON('/.netlify/functions/update-status', {
         order_id: order.id,
         status:   newStatus,
       });

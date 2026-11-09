@@ -339,7 +339,7 @@
         };
 
         try {
-          const res = await postJSON('/api/create-order', payload);
+          const res = await postJSON('/.netlify/functions/create-order', payload);
           
           // Clear cart
           clearCart();

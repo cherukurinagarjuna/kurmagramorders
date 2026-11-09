@@ -131,7 +131,7 @@
       }
 
       try {
-        const data = await getJSON('/api/get-order?id=' + encodeURIComponent(id));
+        const data = await getJSON('/.netlify/functions/get-order?id=' + encodeURIComponent(id));
         const order = data.order;
 
         document.getElementById('dispName').textContent = order.customer_name || '—';
