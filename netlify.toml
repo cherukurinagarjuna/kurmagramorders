@@ -2,11 +2,12 @@
   publish   = "public"
   functions = "netlify/functions"
 
-# Redirect /api/* to Netlify Functions
+# Redirect /api/* to Netlify Functions (force = true ensures functions take precedence)
 [[redirects]]
   from   = "/api/*"
   to     = "/.netlify/functions/:splat"
   status = 200
+  force  = true
 
 # Security headers for all routes
 [[headers]]

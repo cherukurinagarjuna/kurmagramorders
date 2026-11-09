@@ -13,6 +13,14 @@ async function postJSON(url, data) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await res.text();
+    console.error('Non-JSON response from', url, text);
+    throw new Error(`Server returned HTML error (${res.status}). Function may be failing or missing.`);
+  }
+
   const json = await res.json();
   if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
   return json;
@@ -20,6 +28,15 @@ async function postJSON(url, data) {
 
 async function getJSON(url) {
   const res = await fetch(url, { credentials: 'include' });
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const text = await res.text();
+    console.error('Non-JSON response from', url, text);
+    const err = new Error(`Server returned HTML error (${res.status}). Function may be failing or missing.`);
+    err.status = res.status;
+    throw err;
+  }
+
   const json = await res.json();
   if (!res.ok) {
     const err = new Error(json.error || `Request failed (${res.status})`);
