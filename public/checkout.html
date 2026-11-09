@@ -177,28 +177,41 @@
               </p>
             </div>
 
-            <!-- ── STEP 3: PAYMENT CONFIRMATION INPUT ── -->
+            <!-- ── STEP 3: SUBMIT & ATTACH SCREENSHOT ON WHATSAPP ── -->
             <div class="mb-4">
               <span class="step-pill">Step 3</span>
-              <h2 class="h5 fw-bold mb-2" style="color: var(--clr-forest);">Payment Confirmation</h2>
-              <label for="payment_ref" class="form-label fw-semibold small">
-                UPI Reference / UTR Number (12 Digits) <span class="text-danger">*</span>
-              </label>
-              <input
-                type="text" id="payment_ref" name="payment_ref"
-                class="form-control"
-                placeholder="e.g. 412389712345 (Found in UPI app transaction receipt)"
-                minlength="4" maxlength="50" required
-              />
-              <div class="form-text small">
-                After paying, enter the 12-digit UTR or Transaction ID here so we can match and verify your order immediately.
+              <h2 class="h5 fw-bold mb-2" style="color: var(--clr-forest);">Send Payment Screenshot on WhatsApp</h2>
+              
+              <div class="p-3 bg-light rounded-3 border mb-3">
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <span class="fs-4">📷</span>
+                  <strong class="small text-success">How to complete your order:</strong>
+                </div>
+                <ol class="small text-muted ps-3 mb-0" style="line-height: 1.6;">
+                  <li>Scan the QR code above &amp; complete the payment in your UPI app.</li>
+                  <li>Take a screenshot of the completed payment receipt on your phone.</li>
+                  <li>Click the green button below — it creates your Order ID and <strong>automatically opens WhatsApp chat</strong> with our store admin!</li>
+                  <li>Tap the <strong>Attach (📎 / +)</strong> icon in WhatsApp and send your screenshot. That's it!</li>
+                </ol>
               </div>
-              <div class="invalid-feedback">Please enter your 12-digit UPI UTR / Transaction ID.</div>
+
+              <!-- Optional Note or UTR -->
+              <div class="mb-2">
+                <label for="payment_ref" class="form-label small text-muted">
+                  UTR / Reference ID or Note (Optional):
+                </label>
+                <input
+                  type="text" id="payment_ref" name="payment_ref"
+                  class="form-control"
+                  placeholder="Optional: Enter UTR number if you have it"
+                  maxlength="50"
+                />
+              </div>
             </div>
 
             <!-- SUBMIT BUTTON -->
-            <button type="submit" id="submitOrderBtn" class="btn btn-place-order py-3 fs-6">
-              📲 Submit Order &amp; Confirm on WhatsApp
+            <button type="submit" id="submitOrderBtn" class="btn btn-place-order py-3 fs-6 d-flex align-items-center justify-content-center gap-2" style="background: #25d366; color: #fff; font-size: 1.05rem;">
+              <span class="fs-5">📲</span> Place Order &amp; Send Screenshot on WhatsApp
             </button>
           </form>
         </div>

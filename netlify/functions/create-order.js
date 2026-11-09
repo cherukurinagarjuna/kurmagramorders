@@ -48,7 +48,7 @@ exports.handler = async (event) => {
   const cleanAddress = validateStr(address, 10, 500);
   const cleanPhone   = normalizeIndianPhone(phone);
   const cleanAmount  = validateAmount(amount);
-  const cleanRef     = validateStr(payment_ref, 3, 100);
+  const cleanRef     = payment_ref ? validateStr(payment_ref, 2, 100) : 'Screenshot on WhatsApp';
 
   if (!cleanName) {
     return json(400, { ok: false, error: 'Name must be between 2 and 100 characters' });
@@ -61,9 +61,6 @@ exports.handler = async (event) => {
   }
   if (!cleanAmount) {
     return json(400, { ok: false, error: 'Amount must be a positive number' });
-  }
-  if (!cleanRef) {
-    return json(400, { ok: false, error: 'Please enter your UPI Transaction Ref / UTR number or Payment screenshot note' });
   }
 
   // Format product_details
