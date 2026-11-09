@@ -318,3 +318,233 @@ function initTrackPage() {
     }).join('');
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   PAGE: admin.html — Admin panel
+   ══════════════════════════════════════════════════════════ */
+
+function initAdminPage() {
+  const loginSection  = document.getElementById('loginSection');
+  const panelSection  = document.getElementById('panelSection');
+  const loginForm     = document.getElementById('loginForm');
+  const loginAlert    = document.getElementById('loginAlert');
+  const panelAlert    = document.getElementById('panelAlert');
+  const statusFilter  = document.getElementById('statusFilter');
+  const searchInput   = document.getElementById('searchInput');
+  const refreshBtn    = document.getElementById('refreshBtn');
+  const logoutBtn     = document.getElementById('logoutBtn');
+  const tableBody     = document.getElementById('ordersBody');
+  const tableWrapper  = document.getElementById('tableWrapper');
+  const tableEmpty    = document.getElementById('tableEmpty');
+  const tableLoading  = document.getElementById('tableLoading');
+
+  if (!loginForm) return;
+
+  function showPanel()  { loginSection?.classList.add('d-none');    panelSection?.classList.remove('d-none'); }
+  function showLogin()  { panelSection?.classList.add('d-none');    loginSection?.classList.remove('d-none'); }
+  function showLoading(){ tableLoading?.classList.remove('d-none'); tableWrapper?.classList.add('d-none'); tableEmpty?.classList.add('d-none'); }
+  function hideLoading(){ tableLoading?.classList.add('d-none'); }
+
+  function handle401() { showLogin(); }
+
+  /* ── Login ── */
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (loginAlert) loginAlert.innerHTML = '';
+    const pwd = document.getElementById('adminPassword').value;
+    try {
+      await postJSON('/api/admin-login', { password: pwd });
+      showPanel();
+      loadOrders();
+    } catch (err) {
+      showAlert(loginAlert, err.message || 'Login failed.');
+    }
+  });
+
+  /* ── Logout ── */
+  logoutBtn && logoutBtn.addEventListener('click', () => {
+    document.cookie = 'admin=; Max-Age=0; path=/; SameSite=Lax';
+    const pwdInput = document.getElementById('adminPassword');
+    if (pwdInput) pwdInput.value = '';
+    showLogin();
+  });
+
+  /* ── Refresh ── */
+  refreshBtn && refreshBtn.addEventListener('click', loadOrders);
+
+  /* ── Debounced search ── */
+  let debounceTimer;
+  searchInput && searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(loadOrders, 350);
+  });
+
+  /* ── Status filter ── */
+  statusFilter && statusFilter.addEventListener('change', loadOrders);
+
+  /* ── Load orders ── */
+  async function loadOrders() {
+    if (panelAlert) panelAlert.innerHTML = '';
+    showLoading();
+
+    const qs = new URLSearchParams();
+    const status = statusFilter ? statusFilter.value : '';
+    const q      = searchInput  ? searchInput.value.trim() : '';
+    if (status) qs.set('status', status);
+    if (q)      qs.set('q', q);
+
+    try {
+      const data   = await getJSON(`/api/list-orders?${qs.toString()}`);
+      const orders = data.orders || [];
+      hideLoading();
+      renderTable(orders, data.total || 0);
+    } catch (err) {
+      hideLoading();
+      if (err.status === 401) { handle401(); return; }
+      showAlert(panelAlert, err.message || 'Failed to load orders.');
+      tableWrapper?.classList.add('d-none');
+      tableEmpty?.classList.add('d-none');
+    }
+  }
+
+  /* ── Render table ── */
+  function renderTable(orders, total) {
+    const countEl = document.getElementById('orderCount');
+    if (countEl) countEl.textContent = `${total} order${total !== 1 ? 's' : ''}`;
+
+    if (!orders.length) {
+      tableWrapper?.classList.add('d-none');
+      tableEmpty?.classList.remove('d-none');
+      return;
+    }
+
+    tableEmpty?.classList.add('d-none');
+    tableWrapper?.classList.remove('d-none');
+
+    tableBody.innerHTML = orders.map((o) => {
+      const actions = buildActions(o);
+      const paymentRefText = o.payment_ref ? `<br/><span class="badge bg-light text-dark border">Ref: ${escapeHtml(o.payment_ref)}</span>` : '';
+      return `
+        <tr>
+          <td class="font-monospace small">${escapeHtml(o.order_code)}</td>
+          <td>${escapeHtml(o.customer_name)}</td>
+          <td class="small text-muted">${escapeHtml(o.customer_phone)}</td>
+          <td>₹${escapeHtml(String(o.amount))}</td>
+          <td>${statusBadge(o.status)}${paymentRefText}</td>
+          <td class="small text-muted">${escapeHtml(o.lr_number || '—')}</td>
+          <td class="small text-muted">${escapeHtml(fmtDate(o.created_at))}</td>
+          <td class="text-nowrap">${actions}</td>
+        </tr>`;
+    }).join('');
+
+    orders.forEach((o) => {
+      const confirmBtn = document.getElementById(`btn-confirm-${o.id}`);
+      const shipBtn    = document.getElementById(`btn-ship-${o.id}`);
+      const ofdBtn     = document.getElementById(`btn-ofd-${o.id}`);
+      const delBtn     = document.getElementById(`btn-del-${o.id}`);
+
+      if (confirmBtn) confirmBtn.addEventListener('click', () => onSendConfirmation(o));
+      if (shipBtn)    shipBtn.addEventListener('click',    () => onMarkShipped(o));
+      if (ofdBtn)     ofdBtn.addEventListener('click',     () => onUpdateStatus(o, 'out_for_delivery', 'Mark order out for delivery?'));
+      if (delBtn)     delBtn.addEventListener('click',     () => onUpdateStatus(o, 'delivered', 'Mark order as delivered?'));
+    });
+  }
+
+  function buildActions(o) {
+    const btns = [];
+    const printBtn = `<a href="slip.html?id=${encodeURIComponent(o.id)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-dark me-1" title="Print Courier Slip">
+      📄 Print Slip
+    </a>`;
+
+    if (o.status === 'placed') {
+      btns.push(
+        printBtn,
+        `<button id="btn-confirm-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-success me-1" title="Send WhatsApp confirmation">
+           📲 Confirm
+         </button>`,
+        `<button id="btn-ship-${escapeHtml(String(o.id))}" class="btn btn-sm btn-primary" title="Mark as Shipped">
+           🚚 Ship
+         </button>`
+      );
+    } else if (o.status === 'shipped') {
+      btns.push(
+        printBtn,
+        `<button id="btn-ofd-${escapeHtml(String(o.id))}" class="btn btn-sm btn-warning text-dark me-1" title="Out for Delivery">
+           🛵 Out for Delivery
+         </button>`,
+        `<button id="btn-ship-${escapeHtml(String(o.id))}" class="btn btn-sm btn-outline-secondary" title="Update LR / Shipping info">
+           ✏️ Edit LR
+         </button>`
+      );
+    } else if (o.status === 'out_for_delivery') {
+      btns.push(
+        printBtn,
+        `<button id="btn-del-${escapeHtml(String(o.id))}" class="btn btn-sm btn-success" title="Mark Delivered">
+           ✅ Mark Delivered
+         </button>`
+      );
+    } else {
+      btns.push(printBtn);
+    }
+    return btns.join('') || '<span class="text-muted small">—</span>';
+  }
+
+  function onSendConfirmation(order) {
+    const business = 'కూర్మగ్రామము';
+    const msg =
+      `హరే కృష్ణ! Hi ${order.customer_name}, your order ${order.order_code} has been confirmed. ` +
+      `Amount: ₹${order.amount}. We will dispatch it via Navata Transport soon. — ${business}`;
+    const phone  = order.customer_phone.replace(/\D/g, '');
+    const waLink = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(waLink, '_blank', 'noopener,noreferrer');
+  }
+
+  async function onMarkShipped(order) {
+    const lr = window.prompt(`Enter LR / Consignment Number for order ${order.order_code}:`);
+    if (lr === null) return;
+    if (!lr.trim()) {
+      alert('LR number is required to mark as shipped.');
+      return;
+    }
+
+    const transporter = window.prompt('Enter Transporter name:', order.transporter || 'Navata');
+    if (transporter === null) return;
+
+    try {
+      const data = await postJSON('/api/mark-shipped', {
+        order_id:    order.id,
+        lr_number:   lr.trim(),
+        transporter: transporter.trim() || 'Navata',
+      });
+
+      if (data.wa_link) {
+        window.open(data.wa_link, '_blank', 'noopener,noreferrer');
+      }
+
+      await loadOrders();
+    } catch (err) {
+      if (err.status === 401) { handle401(); return; }
+      showAlert(panelAlert, `Failed to mark order as shipped: ${err.message}`);
+    }
+  }
+
+  async function onUpdateStatus(order, newStatus, promptMsg) {
+    if (!window.confirm(`${promptMsg}\nOrder: ${order.order_code}`)) return;
+
+    try {
+      const data = await postJSON('/api/update-status', {
+        order_id: order.id,
+        status:   newStatus,
+      });
+
+      if (data.wa_link) {
+        window.open(data.wa_link, '_blank', 'noopener,noreferrer');
+      }
+
+      await loadOrders();
+    } catch (err) {
+      if (err.status === 401) { handle401(); return; }
+      showAlert(panelAlert, `Failed to update status: ${err.message}`);
+    }
+  }
+}
