@@ -20,14 +20,13 @@ function validateAmount(val) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Handler
-// Accepts single item or multi-item cart order:
-// Body format:
+// Accepts:
 // {
 //   name: string,
 //   phone: string,
 //   address: string,
-//   product_details?: string,
 //   amount: number,
+//   payment_ref: string,  // UTR / Transaction reference or confirmation
 //   items?: Array<{ name: string, quantity: number, price: number, unit?: string, subtotal: number }>
 // }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -43,12 +42,13 @@ exports.handler = async (event) => {
     return json(400, { ok: false, error: 'Request body must be valid JSON' });
   }
 
-  const { name, phone, address, product_details, amount, items } = body;
+  const { name, phone, address, amount, items, product_details, payment_ref } = body;
 
   const cleanName    = validateStr(name, 2, 100);
   const cleanAddress = validateStr(address, 10, 500);
   const cleanPhone   = normalizeIndianPhone(phone);
   const cleanAmount  = validateAmount(amount);
+  const cleanRef     = validateStr(payment_ref, 3, 100);
 
   if (!cleanName) {
     return json(400, { ok: false, error: 'Name must be between 2 and 100 characters' });
@@ -57,13 +57,16 @@ exports.handler = async (event) => {
     return json(400, { ok: false, error: 'Phone must be a valid 10-digit Indian mobile number (starting with 6-9)' });
   }
   if (!cleanAddress) {
-    return json(400, { ok: false, error: 'Address must be between 10 and 500 characters' });
+    return json(400, { ok: false, error: 'Delivery address must be between 10 and 500 characters' });
   }
   if (!cleanAmount) {
     return json(400, { ok: false, error: 'Amount must be a positive number' });
   }
+  if (!cleanRef) {
+    return json(400, { ok: false, error: 'Please enter your UPI Transaction Ref / UTR number or Payment screenshot note' });
+  }
 
-  // Format product_details from items list if provided
+  // Format product_details
   let formattedProductDetails = '';
   if (Array.isArray(items) && items.length > 0) {
     formattedProductDetails = items
@@ -94,38 +97,42 @@ exports.handler = async (event) => {
     const year = new Date().getFullYear();
     const order_code = `RICE-${year}-${String(n).padStart(4, '0')}`;
 
-    // 3. Insert into orders table
+    // 3. Insert into orders table with payment_ref
     const insertOrder = await client.query(
       `INSERT INTO orders
          (order_code, customer_name, customer_phone, delivery_address,
-          product_details, amount, status)
-       VALUES ($1, $2, $3, $4, $5, $6, 'placed')
+          product_details, amount, status, payment_ref, payment_status)
+       VALUES ($1, $2, $3, $4, $5, $6, 'placed', $7, 'pending_verification')
        RETURNING id`,
-      [order_code, cleanName, cleanPhone, cleanAddress, cleanProduct, cleanAmount]
+      [order_code, cleanName, cleanPhone, cleanAddress, cleanProduct, cleanAmount, cleanRef]
     );
     const orderId = insertOrder.rows[0].id;
 
-    // 4. Build WhatsApp confirmation message with Navata notice
-    const businessName = process.env.BUSINESS_NAME || 'కూర్మగ్రామము (Kurmagramamu)';
+    // 4. Build WhatsApp notification link for customer
+    const businessPhone = (process.env.BUSINESS_WHATSAPP || '918074724717').replace(/\D/g, '');
     const siteUrl = (process.env.SITE_URL || '').replace(/\/$/, '');
     const trackLink = siteUrl ? `${siteUrl}/track.html?code=${order_code}` : '';
 
-    const message =
+    const waConfirmationMsg =
       `హరే కృష్ణ! 🙏\n\n` +
-      `Hi ${cleanName}, thank you for your order with ${businessName}.\n\n` +
+      `I have made the UPI payment for my order.\n\n` +
       `📦 *Order Code:* ${order_code}\n` +
+      `👤 *Name:* ${cleanName}\n` +
+      `📱 *Phone:* ${cleanPhone}\n` +
       `🌾 *Items:* ${cleanProduct}\n` +
-      `💰 *Items Subtotal:* ₹${cleanAmount}\n\n` +
-      `🚚 *Shipping Notice:* Shipping charges are extra and calculated based on Navata Transport freight rates (Volume-based). We will update you with the dispatch & LR details soon.\n\n` +
-      (trackLink ? `🔍 *Track Order:* ${trackLink}\n\n` : '') +
-      `ధన్యవాదాలు!`;
+      `💰 *Amount Paid:* ₹${cleanAmount}\n` +
+      `🔢 *UPI UTR / Ref:* ${cleanRef}\n` +
+      `📍 *Delivery Address:* ${cleanAddress}\n\n` +
+      `Please find my attached payment screenshot. Kindly verify and confirm dispatch!`;
 
-    // 5. Notification log
+    const customerWaLink = `https://wa.me/${businessPhone}?text=${encodeURIComponent(waConfirmationMsg)}`;
+
+    // 5. Audit log
     await client.query(
       `INSERT INTO notification_log
          (order_id, channel, message_type, phone, message_body, status)
        VALUES ($1, 'whatsapp', 'order_confirmation', $2, $3, 'pending')`,
-      [orderId, cleanPhone, message]
+      [orderId, cleanPhone, waConfirmationMsg]
     );
 
     await client.query('COMMIT');
@@ -133,7 +140,9 @@ exports.handler = async (event) => {
     return json(201, {
       ok: true,
       order_code,
-      wa_link: waLink(cleanPhone, message),
+      amount: cleanAmount,
+      name: cleanName,
+      customer_wa_link: customerWaLink,
     });
   } catch (err) {
     if (client) await client.query('ROLLBACK').catch(() => {});
