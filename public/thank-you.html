@@ -1,71 +1,246 @@
 <!doctype html>
-<html lang="en">
+<html lang="te">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Order Received — Rice Traders</title>
+  <title>Order Placed &amp; Payment — కూర్మగ్రామము | Kurmagramamu</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous"
   />
+
+  <link rel="stylesheet" href="assets/style.css" />
   <style>
-    body { background: #f5f5f5; }
-    .card { border: none; box-shadow: 0 1px 8px rgba(0,0,0,.08); }
-    .icon-wrap {
-      width: 72px; height: 72px; border-radius: 50%;
-      background: #e8f5e9;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2.2rem; margin: 0 auto 1rem;
+    .qr-card {
+      background: #ffffff;
+      border: 2px dashed #c9a84c;
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
     }
-    .order-code {
+    .qr-image-wrapper {
+      background: #fff;
+      padding: 12px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+    .qr-image-wrapper img {
+      max-width: 240px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .order-code-display {
       font-family: monospace;
-      font-size: 1.5rem;
-      letter-spacing: .05em;
-      color: #2e7d32;
-      word-break: break-all;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--clr-forest);
+      letter-spacing: 0.05em;
     }
-    .btn-success { background: #2e7d32; border-color: #2e7d32; }
-    .btn-success:hover { background: #1b5e20; border-color: #1b5e20; }
+    .btn-wa-payment {
+      background: #25d366;
+      color: #ffffff;
+      font-weight: 700;
+      border-radius: 50px;
+      padding: 14px 28px;
+      border: none;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+    }
+    .btn-wa-payment:hover {
+      background: #1eb956;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.45);
+    }
+    .step-number {
+      width: 28px;
+      height: 28px;
+      background: var(--clr-forest);
+      color: var(--clr-gold);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+      margin-right: 8px;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-light bg-white border-bottom mb-4 shadow-sm">
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <nav class="navbar navbar-kg sticky-top">
     <div class="container">
-      <a href="index.html" class="navbar-brand fw-bold text-success">🌾 Rice Traders</a>
+      <a class="navbar-brand" href="index.html">
+        <img src="assets/images/logo.png" alt="Kurmagramamu Logo" class="brand-logo" onerror="this.style.display='none'" />
+        <span class="brand-text">
+          <span class="brand-telugu">కూర్మగ్రామము</span>
+          <span class="brand-english">Kurmagramamu</span>
+        </span>
+      </a>
+      <a href="track.html" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+        📦 Track Orders
+      </a>
     </div>
   </nav>
 
-  <main class="container" style="max-width:520px">
-    <div class="card p-4 text-center">
-      <div class="icon-wrap">✅</div>
-      <h1 class="h4 fw-bold text-success">Order Placed!</h1>
-      <p class="text-muted mb-3">
-        Your order has been received. We'll confirm it on WhatsApp shortly.
+  <!-- ══════════════ THANK YOU & PAYMENT CONTAINER ══════════════ -->
+  <main class="container py-5" style="max-width: 680px;">
+    
+    <!-- Top Success Header -->
+    <div class="text-center mb-4">
+      <div style="font-size: 3rem;">🙏</div>
+      <h1 class="h3 fw-bold mt-2" style="color: var(--clr-forest); font-family: var(--font-heading);">
+        హరే కృష్ణ! Order Received
+      </h1>
+      <p class="text-muted small">
+        Your order has been registered in our system. Please complete your payment using the UPI QR code below.
       </p>
 
-      <div class="bg-light rounded p-3 mb-4">
-        <p class="text-muted small mb-1">Your Order Code</p>
-        <div class="order-code" id="orderCode">—</div>
-        <p class="text-muted" style="font-size:.78rem" class="mt-1">
-          Save this code to track your order later.
+      <div class="bg-white p-3 rounded-4 shadow-sm border d-inline-block px-4">
+        <span class="text-muted small text-uppercase fw-semibold d-block">Your Order Code</span>
+        <span class="order-code-display" id="orderCode">—</span>
+      </div>
+    </div>
+
+    <!-- Payment & Confirmation Card -->
+    <div class="qr-card mb-4">
+      <div class="text-start mb-3">
+        <h2 class="h5 fw-bold" style="color: var(--clr-forest);">
+          <span class="step-number">1</span> Scan UPI QR to Pay
+        </h2>
+        <p class="small text-muted mb-0">
+          Scan using any UPI app: <strong>PhonePe, Google Pay, Paytm, BHIM, CRED</strong>, or your Mobile Banking app.
         </p>
       </div>
 
-      <a id="trackLink" href="track.html" class="btn btn-success w-100 mb-2 py-2 fw-semibold">
-        📦 Track My Order
-      </a>
-      <a href="index.html" class="btn btn-link text-muted small">Place another order</a>
+      <!-- QR Code Image -->
+      <div class="qr-image-wrapper">
+        <img src="assets/images/upi-qr.jpg" alt="Kurmagramamu Official UPI QR Code" />
+      </div>
+
+      <div class="bg-light p-3 rounded-3 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="fw-semibold text-muted">Amount to Pay:</span>
+          <span class="fs-4 fw-bold text-success">₹<span id="orderAmount">—</span></span>
+        </div>
+        <small class="text-muted d-block mt-1">
+          * Enter your Order Code <strong><span id="orderCodeNote">—</span></strong> in the remarks/note while paying.
+        </small>
+      </div>
+
+      <hr class="my-4" style="border-color: #ebdcc5;" />
+
+      <!-- Step 2: Confirmation on WhatsApp -->
+      <div class="text-start mb-3">
+        <h2 class="h5 fw-bold" style="color: var(--clr-forest);">
+          <span class="step-number">2</span> Send Payment Screenshot on WhatsApp
+        </h2>
+        <p class="small text-muted mb-3">
+          After completing the payment, click the button below to open WhatsApp with your pre-filled Order ID. Simply attach your payment screenshot or enter the 12-digit UTR/UPI Ref number.
+        </p>
+
+        <!-- Optional UTR Input to help customer -->
+        <div class="mb-3">
+          <label for="utrInput" class="form-label small fw-semibold">UPI Transaction ID / UTR (Optional):</label>
+          <input
+            type="text"
+            id="utrInput"
+            class="form-control"
+            placeholder="e.g. 4123XXXXXXXX (12 digits)"
+            maxlength="20"
+          />
+        </div>
+
+        <div class="d-grid">
+          <button id="sendWaScreenshotBtn" class="btn btn-wa-payment d-flex align-items-center justify-content-center gap-2">
+            <span class="fs-5">📲</span> Send Confirmation on WhatsApp
+          </button>
+        </div>
+        <div class="text-center mt-2">
+          <small class="text-muted">Direct WhatsApp Chat with Kurmagramamu Store Admin</small>
+        </div>
+      </div>
     </div>
+
+    <!-- Navigation buttons -->
+    <div class="text-center d-flex flex-column flex-sm-row justify-content-center gap-2">
+      <a id="trackLink" href="track.html" class="btn btn-outline-success rounded-pill px-4">
+        🔍 Track This Order
+      </a>
+      <a href="index.html" class="btn btn-link text-muted small">
+        Return to Home Page
+      </a>
+    </div>
+
   </main>
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc4s9bIOgUxi8T/jzmL3JCzNNUqV1dqe/9uFV7hqj/"
-    crossorigin="anonymous"
-  ></script>
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer-kg mt-auto">
+    <div class="container text-center">
+      <p class="footer-tagline">హరే కృష్ణ 🙏</p>
+      <p>© 2026 కూర్మగ్రామము (Kurmagramamu) · Srikakulam</p>
+    </div>
+  </footer>
+
   <script src="assets/app.js"></script>
-  <script>initThankYou();</script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params     = new URLSearchParams(window.location.search);
+      const code       = params.get('code') || '';
+      const amount     = params.get('amount') || '';
+      const custName   = params.get('name') || '';
+
+      const codeEl     = document.getElementById('orderCode');
+      const noteEl     = document.getElementById('orderCodeNote');
+      const amountEl   = document.getElementById('orderAmount');
+      const trackLink  = document.getElementById('trackLink');
+      const waBtn      = document.getElementById('sendWaScreenshotBtn');
+      const utrInput   = document.getElementById('utrInput');
+
+      if (codeEl) codeEl.textContent = code || '—';
+      if (noteEl) noteEl.textContent = code || '—';
+      if (amountEl) amountEl.textContent = amount ? Number(amount).toLocaleString('en-IN') : '—';
+
+      if (trackLink && code) {
+        trackLink.href = `track.html?code=${encodeURIComponent(code)}`;
+      }
+
+      // Clear shopping cart now that order is confirmed
+      clearCart();
+
+      // WhatsApp Button Handler
+      waBtn.addEventListener('click', () => {
+        const utr = utrInput.value.trim();
+        const businessPhone = '918074724717'; // Store admin WhatsApp
+
+        let msg = `హరే కృష్ణ! 🙏\n\n`;
+        msg += `I have made the UPI payment for my Kurmagramamu order.\n\n`;
+        msg += `📦 *Order Code:* ${code}\n`;
+        if (custName) msg += `👤 *Customer:* ${custName}\n`;
+        if (amount)   msg += `💰 *Amount Paid:* ₹${amount}\n`;
+        if (utr)      msg += `🔢 *UPI Ref / UTR:* ${utr}\n`;
+        msg += `\nI am attaching the payment screenshot below. Please confirm my order!`;
+
+        const waUrl = `https://wa.me/${businessPhone}?text=${encodeURIComponent(msg)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      });
+    });
+  </script>
 </body>
 </html>

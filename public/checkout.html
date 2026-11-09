@@ -244,7 +244,7 @@
         try {
           const res = await postJSON('/api/create-order', payload);
           // Redirect to thank you page with order code
-          window.location.href = `thank-you.html?code=${encodeURIComponent(res.order_code)}`;
+          window.location.href = `thank-you.html?code=${encodeURIComponent(res.order_code)}&amount=${encodeURIComponent(total)}&name=${encodeURIComponent(payload.name)}`;
         } catch (err) {
           showAlert(alertBox, err.message || 'Failed to place order. Please try again.');
           submitBtn.disabled = false;
