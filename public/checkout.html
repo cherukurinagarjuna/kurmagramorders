@@ -112,6 +112,9 @@
               <div class="invalid-feedback">Please provide a complete delivery address for Navata transport.</div>
             </div>
 
+            <!-- Navata Shipping & Delivery Estimator inside Order Form -->
+            <div id="checkoutShippingEstimator" class="mb-4"></div>
+
             <button type="submit" id="submitOrderBtn" class="btn btn-place-order py-3 fs-6">
               ✅ Confirm &amp; Place Order
             </button>
@@ -162,6 +165,7 @@
   </footer>
 
   <script src="assets/app.js"></script>
+  <script src="assets/shipping.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const cart = getCart();
@@ -171,6 +175,19 @@
         window.location.href = 'cart.html';
         return;
       }
+
+      // Calculate total weight from cart items
+      let totalCartWeight = 0;
+      cart.forEach(item => {
+        if (item.name && item.name.includes('25kg')) {
+          totalCartWeight += (25 * (item.quantity || 1));
+        } else {
+          totalCartWeight += (item.quantity || 5);
+        }
+      });
+
+      // Initialize Navata Freight & Delivery Calculator inside the order form
+      initNavataCalculator('checkoutShippingEstimator', totalCartWeight);
 
       // Render summary
       const itemsList = document.getElementById('checkoutItemsList');

@@ -103,8 +103,13 @@
             <span class="fs-4 fw-bold text-success">₹<span id="cartSubtotal">0</span></span>
           </div>
 
-          <!-- Shipping Notice & Calculator -->
-          <div id="cartShippingCalculator" class="mb-4"></div>
+          <!-- Shipping Notice -->
+          <div class="shipping-notice-box d-flex gap-3 align-items-center mb-4">
+            <span class="fs-3">🚚</span>
+            <div class="small">
+              <strong>Navata Transport Notice:</strong> Shipping charges are calculated separately based on Navata Transport freight rates. You can select your destination and check delivery timelines on the next checkout step.
+            </div>
+          </div>
 
           <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
             <a href="index.html" class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold order-2 order-sm-1">
@@ -128,7 +133,6 @@
   </footer>
 
   <script src="assets/app.js"></script>
-  <script src="assets/shipping.js"></script>
   <script>
     function renderCartPage() {
       const cart = getCart();
@@ -176,7 +180,6 @@
       }).join('');
 
       subtotalEl.textContent = subtotal.toLocaleString('en-IN');
-      initNavataCalculator('cartShippingCalculator');
     }
 
     function changeQty(id, delta) {
