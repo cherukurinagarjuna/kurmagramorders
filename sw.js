@@ -14,6 +14,8 @@ const ASSETS_TO_CACHE = [
   'js/app.js',
   'js/sw-register.js',
   'manifest.json',
+  'assets/images/logo-header.png',
+  'assets/images/favicon-192.png',
   'assets/svg/logo.svg',
   'assets/svg/hero-landscape.svg',
   'assets/svg/products/sunni.svg',

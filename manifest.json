@@ -9,6 +9,11 @@
   "lang": "te",
   "icons": [
     {
+      "src": "assets/images/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
       "src": "assets/svg/logo.svg",
       "sizes": "any",
       "type": "image/svg+xml"
