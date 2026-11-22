@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>కూర్మగ్రామ వేదిక్ విలేజ్ | సహజ ఉత్పత్తులు & గోసేవ</title>
+  
+  <meta name="description" content="కూర్మగ్రామ వేదిక్ విలేజ్ (శ్రీకాకుళం జిల్లా) - ఎలాంటి ఫెర్టిలైజర్స్, క్రిమిసంహారకాలు లేకుండా భక్తులు తయారు చేసిన 100% సహజ ఉత్పత్తులు, చెక్క గానుగ నూనెలు, గోశాల ఆర్క్.">
+  <meta name="theme-color" content="#1c4423">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="కూర్మగ్రామ వేదిక్ విలేజ్ | Kurmagram Vedic Village">
+  <meta property="og:description" content="సరళ జీవనం – ఉన్నత ఆశయం. 100% సహజ దేశవాళీ ఉత్పత్తులు, డైరెక్ట్ UPI ద్వారా 0% ఫీజుతో ఆర్డర్ చేయండి.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.kurmagram.com">
+
+  <!-- Favicon & Manifest -->
+  <link rel="icon" type="image/svg+xml" href="assets/svg/logo.svg">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Master Stylesheet (Zero runtime CDN) -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- JSON-LD Structured Data for Local Business & Vedic Store -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Kurmagram Vedic Village (కూర్మగ్రామ వేదిక్ విలేజ్)",
+    "image": "assets/svg/logo.svg",
+    "telephone": "+91-7732075607",
+    "email": "Kurmagramvv@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Near Anthakapalli Village, Kittalapadu Post, Via Shrimukhalingam",
+      "addressLocality": "Srikakulam District",
+      "addressRegion": "Andhra Pradesh",
+      "postalCode": "532428",
+      "addressCountry": "IN"
+    },
+    "url": "https://www.kurmagram.com",
+    "priceRange": "₹₹",
+    "paymentAccepted": "Direct UPI (BHIM, Google Pay, PhonePe, Paytm)"
+  }
+  </script>
+
+  <!-- Vendored Local Runtime Scripts (Zero External CDN calls) -->
+  <script src="vendor/qrcode.min.js" defer></script>
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="vendor/lenis.min.js" defer></script>
+  <script src="vendor/fuse.min.js" defer></script>
+  <script src="vendor/confetti.min.js" defer></script>
+
+  <!-- Application Modules -->
+  <script src="js/config.js" defer></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/app.js" defer></script>
+  <script src="js/sw-register.js" defer></script>
+</head>
+<body class="js">
+
+  <!-- Offline Status Toast Pill -->
+  <div id="offlineNoticeBadge" class="offline-notice-badge" role="status">
+    📡 మీరు ప్రస్తుతం ఆఫ్‌లైన్‌లో ఉన్నారు. కాష్ చేయబడిన పేజీని చూస్తున్నారు.
+  </div>
+
+  <!-- Announcement & Trust Ribbon -->
+  <div class="demo-ribbon">
+    <div class="container">
+      <div class="ribbon-trust-items">
+        <span>🐄 నంద గోకులం గోశాల ట్రస్ట్ (2018)</span>
+        <span>🌿 60 ఎకరాల సహజ వ్యవసాయ క్షేత్రం</span>
+      </div>
+      <div class="ribbon-right">
+        <span>📞 +91-7732075607</span>
+        <button type="button" id="viewOrderHistoryBtn" class="ribbon-link">
+          <span data-i18n="viewHistory">ఆర్డర్ల చరిత్ర 📋</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Site Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand-logo-link" aria-label="కూర్మగ్రామ వేదిక్ విలేజ్ హోమ్‌పేజీ">
+        <img src="assets/svg/logo.svg" alt="కూర్మగ్రామ వేదిక్ విలేజ్ లోగో" class="brand-svg-logo" width="220" height="52">
+      </a>
+
+      <div class="header-nav-actions">
+        <!-- Bilingual Toggle Button -->
+        <button type="button" id="langToggleBtn" class="nav-btn" aria-label="Switch Language">
+          English
+        </button>
+
+        <!-- Temple Bell Chime Toggle Button -->
+        <button type="button" id="soundToggleBtn" class="nav-btn" aria-label="ధ్వని ఆఫ్ చేయండి / Mute temple chime">
+          <span class="sound-icon">🔔</span>
+        </button>
+
+        <!-- Cart Drawer Toggle Button -->
+        <button type="button" id="headerCartBtn" class="nav-btn cart-toggle-btn" aria-label="షాపింగ్ బుట్ట తెరవండి">
+          <span>🛒</span>
+          <span data-i18n="cartTitle">మీ బుట్ట</span>
+          <span id="cartCountBadge" class="cart-badge-count" style="display: none;">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section with Layered Parallax Landscape -->
+    <section class="hero-section">
+      <div class="container hero-content">
+        <div class="hero-badge" data-i18n="badge">
+          శ్రీకూరర్మ క్షేత్రం • నంద గోకులం గోశాల ట్రస్ట్ (2018)
+        </div>
+        <h1 class="hero-title">కూర్మగ్రామ వేదిక్ విలేజ్</h1>
+        <p class="hero-tagline" data-i18n="heroTagline">
+          సరళ జీవనం – ఉన్నత ఆశయం
+        </p>
+
+        <div class="hero-trust-box">
+          <p class="hero-trust-text" data-i18n="heroDesc">
+            ఎలాంటి ఫెర్టిలైజర్స్, క్రిమిసంహారకాలు లేకుండా, సకల జీవులకు హాని లేకుండా భక్తులు తయారు చేసిన సహజ ఉత్పత్తులు.
+          </p>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#catalog" class="btn btn-primary" data-i18n="heroCtaShop">
+            ఉత్పత్తులు చూడండి 🌾
+          </a>
+          <a href="#our-story" class="btn btn-secondary" data-i18n="heroCtaStory">
+            మా ఆశయం తెలుసుకోండి 📖
+          </a>
+        </div>
+      </div>
+
+      <!-- Layered Parallax SVG Landscape -->
+      <div class="hero-landscape-wrap">
+        <img src="assets/svg/hero-landscape.svg" alt="కూర్మగ్రామ సహజ క్షేత్ర దృశ్యం" class="hero-svg-landscape" width="1200" height="500">
+      </div>
+    </section>
+
+    <!-- Offer & Assurance Strip -->
+    <div class="offer-strip">
+      <div class="container offer-strip-inner">
+        <div class="offer-item">
+          <span>⚡</span>
+          <span>డైరెక్ట్ UPI చెల్లింపు (0% ఫీజు)</span>
+        </div>
+        <div class="offer-item">
+          <span>🌿</span>
+          <span>100% సహజ దేశవాళీ పద్ధతులు</span>
+        </div>
+        <div class="offer-item">
+          <span>📦</span>
+          <span>ప్రాకృతిక వ్యవసాయ క్షేత్రం నుండి నేరుగా డెలివరీ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Catalog & Shop Toolbar -->
+    <section class="shop-section" id="catalog">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title">సహజ ఉత్పత్తుల జాబితా</h2>
+          <p class="section-sub">గోశాల, గానుగ మరియు సహజ వ్యవసాయం ద్వారా తయారైన స్వచ్ఛమైన ఉత్పత్తులు</p>
+        </div>
+
+        <!-- Shop Toolbar: Fuzzy Search & Category Chips -->
+        <div class="shop-toolbar">
+          <div class="search-box-wrap">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="search" 
+              id="productSearchInput" 
+              class="search-input" 
+              placeholder="ఉత్పత్తులను వెతకండి (ఉదా: సున్నిపిండి, నువ్వుల నూనె, brown rice)..." 
+              aria-label="ఉత్పత్తులను వెతకండి">
+          </div>
+
+          <div class="category-filters-wrap" id="categoryFilters" role="group" aria-label="ఉత్పత్తి విభాగాలు">
+            <!-- Category Chips Rendered Dynamically -->
+          </div>
+        </div>
+
+        <!-- Product Cards Grid -->
+        <div class="product-grid" id="productGrid" aria-live="polite">
+          <!-- Rendered dynamically by js/app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Pinned Story Section: Four Pillars -->
+    <section class="story-section" id="our-story">
+      <div class="container story-grid">
+        <div class="story-sticky-card">
+          <span class="hero-badge">కూర్మగ్రామ జీవన విధానం</span>
+          <h2>సరళ జీవనం – ఉన్నత ఆశయం</h2>
+          <p>
+            ఆంధ్రప్రదేశ్ లోని శ్రీకాకుళం జిల్లా, కిట్టలపాడు సమీపంలో 60 ఎకరాల విస్తీర్ణంలో 2018 లో "నంద గోకులం గోశాల ట్రస్ట్" ఆధ్వర్యంలో కూర్మగ్రామం ప్రారంభమైంది.
+          </p>
+          <p>
+            ఇక్కడ వేదిక్ గురుకులం, దేశవాళీ గోవుల సంరక్షణ గోశాల మరియు 80 మందికి పైగా భక్తులు కలిసి రసాయనాల్లేని సహజమైన జీవనాన్ని గడుపుతున్నారు.
+          </p>
+          <a href="#catalog" class="btn btn-amber">సహజ ఉత్పత్తులను కొనండి 🌾</a>
+        </div>
+
+        <div class="story-pillars-list">
+          <div class="story-pillar-item">
+            <div class="pillar-icon">🌱</div>
+            <h3 class="pillar-title" data-i18n="pillar1Title">సరళ జీవనం (Simple)</h3>
+            <p class="pillar-desc" data-i18n="pillar1Desc">రసాయనాల్లేని ప్రాకృతిక జీవన శైలి మరియు పవిత్ర వాతావరణం.</p>
+          </div>
+
+          <div class="story-pillar-item">
+            <div class="pillar-icon">🌾</div>
+            <h3 class="pillar-title" data-i18n="pillar2Title">సహజ పద్ధతులు (Natural)</h3>
+            <p class="pillar-desc" data-i18n="pillar2Desc">ఎలాంటి కృత్రిమ ఎరువులు, పురుగుమందులు వాడని దేశవాళీ సహజ సాగు.</p>
+          </div>
+
+          <div class="story-pillar-item">
+            <div class="pillar-icon">🪵</div>
+            <h3 class="pillar-title" data-i18n="pillar3Title">సంప్రదాయ జ్ఞానం (Traditional)</h3>
+            <p class="pillar-desc" data-i18n="pillar3Desc">చెక్క గానుగ నూనెలు, గోశాల స్వచ్ఛమైన ఆర్క్ సంప్రదాయ స్వేదన విధానం.</p>
+          </div>
+
+          <div class="story-pillar-item">
+            <div class="pillar-icon">🐄</div>
+            <h3 class="pillar-title" data-i18n="pillar4Title">ధార్మిక సేవా (Dharmic)</h3>
+            <p class="pillar-desc" data-i18n="pillar4Desc">సకల జీవుల సంరక్షణ, దేశవాళీ గోసేవ మరియు ధార్మిక సేవా దృక్పథం.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How to Order Section -->
+    <section class="steps-section" id="how-to-order">
+      <div class="container">
+        <div class="section-head">
+          <h2 class="section-title" data-i18n="howToOrderTitle">ఆర్డర్ ఎలా చేయాలి?</h2>
+          <p class="section-sub">0% చెల్లింపు రుసుములతో సులభమైన 3 దశల ఆర్డర్ విధానం</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3 class="step-title" data-i18n="step1Title">1. ఉత్పత్తులను ఎంచుకోండి</h3>
+            <p class="step-desc" data-i18n="step1Desc">మీకు కావలసిన పరిమాణాన్ని (g / kg / L) ఎంచుకుని బుట్టలో వేయండి.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3 class="step-title" data-i18n="step2Title">2. డైరెక్ట్ UPI ద్వారా చెల్లించండి</h3>
+            <p class="step-desc" data-i18n="step2Desc">0% రుసుములతో నేరుగా మా ట్రస్ట్ UPI ID కి చెల్లించండి.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3 class="step-title" data-i18n="step3Title">3. WhatsApp లో రసీదు పంపండి</h3>
+            <p class="step-desc" data-i18n="step3Desc">మీ ఆర్డర్ ID తో కూడిన మెసేజ్ ను ఒక్క క్లిక్ తో పంపండి.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <h3>కూర్మగ్రామ వేదిక్ విలేజ్</h3>
+        <p>నంద గోకులం గోశాల ట్రస్ట్ (Est. 2018)</p>
+        <p>సరళ జీవనం – ఉన్నత ఆశయం</p>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">🛡️ FSSAI Lic. No: XXXXXXXXXXXXXX</p>
+      </div>
+
+      <div class="footer-col">
+        <h3>చిరునామా (Address)</h3>
+        <address>
+          Near Anthakapalli Village, Kittalapadu Post,<br>
+          Via Shrimukhalingam, Srikakulam District,<br>
+          Andhra Pradesh – 532428, India
+        </address>
+      </div>
+
+      <div class="footer-col">
+        <h3>సంప్రదించండి (Contact)</h3>
+        <p>📞 +91-7732075607</p>
+        <p>📞 +91-8712011776</p>
+        <p>✉️ Kurmagramvv@gmail.com</p>
+        <p>🌐 <a href="https://www.kurmagram.com" target="_blank" rel="noopener" style="color: #ffb703;">www.kurmagram.com</a></p>
+      </div>
+
+      <div class="footer-col">
+        <h3>వేగవంతమైన లింకులు</h3>
+        <ul class="footer-links-list">
+          <li><a href="#catalog">ఉత్పత్తుల జాబితా</a></li>
+          <li><a href="#our-story">మా ఆశయం & గోశాల</a></li>
+          <li><a href="#how-to-order">ఆర్డర్ చేసే విధానం</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 కూర్మగ్రామ వేదిక్ విలేజ్. సర్వహక్కులు ప్రత్యేకించబడినవి. సహజ జీవన విధానం.</p>
+    </div>
+  </footer>
+
+  <!-- Slide-out Cart Drawer -->
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="షాపింగ్ బుట్ట" aria-hidden="true">
+    <div class="drawer-header">
+      <h3 class="drawer-title" data-i18n="cartTitle">మీ బుట్ట</h3>
+      <button type="button" id="cartDrawerCloseBtn" class="drawer-close-btn" aria-label="బుట్టను మూసివేయి">✕</button>
+    </div>
+
+    <div class="drawer-body" id="cartDrawerItems">
+      <!-- Items dynamically populated -->
+    </div>
+
+    <div class="drawer-footer">
+      <div class="drawer-subtotal-row">
+        <span data-i18n="cartSubtotal">మొత్తం వెల:</span>
+        <span id="cartSubtotalAmount">₹0</span>
+      </div>
+      <span class="free-shipping-pill" data-i18n="cartFreeDelivery">ఉచిత హోమ్ డెలివరీ వర్తిస్తుంది 🚚</span>
+      <button type="button" id="cartCheckoutBtn" class="btn btn-primary" data-i18n="checkoutBtn">
+        ఆర్డర్ పూర్తి చేయండి (UPI ద్వారా) →
+      </button>
+    </div>
+  </aside>
+
+  <!-- Quick View Product Modal -->
+  <div id="quickViewModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="ఉత్పత్తి వివరాలు">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 data-i18n="viewDetails">వివరాలు</h2>
+        <button type="button" class="modal-close-btn" aria-label="మూసివేయి">✕</button>
+      </div>
+      <div class="modal-content" id="quickViewModalBody">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Direct UPI Checkout Modal -->
+  <div id="checkoutModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="ఆర్డర్ & చెల్లింపు వివరాలు">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 data-i18n="checkoutTitle">ఆర్డర్ వివరాలు & UPI చెల్లింపు</h2>
+        <button type="button" class="modal-close-btn" aria-label="మూసివేయి">✕</button>
+      </div>
+      <div class="modal-content">
+        <!-- Order Summary Card -->
+        <div class="checkout-summary-card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem; color: #6b4f2a;">
+            <span>ఆర్డర్ ID: <strong id="checkoutOrderId">KG-DEMO</strong></span>
+            <span>0% చెల్లింపు రుసుము</span>
+          </div>
+          <ul class="checkout-items-list" id="checkoutItemsList"></ul>
+          <div class="checkout-total-row">
+            <strong data-i18n="cartSubtotal">మొత్తం వెల:</strong>
+            <strong id="checkoutTotalAmount" style="font-size: 1.3rem;">₹0</strong>
+          </div>
+        </div>
+
+        <!-- Customer Details Form -->
+        <form class="checkout-form" id="checkoutCustomerForm" onsubmit="return false;">
+          <div class="form-group">
+            <label for="custName" data-i18n="custNameLabel">మీ పూర్తి పేరు *</label>
+            <input type="text" id="custName" class="form-input" required placeholder="ఉదా: శ్రీనివాస రావు">
+          </div>
+
+          <div class="form-group">
+            <label for="custPhone" data-i18n="custPhoneLabel">ఫోన్ నంబర్ (WhatsApp) *</label>
+            <input type="tel" id="custPhone" class="form-input" required placeholder="ఉదా: 9876543210">
+          </div>
+
+          <div class="form-group">
+            <label for="custAddress" data-i18n="custAddressLabel">పూర్తి డెలివరీ చిరునామా & పిన్‌కోడ్ *</label>
+            <textarea id="custAddress" class="form-textarea" required placeholder="ఇంటి నంబర్, వీధి, గ్రామం/నగరం, జిల్లా, పిన్‌కోడ్"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="custNotes" data-i18n="custNotesLabel">ప్రత్యేక సూచనలు (ఐచ్ఛికం)</label>
+            <input type="text" id="custNotes" class="form-input" placeholder="ఏదైనా ప్రత్యేక సూచనలు ఉంటే ఇక్కడ రాయండి">
+          </div>
+        </form>
+
+        <!-- Direct UPI QR & Payment Action -->
+        <div class="upi-payment-box">
+          <p class="upi-step-text" data-i18n="payStep1">
+            1. క్రింది QR కోడ్‌ను మీ UPI యాప్ (GPay, PhonePe, Paytm) తో స్కాన్ చేయండి లేదా బటన్ క్లిక్ చేయండి:
+          </p>
+
+          <div class="upi-qr-frame" id="upiQrContainer">
+            <!-- QR code rendered dynamically -->
+          </div>
+
+          <div class="upi-actions-row">
+            <a id="upiPayDeepLink" href="#" class="btn btn-amber btn-sm" data-i18n="payViaApp">
+              📱 UPI యాప్‌లో చెల్లించండి
+            </a>
+            <button type="button" id="copyUpiIdBtn" class="btn btn-secondary btn-sm" data-i18n="copyUpiBtn">
+              📋 UPI ID కాపీ చేయండి
+            </button>
+          </div>
+
+          <p class="upi-step-text" style="margin-top: 1.25rem;" data-i18n="payStep2">
+            2. చెల్లింపు పూర్తయ్యాక WhatsApp బటన్ క్లిక్ చేసి ఆర్డర్ నిర్ధారించండి.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <button type="button" id="submitOrderWhatsAppBtn" class="btn btn-whatsapp" style="width: 100%;" data-i18n="sendWhatsApp">
+            📲 WhatsApp ద్వారా ఆర్డర్ వివరాలు పంపండి
+          </button>
+          <button type="button" id="copySummaryBtn" class="btn btn-secondary btn-sm">
+            📋 ఆర్డర్ సారాంశాన్ని కాపీ చేయండి
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Past Order History Modal -->
+  <div id="orderHistoryModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="గత ఆర్డర్ల చరిత్ర">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 data-i18n="orderHistoryTitle">నా గత ఆర్డర్లు</h2>
+        <button type="button" class="modal-close-btn" aria-label="మూసివేయి">✕</button>
+      </div>
+      <div class="modal-content" id="orderHistoryList">
+        <!-- Rendered dynamically from localStorage -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification element -->
+  <div id="toastNotification" class="toast-notice" role="alert" aria-live="assertive"></div>
+
+</body>
+</html>

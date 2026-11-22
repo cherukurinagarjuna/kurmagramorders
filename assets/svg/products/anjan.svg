@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Go Anjan Bham (Cow-Ghee Kajal): Pot + Ghee Diya Lamp Flame -->
+  <defs>
+    <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb703" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#e8890c" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#fffdf7" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="potGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a3b32"/>
+      <stop offset="60%" stop-color="#2c1810"/>
+      <stop offset="100%" stop-color="#1a0e0a"/>
+    </linearGradient>
+    <linearGradient id="diyaGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d49a37"/>
+      <stop offset="100%" stop-color="#9d6718"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Diya Lamp Flame Glow -->
+  <circle cx="95" cy="85" r="45" fill="url(#flameGlow)"/>
+
+  <!-- Brass Diya (Traditional Cow-Ghee Lamp) -->
+  <g id="diya">
+    <ellipse cx="95" cy="145" rx="36" ry="14" fill="url(#diyaGrad)" stroke="#6b4f2a" stroke-width="2"/>
+    <path d="M60 145 Q95 175 130 145" fill="url(#diyaGrad)" stroke="#6b4f2a" stroke-width="2"/>
+    <ellipse cx="95" cy="168" rx="18" ry="6" fill="#845412" stroke="#6b4f2a" stroke-width="1.8"/>
+
+    <!-- Cotton Wick -->
+    <path d="M95 138 Q95 120 95 110" stroke="#6b4f2a" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- Sacred Golden Flame -->
+    <path d="M95 80 Q105 102 95 115 Q85 102 95 80 Z" fill="#ffb703" stroke="#e8890c" stroke-width="1.5"/>
+    <path d="M95 88 Q100 102 95 112 Q90 102 95 88 Z" fill="#fffdf7"/>
+  </g>
+
+  <!-- Kajal Pot / Dibbi (Go Anjan Jar) -->
+  <g id="kajalJar" transform="translate(45, 0)">
+    <!-- Base shadow -->
+    <ellipse cx="140" cy="172" rx="35" ry="10" fill="#dfcfaf"/>
+
+    <!-- Pot Body -->
+    <path d="M110 135 C105 165 115 172 140 172 C165 172 175 165 170 135 Z" fill="url(#potGrad)" stroke="#6b4f2a" stroke-width="2"/>
+    <!-- Pot Rim -->
+    <ellipse cx="140" cy="135" rx="30" ry="10" fill="#1f1815" stroke="#6b4f2a" stroke-width="2"/>
+    
+    <!-- Open Pure Kajal Texture inside -->
+    <ellipse cx="140" cy="135" rx="24" ry="7" fill="#0d0907"/>
+    <ellipse cx="136" cy="134" rx="10" ry="3" fill="#3a2e29" opacity="0.6"/>
+
+    <!-- Ornate Golden Lid leaning to the right -->
+    <ellipse cx="180" cy="148" rx="14" ry="22" transform="rotate(35 180 148)" fill="url(#diyaGrad)" stroke="#6b4f2a" stroke-width="2"/>
+    <circle cx="180" cy="148" r="4" fill="#faf5e9" stroke="#6b4f2a" stroke-width="1.2"/>
+
+    <!-- Small Tilak / Eye Motif on Jar -->
+    <ellipse cx="140" cy="155" rx="7" ry="4" fill="#faf5e9" stroke="#e8890c" stroke-width="1.2"/>
+    <circle cx="140" cy="155" r="2" fill="#1c4423"/>
+  </g>
+</svg>

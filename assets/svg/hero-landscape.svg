@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 500" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" fill="none">
+  <defs>
+    <!-- Sky & Sun Gradients -->
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff8eb"/>
+      <stop offset="45%" stop-color="#fcedd0"/>
+      <stop offset="85%" stop-color="#e9f3e4"/>
+      <stop offset="100%" stop-color="#d4e8cb"/>
+    </linearGradient>
+
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffb703" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#fb8500" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#fcedd0" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="hillBackGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#69995d"/>
+      <stop offset="100%" stop-color="#3d7348"/>
+    </linearGradient>
+
+    <linearGradient id="hillMidGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a7d44"/>
+      <stop offset="100%" stop-color="#23532c"/>
+    </linearGradient>
+
+    <linearGradient id="paddyFieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a6635"/>
+      <stop offset="100%" stop-color="#14361b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Canvas -->
+  <rect width="1200" height="500" fill="url(#skyGrad)"/>
+
+  <!-- Golden Sunrise -->
+  <g class="parallax-layer-sun" id="heroSun">
+    <circle cx="600" cy="220" r="140" fill="url(#sunGlow)"/>
+    <circle cx="600" cy="220" r="54" fill="#ffb703" stroke="#e8890c" stroke-width="2"/>
+    <!-- Sun Ray Accents -->
+    <line x1="600" y1="140" x2="600" y2="120" stroke="#e8890c" stroke-width="2" stroke-linecap="round"/>
+    <line x1="680" y1="220" x2="700" y2="220" stroke="#e8890c" stroke-width="2" stroke-linecap="round"/>
+    <line x1="520" y1="220" x2="500" y2="220" stroke="#e8890c" stroke-width="2" stroke-linecap="round"/>
+    <line x1="656" y1="164" x2="670" y2="150" stroke="#e8890c" stroke-width="2" stroke-linecap="round"/>
+    <line x1="544" y1="164" x2="530" y2="150" stroke="#e8890c" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Distant Eastern Ghats / Srikakulam Mountain Silhouette -->
+  <path d="M0 290 Q220 200 480 270 T980 240 Q1100 220 1200 260 L1200 500 L0 500 Z" fill="url(#hillBackGrad)" opacity="0.65"/>
+
+  <!-- Midground Rolling Forest & Vedic Village Groves -->
+  <path d="M0 315 C260 275 420 330 680 300 C920 270 1060 325 1200 310 L1200 500 L0 500 Z" fill="url(#hillMidGrad)"/>
+
+  <!-- Paddy Rows / Terraces (Contour Curves) -->
+  <g class="parallax-paddy-rows" stroke="#489154" stroke-width="2.5" opacity="0.45" fill="none">
+    <path d="M-50 355 Q300 330 650 365 T1250 340"/>
+    <path d="M-50 380 Q320 360 680 395 T1250 370"/>
+    <path d="M-50 410 Q350 390 700 425 T1250 405"/>
+    <path d="M-50 445 Q380 425 730 460 T1250 440"/>
+  </g>
+
+  <!-- Foreground Natural Farm Soil Ground -->
+  <path d="M0 375 Q300 335 620 370 T1200 360 L1200 500 L0 500 Z" fill="url(#paddyFieldGrad)"/>
+
+  <!-- Sacred Vedic Goshala Cow Silhouette with Calf (Desi Gir / Ongole cow with hump) -->
+  <g transform="translate(180, 310) scale(0.65)" fill="#1c4423" stroke="#6b4f2a" stroke-width="1.5">
+    <!-- Mother Cow Body -->
+    <path d="M40 70 Q55 35 75 35 Q90 35 105 50 Q130 45 155 55 Q175 65 185 85 L180 125 L170 125 L165 95 L145 95 L140 125 L130 125 L135 85 Q110 90 90 85 L85 125 L75 125 L78 85 L60 85 L55 125 L45 125 L48 80 Q35 85 30 75 Z"/>
+    <!-- Sacred Hump (Vedanta symbol of Indian Indigenous Cow) -->
+    <ellipse cx="95" cy="42" rx="14" ry="12"/>
+    <!-- Head and Horns -->
+    <path d="M45 60 Q30 55 22 45 Q20 35 28 32 Q35 40 45 52 Z"/>
+    <!-- Ears & Horns -->
+    <path d="M35 38 Q42 22 48 18 Q45 28 40 38 Z"/>
+    <path d="M26 40 Q12 40 16 48 Z"/>
+    <!-- Dewlap -->
+    <path d="M38 62 Q45 78 55 75" fill="none" stroke-width="2"/>
+    <!-- Tail with bushy tuft -->
+    <path d="M182 82 Q192 105 188 120" fill="none" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="188" cy="120" r="3.5"/>
+  </g>
+
+  <!-- Sacred Tortoise Emblem in Farm Foreground -->
+  <g transform="translate(940, 395) scale(0.7)" fill="#e8890c" stroke="#6b4f2a" stroke-width="2">
+    <!-- Kurma Shell -->
+    <ellipse cx="50" cy="50" rx="36" ry="24" fill="#2f6b3a"/>
+    <path d="M50 26 V74 M30 35 H70 M30 65 H70 M25 40 L75 60 M25 60 L75 40" stroke="#faf5e9" stroke-width="1.8"/>
+    <!-- Head -->
+    <circle cx="92" cy="50" r="9" fill="#2f6b3a"/>
+    <!-- Flippers -->
+    <ellipse cx="28" cy="28" rx="8" ry="5" transform="rotate(-30 28 28)" fill="#2f6b3a"/>
+    <ellipse cx="72" cy="28" rx="8" ry="5" transform="rotate(30 72 28)" fill="#2f6b3a"/>
+    <ellipse cx="28" cy="72" rx="8" ry="5" transform="rotate(30 28 72)" fill="#2f6b3a"/>
+    <ellipse cx="72" cy="72" rx="8" ry="5" transform="rotate(-30 72 72)" fill="#2f6b3a"/>
+  </g>
+
+  <!-- Golden Grain Paddy Stalks Foreground accents -->
+  <g stroke="#e8890c" stroke-width="2" stroke-linecap="round">
+    <!-- Stalk 1 -->
+    <path d="M80 470 Q95 410 110 380"/>
+    <circle cx="110" cy="380" r="3" fill="#e8890c"/>
+    <circle cx="106" cy="390" r="3" fill="#e8890c"/>
+    <circle cx="115" cy="392" r="3" fill="#e8890c"/>
+    <circle cx="102" cy="402" r="3" fill="#e8890c"/>
+    <circle cx="118" cy="405" r="3" fill="#e8890c"/>
+
+    <!-- Stalk 2 -->
+    <path d="M1020 480 Q1040 430 1055 395"/>
+    <circle cx="1055" cy="395" r="3" fill="#e8890c"/>
+    <circle cx="1048" cy="405" r="3" fill="#e8890c"/>
+    <circle cx="1060" cy="408" r="3" fill="#e8890c"/>
+    <circle cx="1042" cy="418" r="3" fill="#e8890c"/>
+    <circle cx="1063" cy="422" r="3" fill="#e8890c"/>
+  </g>
+</svg>

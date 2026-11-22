@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Verm Ark (Vermiwash Organic Plant Tonic) Illustration -->
+  <defs>
+    <linearGradient id="amberLiquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b67329"/>
+      <stop offset="60%" stop-color="#804a15"/>
+      <stop offset="100%" stop-color="#552f0b"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#489154"/>
+      <stop offset="100%" stop-color="#215c2d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Bottle Shadow -->
+  <ellipse cx="140" cy="188" rx="42" ry="12" fill="#dfcfaf"/>
+
+  <!-- Vermiwash Tonic Bottle -->
+  <g id="bottle">
+    <!-- Bottle Body -->
+    <path d="M110 95 C110 82 122 80 128 80 L128 58 L152 58 L152 80 C158 80 170 82 170 95 L170 175 C170 182 165 186 155 186 L125 186 C115 186 110 182 110 175 Z" fill="#fffdf7" stroke="#6b4f2a" stroke-width="2"/>
+    
+    <!-- Liquid Level -->
+    <path d="M112 108 C112 108 125 105 140 105 C155 105 168 108 168 108 L168 174 C168 180 163 184 154 184 L126 184 C117 184 112 180 112 174 Z" fill="url(#amberLiquid)" opacity="0.9"/>
+
+    <!-- Bottle Cap -->
+    <rect x="126" y="46" width="28" height="13" rx="2" fill="#2f6b3a" stroke="#1c4423" stroke-width="2"/>
+    <line x1="131" y1="46" x2="131" y2="59" stroke="#1c4423" stroke-width="1.2"/>
+    <line x1="136" y1="46" x2="136" y2="59" stroke="#1c4423" stroke-width="1.2"/>
+    <line x1="141" y1="46" x2="141" y2="59" stroke="#1c4423" stroke-width="1.2"/>
+    <line x1="146" y1="46" x2="146" y2="59" stroke="#1c4423" stroke-width="1.2"/>
+
+    <!-- Bottle Label -->
+    <rect x="116" y="118" width="48" height="48" rx="4" fill="#fffdf7" stroke="#6b4f2a" stroke-width="1.5"/>
+    <circle cx="140" cy="133" r="8" fill="#2f6b3a"/>
+    <path d="M140 128 L142 133 L138 133 Z" fill="#fffdf7"/>
+    <circle cx="140" cy="136" r="1.5" fill="#fffdf7"/>
+    <text x="140" y="152" font-family="'Noto Sans Telugu', sans-serif" font-size="8" font-weight="700" fill="#1c4423" text-anchor="middle">వార్మ్ ఆర్క్</text>
+    <text x="140" y="161" font-family="'Poppins', sans-serif" font-size="6" font-weight="600" fill="#6b4f2a" text-anchor="middle">VERMIWASH</text>
+  </g>
+
+  <!-- Big Healthy Leaf Behind / Beside -->
+  <g transform="translate(180, 85)">
+    <path d="M0 65 Q45 25 35 -15 Q-15 0 0 65 Z" fill="url(#leafGrad)" stroke="#6b4f2a" stroke-width="2"/>
+    <path d="M0 65 Q18 25 35 -15" stroke="#faf5e9" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="10" y1="40" x2="25" y2="35" stroke="#faf5e9" stroke-width="1.2"/>
+    <line x1="18" y1="20" x2="32" y2="10" stroke="#faf5e9" stroke-width="1.2"/>
+  </g>
+
+  <!-- Friendly Earthworm Motif -->
+  <path d="M68 170 C72 150 90 152 86 168 C82 180 98 182 102 170" fill="none" stroke="#d49a37" stroke-width="4.5" stroke-linecap="round"/>
+  <circle cx="68" cy="170" r="1.2" fill="#1c4423"/>
+
+  <!-- Bio-Nutrient Droplet -->
+  <path d="M85 130 C85 130 94 142 94 148 C94 153 90 157 85 157 C80 157 76 153 76 148 C76 142 85 130 85 130 Z" fill="#b67329" stroke="#6b4f2a" stroke-width="1.5"/>
+</svg>

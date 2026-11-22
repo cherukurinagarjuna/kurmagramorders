@@ -1,0 +1,17 @@
+{
+  "name": "కూర్మగ్రామ వేదిక్ విలేజ్ | Kurmagram Vedic Village",
+  "short_name": "కూర్మగ్రామము",
+  "description": "సరళ జీవనం – ఉన్నత ఆశయం. ఎలాంటి రసాయనాలు లేని సహజ ఉత్పత్తులు.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#faf5e9",
+  "theme_color": "#1c4423",
+  "lang": "te",
+  "icons": [
+    {
+      "src": "assets/svg/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

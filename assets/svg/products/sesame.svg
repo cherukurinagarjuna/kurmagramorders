@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Cold-Pressed Sesame Oil: Wooden Ghani (Chekka Ganuga) + Sesame Seeds + Oil -->
+  <defs>
+    <linearGradient id="woodGhani" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9d6732"/>
+      <stop offset="60%" stop-color="#73451a"/>
+      <stop offset="100%" stop-color="#4d2b0e"/>
+    </linearGradient>
+    <linearGradient id="sesameOil" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffb703"/>
+      <stop offset="60%" stop-color="#e8890c"/>
+      <stop offset="100%" stop-color="#b85d0d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Shadow -->
+  <ellipse cx="145" cy="190" rx="55" ry="12" fill="#dfcfaf"/>
+
+  <!-- Traditional Wooden Ghani (Mortar & Pestle Press) -->
+  <g id="ghani" transform="translate(15, 0)">
+    <!-- Wooden Pestle (Ghani Kolu) tilted -->
+    <path d="M105 50 L120 50 L115 140 L100 140 Z" transform="rotate(-15 110 95)" fill="#b87a3e" stroke="#6b4f2a" stroke-width="2"/>
+    <ellipse cx="94" cy="52" rx="8" ry="4" transform="rotate(-15 94 52)" fill="#845222" stroke="#6b4f2a" stroke-width="1.5"/>
+
+    <!-- Wooden Ghani Mortar Body -->
+    <path d="M70 120 C70 160 80 185 115 185 C150 185 160 160 160 120 Z" fill="url(#woodGhani)" stroke="#6b4f2a" stroke-width="2"/>
+    
+    <!-- Wooden Rim with Carvings -->
+    <ellipse cx="115" cy="120" rx="45" ry="14" fill="#a46b33" stroke="#6b4f2a" stroke-width="2"/>
+    <ellipse cx="115" cy="120" rx="35" ry="10" fill="#4d2b0e" stroke="#6b4f2a" stroke-width="1.5"/>
+
+    <!-- Wood Rings Texture -->
+    <path d="M85 145 Q115 158 145 145 M82 165 Q115 176 148 165" stroke="#4d2b0e" stroke-width="1.5" fill="none" opacity="0.6"/>
+
+    <!-- Chekka Ganuga Tag Line on Wood -->
+    <rect x="95" y="150" width="40" height="18" rx="2" fill="#fffdf7" stroke="#6b4f2a" stroke-width="1"/>
+    <text x="115" y="162" font-family="'Noto Sans Telugu', sans-serif" font-size="7" font-weight="700" fill="#1c4423" text-anchor="middle">గానుగ</text>
+  </g>
+
+  <!-- Cold-Pressed Golden Oil Bottle to the right -->
+  <g transform="translate(175, 90)">
+    <path d="M15 25 L15 10 L25 10 L25 25 C32 30 38 40 38 55 L38 92 C38 96 35 98 30 98 L10 98 C5 98 2 96 2 92 L2 55 C2 40 8 30 15 25 Z" fill="url(#sesameOil)" stroke="#6b4f2a" stroke-width="2"/>
+    <rect x="14" y="2" width="12" height="9" fill="#1c4423" stroke="#6b4f2a" stroke-width="1.5"/>
+    <!-- Glass Highlight -->
+    <line x1="8" y1="42" x2="8" y2="90" stroke="#fffdf7" stroke-width="1.8" opacity="0.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Natural Black & Golden Sesame Seeds scattered -->
+  <g fill="#2c221e" stroke="#6b4f2a" stroke-width="0.8">
+    <ellipse cx="68" cy="180" rx="3.5" ry="2" transform="rotate(25 68 180)"/>
+    <ellipse cx="78" cy="184" rx="3.5" ry="2" transform="rotate(-15 78 184)"/>
+    <ellipse cx="88" cy="181" rx="3.5" ry="2" transform="rotate(40 88 181)"/>
+    <ellipse cx="60" cy="183" rx="3.5" ry="2" transform="rotate(-30 60 183)"/>
+    <ellipse cx="160" cy="184" rx="3.5" ry="2" transform="rotate(10 160 184)"/>
+    <ellipse cx="170" cy="182" rx="3.5" ry="2" transform="rotate(-20 170 182)"/>
+  </g>
+</svg>
