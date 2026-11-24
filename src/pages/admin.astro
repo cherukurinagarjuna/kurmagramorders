@@ -540,6 +540,33 @@ import Base from '../layouts/Base.astro';
       flex-shrink: 0;
     }
 
+    /* ── Delete Order Button ── */
+    .btn-action-delete-order {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #C62828 !important;
+      background: #FFEBEE !important;
+      border: 1.5px solid #E53935 !important;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.08);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .btn-action-delete-order:hover {
+      background: #C62828 !important;
+      color: #FFFFFF !important;
+      border-color: #B71C1C !important;
+      box-shadow: 2px 2px 0 #1A1412;
+    }
+    .btn-action-delete-order svg {
+      flex-shrink: 0;
+    }
+
     .admin-policy-footer {
       background: var(--color-tholu, #F4EAD4);
       border: 1px dashed var(--color-kasi, #1A1412);
@@ -849,6 +876,18 @@ import Base from '../layouts/Base.astro';
                     </svg>
                     <span>WhatsApp సందేశం (Send WhatsApp)</span>
                   </button>
+
+                  <!-- Action 3: Delete Test Order Button -->
+                  <button type="button" 
+                          class="btn-action-delete-order" 
+                          data-order-id="${order.id}" 
+                          data-order-no="${orderNo}" 
+                          title="ఈ ఆర్డర్‌ను తొలగించండి (Delete Test Order)">
+                    <svg width="13" height="13" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                      <path d="M216 48h-40v-8a24 24 0 0 0-24-24h-48a24 24 0 0 0-24 24v8H40a8 8 0 0 0 0 16h8v144a16 16 0 0 0 16 16h128a16 16 0 0 0 16-16V64h8a8 8 0 0 0 0-16ZM96 40a8 8 0 0 1 8-8h48a8 8 0 0 1 8 8v8H96Zm96 168H64V64h128Zm-80-104v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Zm48 0v64a8 8 0 0 1-16 0v-64a8 8 0 0 1 16 0Z"/>
+                    </svg>
+                    <span>ఆర్డర్ తొలగించు (Delete Order)</span>
+                  </button>
                 </div>
               </td>
             </tr>
@@ -889,6 +928,45 @@ import Base from '../layouts/Base.astro';
             const target = currentOrders.find(o => o.id == orderId);
             if (target) {
               sendWhatsAppDirectly(target, target.status || 'received', target.lr_number);
+            }
+          });
+        });
+
+        // Wire delete order click
+        ordersTbody.querySelectorAll('.btn-action-delete-order').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const orderId = btn.dataset.orderId;
+            const orderNo = btn.dataset.orderNo;
+            const confirmed = confirm(`మీరు ఖచ్చితంగా ఆర్డర్ ${orderNo} ను తొలగించాలనుకుంటున్నారా?\n(Are you sure you want to delete order ${orderNo}?)`);
+            if (!confirmed) return;
+
+            try {
+              btn.disabled = true;
+              btn.innerHTML = '<span>తొలగిస్తోంది...</span>';
+
+              const res = await fetch('/api/delete-order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'x-admin-password': adminToken,
+                  'Authorization': `Bearer ${adminToken}`
+                },
+                body: JSON.stringify({ order_id: parseInt(orderId, 10), order_no: orderNo })
+              });
+
+              const data = await res.json().catch(() => ({}));
+              if (res.ok && data.ok) {
+                currentOrders = currentOrders.filter(o => o.id != orderId && o.order_no != orderNo && o.order_code != orderNo);
+                updateStats(currentOrders);
+                renderTable();
+                showToast(`ఆర్డర్ ${orderNo} విజయవంతంగా తొలగించబడింది (Order Deleted)!`);
+              } else {
+                alert(data.error || 'ఆర్డర్ తొలగించడంలో లోపం ఏర్పడింది.');
+                renderTable();
+              }
+            } catch (err) {
+              alert('సర్వర్ ఎర్రర్: ' + err.message);
+              renderTable();
             }
           });
         });

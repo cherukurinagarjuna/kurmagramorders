@@ -286,12 +286,38 @@ async function updateStatus({ order_id, status, lr_number, transporter }) {
   return order;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Delete Order
+// ─────────────────────────────────────────────────────────────────────────────
+async function deleteOrder({ id, order_no }) {
+  let orders = readOrdersFromFile();
+  const initialLen = orders.length;
+
+  if (id) {
+    const numId = parseInt(id, 10);
+    orders = orders.filter(o => parseInt(o.id, 10) !== numId);
+  } else if (order_no) {
+    const cleanNo = String(order_no).trim().toUpperCase();
+    orders = orders.filter(o =>
+      (o.order_no && o.order_no.toUpperCase() !== cleanNo) &&
+      (o.order_code && o.order_code.toUpperCase() !== cleanNo)
+    );
+  }
+
+  if (orders.length !== initialLen) {
+    writeOrdersToFile(orders);
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   createOrder,
   listOrders,
   trackOrder,
   getOrder,
   updateStatus,
+  deleteOrder,
   readOrdersFromFile,
   writeOrdersToFile,
   publicView

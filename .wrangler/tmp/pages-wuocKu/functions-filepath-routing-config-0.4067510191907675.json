@@ -1,0 +1,85 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/admin-login",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/admin-login.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/create-order",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/create-order.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/get-order",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/get-order.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/get-products",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/get-products.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/list-orders",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/list-orders.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/mark-shipped",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/mark-shipped.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/api/track-order",
+      "mountPath": "/api",
+      "method": "GET",
+      "module": [
+        "api/track-order.js:onRequestGet"
+      ]
+    },
+    {
+      "routePath": "/api/update-status",
+      "mountPath": "/api",
+      "method": "POST",
+      "module": [
+        "api/update-status.js:onRequestPost"
+      ]
+    },
+    {
+      "routePath": "/",
+      "mountPath": "/",
+      "method": "OPTIONS",
+      "middleware": [
+        "_middleware.js:onRequestOptions"
+      ]
+    },
+    {
+      "routePath": "/",
+      "mountPath": "/",
+      "method": "",
+      "middleware": [
+        "_middleware.js:onRequest"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
