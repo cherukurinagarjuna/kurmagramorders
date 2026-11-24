@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import OfferStrip from '../components/OfferStrip.astro';
+import Catalog from '../components/Catalog.astro';
+import Steps from '../components/Steps.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config';
+---
+
+<Base title={SITE.titleShop} description="కూర్మగ్రామ వేదిక్ విలేజ్ సహజ ఉత్పత్తుల భాండాగారం. ఆవు నెయ్యి, చెక్క గానుగ నూనెలు, దేశవాళీ బియ్యం మరియు మూలికా స్నాన చూర్ణాలు." canonicalPath="/shop">
+  <Header activeNav="shop" />
+  
+  <main id="mainContent">
+    <!-- Editorial Shop Header Banner -->
+    <section class="shop-hero-banner" style="background-color: var(--color-biyyam); padding: var(--space-8) 0; border-bottom: 1.5px solid var(--color-ittadi); text-align: center;">
+      <div class="container">
+        <div style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <img src="/assets/svg/kalamkari/paddy-stalk.svg" alt="వరి కంకి చిహ్నం" width="28" height="28" />
+          <span style="font-family: var(--font-latin); font-size: 0.75rem; letter-spacing: 0.15em; color: var(--color-ittadi-text); font-weight: 600;">VEDIC NATURAL STORE</span>
+        </div>
+        <h1 style="font-family: var(--font-display); font-size: var(--text-hero); font-weight: 700; color: var(--color-kasi); margin-bottom: 0.5rem;">
+          సహజ ఉత్పత్తుల భాండాగారం
+        </h1>
+        <p style="font-size: var(--text-body); color: var(--color-text-muted); max-width: 620px; margin: 0 auto; line-height: 1.7;">
+          శ్రీకాకుళం నంద గోకులం గోశాల మరియు ప్రకృతి వ్యవసాయ క్షేత్రం నుండి నేరుగా స్వహస్తాలతో తయారుచేసిన నిఖార్సయిన గ్రామీణ ఉత్పత్తులు.
+        </p>
+      </div>
+    </section>
+
+    <OfferStrip />
+    <Catalog title="అన్ని ఉత్పత్తులు" subtitle="వర్గాన్ని ఎంచుకోండి లేదా శోధించండి" />
+    <Steps />
+  </main>
+
+  <Footer />
+</Base>

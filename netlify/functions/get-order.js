@@ -1,10 +1,10 @@
 'use strict';
 
-const { getPool }           = require('./lib/db');
+const ordersDb              = require('./lib/orders-db');
 const { json, requireAuth } = require('./lib/helpers');
 
 // ─────────────────────────────────────────────────────────────────────────────
-// GET /api/get-order?id=ORDER_ID
+// GET /api/get-order?id=ORDER_ID or ?code=ORDER_CODE
 // Returns full details for a single order (admin only).
 // ─────────────────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
@@ -17,49 +17,24 @@ exports.handler = async (event) => {
     return json(401, { ok: false, error: 'Unauthorized' });
   }
 
-  const { id } = event.queryStringParameters || {};
-  const orderId = parseInt(id, 10);
-  if (!Number.isInteger(orderId) || orderId <= 0) {
-    return json(400, { ok: false, error: 'id must be a positive integer' });
+  const { id, code } = event.queryStringParameters || {};
+  if (!id && !code) {
+    return json(400, { ok: false, error: 'Provide either id or code as query parameter' });
   }
 
-  const pool = getPool();
-  let client;
-
   try {
-    client = await pool.connect();
-    const result = await client.query(
-      `SELECT
-         id,
-         order_code,
-         customer_name,
-         customer_phone,
-         delivery_address,
-         product_details,
-         amount,
-         status,
-         lr_number,
-         transporter,
-         created_at,
-         shipped_at,
-         updated_at
-       FROM orders
-       WHERE id = $1`,
-      [orderId]
-    );
+    const order = await ordersDb.getOrder({ id, code });
 
-    if (result.rows.length === 0) {
+    if (!order) {
       return json(404, { ok: false, error: 'Order not found' });
     }
 
     return json(200, {
-      ok: true,
-      order: result.rows[0],
+      ok:    true,
+      order: order,
     });
   } catch (err) {
-    console.error('[get-order] DB error:', err.message);
+    console.error('[get-order] Error:', err.message);
     return json(500, { ok: false, error: 'Could not fetch order' });
-  } finally {
-    if (client) client.release();
   }
 };

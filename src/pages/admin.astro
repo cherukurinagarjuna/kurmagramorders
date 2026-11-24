@@ -1,0 +1,927 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base 
+  title="ఆర్డర్ల నిర్వహణ & మాన్యువల్ WhatsApp డ్యాష్‌బోర్డ్ | కూర్మగ్రామ వేదిక్ విలేజ్"
+  description="కూర్మగ్రామ వేదిక్ విలేజ్ ఆర్డర్ల అడ్మిన్ నిర్వహణ ప్యానెల్ మరియు మాన్యువల్ WhatsApp కమ్యూనికేషన్ హబ్."
+>
+  <main class="admin-page-container">
+    <!-- Login Screen (Initially visible if not authenticated) -->
+    <section id="adminLoginSection" class="admin-login-wrap">
+      <div class="admin-login-card">
+        <div class="login-header-mark">
+          <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="కూర్మగ్రామము" width="48" height="48" />
+          <span class="login-kalamkari-badge">కూర్మగ్రామ వేదిక్ విలేజ్</span>
+        </div>
+        <h1 class="login-title">అడ్మిన్ లాగిన్ &bull; Admin Portal</h1>
+        <p class="login-sub">ఆర్డర్లను నిర్వహించడానికి మరియు కస్టమర్లకు మాన్యువల్ WhatsApp సందేశాలు పంపడానికి పాస్‌వర్డ్ నమోదు చేయండి.</p>
+
+        <div id="loginAlertBox" class="admin-alert" style="display: none;" role="alert"></div>
+
+        <form id="adminLoginForm" class="admin-login-form">
+          <div class="form-group">
+            <label for="adminPasswordInput" class="admin-form-label">అడ్మిన్ పాస్‌వర్డ్ (Admin Password) *</label>
+            <input 
+              type="password" 
+              id="adminPasswordInput" 
+              class="admin-form-input" 
+              required 
+              placeholder="పాస్‌వర్డ్ నమోదు చేయండి" 
+              autocomplete="current-password"
+            />
+          </div>
+          <button type="submit" id="adminLoginSubmitBtn" class="btn btn-sharp-primary btn-login-submit">
+            <span>లాగిన్ అవ్వండి &rarr;</span>
+          </button>
+        </form>
+
+        <div class="login-card-footer">
+          <span>సురక్షిత అంతర్గత నిర్వహణ వ్యవస్థ &bull; Kurmagram Vedic Village</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Dashboard Panel (Visible when authenticated) -->
+    <section id="adminDashboardPanel" class="admin-dashboard-panel" style="display: none;">
+      <!-- Top Broadsheet Header -->
+      <header class="admin-panel-header">
+        <div class="admin-header-left">
+          <div class="admin-title-row">
+            <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="" width="36" height="36" class="admin-emblem" />
+            <div>
+              <span class="admin-eyebrow">కూర్మగ్రామ వేదిక్ విలేజ్ &bull; అంతర్గత కార్యాలయం</span>
+              <h1 class="admin-main-heading">ఆర్డర్ల నిర్వహణ & మాన్యువల్ WhatsApp లెడ్జర్</h1>
+            </div>
+          </div>
+        </div>
+        <div class="admin-header-actions">
+          <button type="button" id="adminRefreshBtn" class="btn btn-sharp-secondary btn-sm" title="ఆర్డర్ల జాబితాను రీఫ్రెష్ చేయండి">
+            <span>తిరిగి లోడ్ చేయండి (⟳)</span>
+          </button>
+          <button type="button" id="adminLogoutBtn" class="btn btn-sharp-secondary btn-sm btn-logout" title="లాగౌట్ అవ్వండి">
+            <span>లాగౌట్</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Stats Overview Ribbon -->
+      <div class="admin-stats-ribbon">
+        <div class="stat-card">
+          <span class="stat-label">మొత్తం ఆర్డర్లు (Total Orders)</span>
+          <strong class="stat-value" id="statTotalOrders">0</strong>
+        </div>
+        <div class="stat-card stat-card-received">
+          <span class="stat-label"><span class="status-dot dot-received"></span> అందింది (Received)</span>
+          <strong class="stat-value" id="statReceivedOrders">0</strong>
+        </div>
+        <div class="stat-card stat-card-processing">
+          <span class="stat-label"><span class="status-dot dot-processing"></span> ప్యాకింగ్ (Processing)</span>
+          <strong class="stat-value" id="statProcessingOrders">0</strong>
+        </div>
+        <div class="stat-card stat-card-shipped">
+          <span class="stat-label"><span class="status-dot dot-shipped"></span> రవాణా (Shipped)</span>
+          <strong class="stat-value" id="statShippedOrders">0</strong>
+        </div>
+      </div>
+
+      <!-- Controls Bar: Filter Tabs & Search -->
+      <div class="admin-controls-card">
+        <div class="admin-filter-tabs" role="tablist">
+          <button type="button" class="admin-filter-tab active" data-status="">అన్నీ (All)</button>
+          <button type="button" class="admin-filter-tab" data-status="received">అందింది (Received)</button>
+          <button type="button" class="admin-filter-tab" data-status="processing">ప్యాకింగ్ (Processing)</button>
+          <button type="button" class="admin-filter-tab" data-status="shipped">రవాణాలో ఉంది (Shipped)</button>
+          <button type="button" class="admin-filter-tab" data-status="delivered">చేరింది (Delivered)</button>
+        </div>
+        <div class="admin-search-wrap">
+          <input 
+            type="search" 
+            id="adminSearchInput" 
+            class="admin-search-input" 
+            placeholder="ఆర్డర్ నంబర్, పేరు లేదా ఫోన్ నంబర్‌తో శోధించండి..." 
+          />
+        </div>
+      </div>
+
+      <!-- Live Notification Toast -->
+      <div id="adminActionToast" class="admin-toast-banner" style="display: none;" role="status"></div>
+
+      <!-- Orders Table Container -->
+      <div class="admin-table-wrapper">
+        <div id="adminTableLoading" class="admin-state-box">
+          <p>ఆర్డర్ల సమాచారం సేకరిస్తున్నాము...</p>
+        </div>
+
+        <div id="adminTableEmpty" class="admin-state-box" style="display: none;">
+          <p>ఎలాంటి ఆర్డర్లు కనుగొనబడలేదు.</p>
+        </div>
+
+        <table id="adminOrdersTable" class="admin-orders-table" style="display: none;">
+          <thead>
+            <tr>
+              <th scope="col">ఆర్డర్ No (Order No)</th>
+              <th scope="col">గ్రాహకుడు (Customer)</th>
+              <th scope="col">ఫోన్ (WhatsApp)</th>
+              <th scope="col">వస్తువులు & మొత్తం (Items & Total)</th>
+              <th scope="col">ప్రస్తుత స్థితి (Status)</th>
+              <th scope="col">నమోదైన తేదీ (Date)</th>
+              <th scope="col" class="th-actions">చర్యలు (Print Slip & WhatsApp)</th>
+            </tr>
+          </thead>
+          <tbody id="adminOrdersTbody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Manual WhatsApp Policy Notice -->
+      <div class="admin-policy-footer">
+        <p>
+          <strong>గమనిక (100% Manual WhatsApp Handshake):</strong> ఏ విధమైన బాహ్య ఆటోమేషన్ లేదా బాట్‌లు లేకుండా, బటన్‌ను క్లిక్ చేసినప్పుడు నేరుగా మీ WhatsApp లో సందేశం సిద్ధమవుతుంది. మీరు సమీక్షించి "Send" క్లిక్ చేయవచ్చు.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <style is:global>
+    .admin-page-container {
+      background-color: var(--color-khadi, #FDFBF7);
+      min-height: 85vh;
+      padding: var(--space-6, 1.5rem) var(--space-4, 1rem);
+      max-width: 1560px;
+      margin: 0 auto;
+    }
+
+    /* ── Login Box ── */
+    .admin-login-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--space-8, 2rem) 0;
+    }
+    .admin-login-card {
+      background: var(--color-khadi, #FDFBF7);
+      border: 2px solid var(--color-kasi, #1A1412);
+      box-shadow: 4px 4px 0 var(--color-kasi, #1A1412);
+      max-width: 460px;
+      width: 100%;
+      padding: var(--space-8, 2rem);
+    }
+    .login-header-mark {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: var(--space-4, 1rem);
+    }
+    .login-kalamkari-badge {
+      font-size: var(--text-caption, 0.75rem);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--color-manjistha, #7B1113);
+    }
+    .login-title {
+      font-family: 'Ramabhadra', serif;
+      font-size: 1.5rem;
+      color: var(--color-kasi, #1A1412);
+      margin-bottom: var(--space-2, 0.5rem);
+    }
+    .login-sub {
+      font-size: var(--text-sm, 0.88rem);
+      color: var(--color-text-muted, #4A4036);
+      line-height: 1.6;
+      margin-bottom: var(--space-5, 1.25rem);
+    }
+    .admin-login-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4, 1rem);
+    }
+    .admin-form-label {
+      font-size: var(--text-sm, 0.88rem);
+      font-weight: 700;
+      color: var(--color-kasi, #1A1412);
+      display: block;
+      margin-bottom: 0.35rem;
+    }
+    .admin-form-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid var(--color-kasi, #1A1412);
+      border-radius: 0;
+      padding: 0.75rem 0.85rem;
+      font-size: 1rem;
+      color: var(--color-kasi, #1A1412);
+    }
+    .btn-login-submit {
+      width: 100%;
+      padding: 0.85rem;
+      justify-content: center;
+    }
+    .login-card-footer {
+      margin-top: var(--space-6, 1.5rem);
+      border-top: 1px dotted var(--color-border, #E2D9CC);
+      padding-top: var(--space-3, 0.75rem);
+      font-size: var(--text-caption, 0.75rem);
+      text-align: center;
+      color: var(--color-text-muted, #4A4036);
+    }
+
+    /* ── Dashboard Panel ── */
+    .admin-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--color-kasi, #1A1412);
+      padding-bottom: var(--space-4, 1rem);
+      margin-bottom: var(--space-6, 1.5rem);
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .admin-title-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .admin-eyebrow {
+      font-size: var(--text-caption, 0.75rem);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: var(--color-manjistha, #7B1113);
+      display: block;
+    }
+    .admin-main-heading {
+      font-family: 'Ramabhadra', serif;
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      color: var(--color-kasi, #1A1412);
+      margin: 0.15rem 0 0;
+    }
+    .admin-header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .btn-logout {
+      border-color: #DC2626 !important;
+      color: #DC2626 !important;
+    }
+    .btn-logout:hover {
+      background: #DC2626 !important;
+      color: #FFFFFF !important;
+    }
+
+    /* ── Stats Ribbon ── */
+    .admin-stats-ribbon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-3, 0.75rem);
+      margin-bottom: var(--space-6, 1.5rem);
+    }
+    .stat-card {
+      background: var(--color-biyyam, #FFFFFF);
+      border: 1.5px solid var(--color-kasi, #1A1412);
+      padding: var(--space-4, 1rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .stat-label {
+      font-size: var(--text-xs, 0.8rem);
+      color: var(--color-text-muted, #4A4036);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .stat-value {
+      font-family: 'Ramabhadra', serif;
+      font-size: 1.6rem;
+      color: var(--color-kasi, #1A1412);
+    }
+    .status-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      margin-right: 4px;
+    }
+    .dot-received { background-color: #16A34A; }
+    .dot-processing { background-color: #D97706; }
+    .dot-shipped { background-color: #2563EB; }
+    .dot-delivered { background-color: #059669; }
+
+    /* ── Controls Bar ── */
+    .admin-controls-card {
+      background: var(--color-tholu, #F4EAD4);
+      border: 1.5px solid var(--color-kasi, #1A1412);
+      padding: var(--space-3, 0.75rem) var(--space-4, 1rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: var(--space-4, 1rem);
+      flex-wrap: wrap;
+    }
+    .admin-filter-tabs {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .admin-filter-tab {
+      background: transparent;
+      border: 1px solid var(--color-kasi, #1A1412);
+      border-radius: 0;
+      padding: 0.35rem 0.65rem;
+      font-size: var(--text-xs, 0.8rem);
+      font-weight: 700;
+      color: var(--color-kasi, #1A1412);
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .admin-filter-tab:hover {
+      background: rgba(26, 20, 18, 0.06);
+    }
+    .admin-filter-tab.active {
+      background: var(--color-kasi, #1A1412);
+      color: var(--color-khadi, #FDFBF7);
+    }
+    .admin-search-wrap {
+      flex: 1;
+      max-width: 380px;
+      min-width: 240px;
+    }
+    .admin-search-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid var(--color-kasi, #1A1412);
+      border-radius: 0;
+      padding: 0.4rem 0.65rem;
+      font-size: var(--text-sm, 0.88rem);
+      color: var(--color-kasi, #1A1412);
+    }
+
+    /* ── Alert & Toast ── */
+    .admin-alert {
+      background: #FEF2F2;
+      border: 1px solid #DC2626;
+      color: #991B1B;
+      padding: 0.65rem 0.85rem;
+      font-size: var(--text-sm, 0.88rem);
+      margin-bottom: var(--space-4, 1rem);
+    }
+    .admin-toast-banner {
+      background: #ECFDF5;
+      border: 1px solid #059669;
+      color: #065F46;
+      padding: 0.65rem 1rem;
+      font-size: var(--text-sm, 0.88rem);
+      font-weight: 700;
+      margin-bottom: var(--space-4, 1rem);
+      animation: fadeIn 0.2s ease;
+    }
+
+    /* ── Orders Table ── */
+    .admin-table-wrapper {
+      background: var(--color-biyyam, #FFFFFF);
+      border: 2px solid var(--color-kasi, #1A1412);
+      box-shadow: 4px 4px 0 var(--color-kasi, #1A1412);
+      overflow-x: auto;
+      margin-bottom: var(--space-6, 1.5rem);
+    }
+    .admin-state-box {
+      padding: var(--space-8, 2rem);
+      text-align: center;
+      color: var(--color-text-muted, #4A4036);
+      font-size: var(--text-sm, 0.88rem);
+    }
+    .admin-orders-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm, 0.88rem);
+      text-align: left;
+    }
+    .admin-orders-table th {
+      background: var(--color-tholu, #F4EAD4);
+      color: var(--color-kasi, #1A1412);
+      border-bottom: 2px solid var(--color-kasi, #1A1412);
+      border-right: 1px solid var(--color-border, #E2D9CC);
+      padding: 0.75rem 0.85rem;
+      font-size: var(--text-xs, 0.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .admin-orders-table td {
+      border-bottom: 1px solid var(--color-border, #E2D9CC);
+      border-right: 1px solid var(--color-border, #E2D9CC);
+      padding: 0.6rem 0.65rem;
+      vertical-align: middle;
+      color: var(--color-kasi, #1A1412);
+    }
+    .admin-orders-table tbody tr:hover {
+      background: #FDFBF7;
+    }
+
+    .order-code-badge {
+      font-family: monospace;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--color-manjistha, #7B1113);
+      display: block;
+      white-space: nowrap;
+    }
+    .customer-name-cell {
+      font-weight: 700;
+      color: var(--color-kasi, #1A1412);
+      font-size: 0.85rem;
+    }
+    .customer-addr-snippet {
+      font-size: 0.72rem;
+      color: var(--color-text-muted, #4A4036);
+      display: block;
+      max-width: 160px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .phone-cell a {
+      color: var(--color-kasi, #1A1412);
+      text-decoration: underline;
+      font-family: monospace;
+      font-weight: 600;
+      font-size: 0.82rem;
+    }
+    .amount-cell strong {
+      color: var(--color-kasi, #1A1412);
+      font-size: 0.9rem;
+    }
+    .items-snippet {
+      font-size: 0.72rem;
+      color: var(--color-text-muted, #4A4036);
+      display: block;
+      max-width: 160px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ── Status Badges & Quick Status Select ── */
+    .status-select-wrap select {
+      background: var(--color-khadi, #FDFBF7);
+      border: 1px solid var(--color-kasi, #1A1412);
+      border-radius: 0;
+      padding: 0.2rem 0.35rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--color-kasi, #1A1412);
+      cursor: pointer;
+    }
+
+    .th-actions {
+      min-width: 320px;
+    }
+    .action-cell-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      align-items: flex-start;
+    }
+    /* ── Print Slip Button for Navata Transport & Devotees ── */
+    .btn-action-print-slip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--color-kasi, #1A1412);
+      color: #FFFFFF !important;
+      border: 1.5px solid var(--color-kasi, #1A1412);
+      padding: 0.35rem 0.65rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 2px 2px 0 var(--color-manjistha, #7B1113);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-action-print-slip:hover {
+      background: var(--color-manjistha, #7B1113);
+      border-color: var(--color-manjistha, #7B1113);
+      color: #FFFFFF !important;
+      box-shadow: 2px 2px 0 var(--color-kasi, #1A1412);
+    }
+    .btn-action-print-slip svg {
+      flex-shrink: 0;
+    }
+
+    /* ── Single Direct WhatsApp Update Button ── */
+    .btn-wa-single-notify {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.65rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #1B5E20 !important;
+      background: #E8F5E9 !important;
+      border: 1.5px solid #2E7D32 !important;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .btn-wa-single-notify:hover {
+      background: #2E7D32 !important;
+      color: #FFFFFF !important;
+      box-shadow: 2px 2px 0 #1A1412;
+    }
+    .btn-wa-single-notify svg {
+      flex-shrink: 0;
+    }
+
+    .admin-policy-footer {
+      background: var(--color-tholu, #F4EAD4);
+      border: 1px dashed var(--color-kasi, #1A1412);
+      padding: var(--space-4, 1rem);
+      font-size: var(--text-xs, 0.8rem);
+      color: var(--color-text-muted, #4A4036);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .admin-controls-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .admin-search-wrap {
+        max-width: 100%;
+      }
+      .wa-buttons-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginSection = document.getElementById('adminLoginSection');
+      const dashboardPanel = document.getElementById('adminDashboardPanel');
+      const loginForm = document.getElementById('adminLoginForm');
+      const loginPasswordInput = document.getElementById('adminPasswordInput');
+      const loginAlertBox = document.getElementById('loginAlertBox');
+      const logoutBtn = document.getElementById('adminLogoutBtn');
+      const refreshBtn = document.getElementById('adminRefreshBtn');
+      const searchInput = document.getElementById('adminSearchInput');
+      const filterTabs = document.querySelectorAll('.admin-filter-tab');
+      const tableLoading = document.getElementById('adminTableLoading');
+      const tableEmpty = document.getElementById('adminTableEmpty');
+      const ordersTable = document.getElementById('adminOrdersTable');
+      const ordersTbody = document.getElementById('adminOrdersTbody');
+      const toastBanner = document.getElementById('adminActionToast');
+
+      let currentOrders = [];
+      let activeFilter = '';
+      let adminToken = sessionStorage.getItem('kg_admin_token') || localStorage.getItem('kg_admin_token') || '';
+
+      // Exact Manual WhatsApp Message Templates
+      function getWhatsAppMessage(type, name, orderNo, lrNumber) {
+        const cleanName = (name || 'గ్రాహకులు').trim();
+        const cleanNo = (orderNo || '').trim();
+
+        if (type === 'received' || type === 'placed') {
+          return `నమస్కారం ${cleanName} గారు! 🙏\nమీ కూర్మగ్రామ వేదిక్ విలేజ్ ఆర్డర్ (No: ${cleanNo}) మాకు అందింది. త్వరలో ప్రాసెస్ చేసి పంపుతాము.\nధన్యవాదాలు - కూర్మగ్రామ వేదిక్ విలేజ్`;
+        } else if (type === 'processing') {
+          return `నమస్కారం ${cleanName} గారు! 🙏\nమీ కూర్మగ్రామ వేదిక్ విలేజ్ ఆర్డర్ (No: ${cleanNo}) ప్రస్తుతం ప్యాక్ చేయబడుతోంది. త్వరలోనే నవత రోడ్ ట్రాన్స్‌పోర్ట్ ద్వారా పంపబడుతుంది.\nధన్యవాదాలు - కూర్మగ్రామ వేదిక్ విలేజ్`;
+        } else if (type === 'shipped') {
+          const lrText = lrNumber ? `\n📦 నవత LR / బిల్టీ నంబర్: ${lrNumber}` : '';
+          return `నమస్కారం ${cleanName} గారు! 🙏\nమీ కూర్మగ్రామ వేదిక్ విలేజ్ ఆర్డర్ (No: ${cleanNo}) నవత రోడ్ ట్రాన్స్‌పోర్ట్ ద్వారా పంపబడింది.${lrText}\nట్రాకింగ్ వివరాలు: https://kurmagramorders.netlify.app/track.html?code=${cleanNo}\nధన్యవాదాలు - కూర్మగ్రామ వేదిక్ విలేజ్`;
+        } else if (type === 'delivered') {
+          return `నమస్కారం ${cleanName} గారు! 🙏\nమీ కూర్మగ్రామ వేదిక్ విలేజ్ ఆర్డర్ (No: ${cleanNo}) చేరింది (Delivered). మీకు మా సహజ ఉత్పత్తులు నచ్చుతాయని ఆశిస్తున్నాము.\nధన్యవాదాలు - కూర్మగ్రామ వేదిక్ విలేజ్`;
+        } else if (type === 'cancelled') {
+          return `నమస్కారం ${cleanName} గారు! 🙏\nమీ కూర్మగ్రామ వేదిక్ విలేజ్ ఆర్డర్ (No: ${cleanNo}) రద్దు చేయబడింది.\nధన్యవాదాలు - కూర్మగ్రామ వేదిక్ విలేజ్`;
+        }
+        return `నమస్కారం ${cleanName} గారు! 🙏\nమీ ఆర్డర్ (No: ${cleanNo}) స్థితి: ${type}.\nధన్యవాదాలు - కూర్మగ్రామ వేదిక్ విలేజ్`;
+      }
+
+      function sendWhatsAppDirectly(order, status, lrNum) {
+        if (!order || !order.customer_phone) return;
+        const rawPhone = String(order.customer_phone).replace(/\D/g, '');
+        const intlPhone = rawPhone.length === 10 ? `91${rawPhone}` : (rawPhone.startsWith('91') ? rawPhone : `91${rawPhone}`);
+        const orderNo = order.order_no || order.order_code || `KG-${order.id}`;
+        const msg = getWhatsAppMessage(status || order.status || 'received', order.customer_name, orderNo, lrNum || order.lr_number);
+        const url = `https://wa.me/${intlPhone}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        showToast(`WhatsApp మెసేజ్ సిద్ధమైంది (${(status || order.status).toUpperCase()})!`);
+      }
+
+      function showToast(msg) {
+        if (!toastBanner) return;
+        toastBanner.textContent = msg;
+        toastBanner.style.display = 'block';
+        setTimeout(() => {
+          toastBanner.style.display = 'none';
+        }, 3500);
+      }
+
+      // Check initial auth state
+      if (adminToken) {
+        showDashboard();
+      } else {
+        showLogin();
+      }
+
+      function showLogin() {
+        loginSection.style.display = 'flex';
+        dashboardPanel.style.display = 'none';
+      }
+
+      function showDashboard() {
+        loginSection.style.display = 'none';
+        dashboardPanel.style.display = 'block';
+        fetchOrders();
+      }
+
+      // Login handler
+      loginForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const pwd = loginPasswordInput.value.trim();
+        loginAlertBox.style.display = 'none';
+
+        try {
+          const res = await fetch('/api/admin-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: pwd })
+          });
+          const data = await res.json();
+
+          if (res.ok && data.ok) {
+            adminToken = pwd;
+            sessionStorage.setItem('kg_admin_token', pwd);
+            localStorage.setItem('kg_admin_token', pwd);
+            document.cookie = `admin=${encodeURIComponent(pwd)}; path=/; max-age=86400; SameSite=Lax`;
+            loginPasswordInput.value = '';
+            showDashboard();
+          } else {
+            loginAlertBox.textContent = data.error || 'పాస్‌వర్డ్ సరికాదు. దయచేసి మళ్లీ ప్రయత్నించండి.';
+            loginAlertBox.style.display = 'block';
+          }
+        } catch (err) {
+          loginAlertBox.textContent = 'సర్వర్‌ను సంప్రదించడంలో లోపం ఏర్పడింది.';
+          loginAlertBox.style.display = 'block';
+        }
+      });
+
+      // Logout handler
+      logoutBtn?.addEventListener('click', () => {
+        adminToken = '';
+        sessionStorage.removeItem('kg_admin_token');
+        localStorage.removeItem('kg_admin_token');
+        document.cookie = 'admin=; path=/; max-age=0';
+        showLogin();
+      });
+
+      // Refresh handler
+      refreshBtn?.addEventListener('click', () => {
+        fetchOrders();
+      });
+
+      // Filter tabs
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          activeFilter = tab.dataset.status || '';
+          renderTable();
+        });
+      });
+
+      // Search input
+      searchInput?.addEventListener('input', () => {
+        renderTable();
+      });
+
+      // Fetch orders from API
+      async function fetchOrders() {
+        tableLoading.style.display = 'block';
+        tableEmpty.style.display = 'none';
+        ordersTable.style.display = 'none';
+
+        try {
+          const res = await fetch('/api/list-orders', {
+            headers: {
+              'x-admin-password': adminToken,
+              'Authorization': `Bearer ${adminToken}`
+            }
+          });
+
+          if (res.status === 401) {
+            adminToken = '';
+            sessionStorage.removeItem('kg_admin_token');
+            showLogin();
+            return;
+          }
+
+          const data = await res.json();
+          tableLoading.style.display = 'none';
+
+          if (res.ok && data.ok && Array.isArray(data.orders)) {
+            currentOrders = data.orders;
+            updateStats(currentOrders);
+            renderTable();
+          } else {
+            tableEmpty.style.display = 'block';
+          }
+        } catch (err) {
+          tableLoading.style.display = 'none';
+          tableEmpty.style.display = 'block';
+          tableEmpty.textContent = 'ఆర్డర్లు లోడ్ చేయడంలో సమస్య ఏర్పడింది.';
+        }
+      }
+
+      function updateStats(orders) {
+        document.getElementById('statTotalOrders').textContent = orders.length;
+        document.getElementById('statReceivedOrders').textContent = orders.filter(o => o.status === 'received' || o.status === 'placed').length;
+        document.getElementById('statProcessingOrders').textContent = orders.filter(o => o.status === 'processing').length;
+        document.getElementById('statShippedOrders').textContent = orders.filter(o => o.status === 'shipped').length;
+      }
+
+      function renderTable() {
+        const query = (searchInput?.value || '').trim().toLowerCase();
+        
+        let filtered = currentOrders.filter(order => {
+          // Status filter
+          if (activeFilter) {
+            if (activeFilter === 'received') {
+              if (order.status !== 'received' && order.status !== 'placed') return false;
+            } else if (order.status !== activeFilter) {
+              return false;
+            }
+          }
+          // Search query
+          if (query) {
+            const code = (order.order_no || order.order_code || '').toLowerCase();
+            const name = (order.customer_name || '').toLowerCase();
+            const phone = (order.customer_phone || '').toLowerCase();
+            return code.includes(query) || name.includes(query) || phone.includes(query);
+          }
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          ordersTable.style.display = 'none';
+          tableEmpty.style.display = 'block';
+          return;
+        }
+
+        tableEmpty.style.display = 'none';
+        ordersTable.style.display = 'table';
+
+        ordersTbody.innerHTML = filtered.map(order => {
+          const orderNo = order.order_no || order.order_code || `KG-${order.id}`;
+          const dateStr = order.created_at ? new Date(order.created_at).toLocaleDateString('te-IN', {
+            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+          }) : '-';
+          
+          const rawPhone = (order.customer_phone || '').replace(/\D/g, '');
+          const intlPhone = rawPhone.length === 10 ? `91${rawPhone}` : (rawPhone.startsWith('91') ? rawPhone : `91${rawPhone}`);
+          
+          const totalInr = order.amount || (order.total_amount ? (order.total_amount / 100).toFixed(2) : '0');
+
+          return `
+            <tr data-order-id="${order.id}">
+              <td>
+                <span class="order-code-badge">${orderNo}</span>
+                ${order.payment_ref ? `<span style="font-size: 0.72rem; color: var(--color-text-muted);">UTR: ${order.payment_ref}</span>` : ''}
+              </td>
+              <td>
+                <span class="customer-name-cell">${order.customer_name || 'గ్రాహకులు'}</span>
+                <span class="customer-addr-snippet" title="${order.customer_address || order.delivery_address || ''}">
+                  ${order.customer_address || order.delivery_address || '-'}
+                </span>
+              </td>
+              <td class="phone-cell">
+                <a href="tel:${order.customer_phone}">${order.customer_phone}</a>
+              </td>
+              <td class="amount-cell">
+                <strong>₹${Number(totalInr).toLocaleString('en-IN')}</strong>
+                <span class="items-snippet" title="${order.product_details || ''}">
+                  ${order.product_details || 'సరుకులు'}
+                </span>
+              </td>
+              <td>
+                <div class="status-select-wrap">
+                  <select class="order-status-selector" data-id="${order.id}">
+                    <option value="received" ${order.status === 'received' || order.status === 'placed' ? 'selected' : ''}>అందింది (Received)</option>
+                    <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>ప్యాకింగ్ (Processing)</option>
+                    <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>రవాణా (Shipped)</option>
+                    <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>చేరింది (Delivered)</option>
+                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>రద్దయింది (Cancelled)</option>
+                  </select>
+                </div>
+              </td>
+              <td style="font-size: 0.8rem; white-space: nowrap; color: var(--color-text-muted);">
+                ${dateStr}
+              </td>
+              <td>
+                <div class="action-cell-stack">
+                  <!-- Action 1: Print Slip for Navata Transport & Devotee Department -->
+                  <a href="/slip?id=${order.id}&code=${encodeURIComponent(order.order_no || order.order_code || '')}&key=${encodeURIComponent(adminToken)}&autoprint=1" 
+                     target="_blank" 
+                     rel="noopener noreferrer" 
+                     class="btn-action-print-slip" 
+                     title="నవత ట్రాన్స్‌పోర్ట్ మరియు భక్తుల విభాగం కొరకు రసీదు స్లిప్ ప్రింట్ చేయండి">
+                    <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                      <path d="M200 80V48a16 16 0 0 0-16-16H72a16 16 0 0 0-16 16v32H40a16 16 0 0 0-16 16v88a16 16 0 0 0 16 16h16v24a16 16 0 0 0 16 16h112a16 16 0 0 0 16-16v-24h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM72 48h112v32H72zm112 160H72v-48h112zm32-40h-16v-24a16 16 0 0 0-16-16H72a16 16 0 0 0-16 16v24H40V96h176v72zm-32-56a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"/>
+                    </svg>
+                    <span>ప్రింట్ స్లిప్ (Print Slip)</span>
+                  </a>
+
+                  <!-- Action 2: Single Direct WhatsApp Update Button -->
+                  <button type="button" 
+                          class="btn-wa-single-notify" 
+                          data-order-id="${order.id}" 
+                          title="ఈ ఆర్డర్ ప్రస్తుత స్థితి WhatsApp ద్వారా కస్టమర్‌కు నేరుగా పంపండి">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/>
+                    </svg>
+                    <span>WhatsApp సందేశం (Send WhatsApp)</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Wire status dropdown change: updates DB and immediately sends WhatsApp message directly!
+        ordersTbody.querySelectorAll('.order-status-selector').forEach(sel => {
+          sel.addEventListener('change', async (e) => {
+            const orderId = sel.dataset.id;
+            const newStatus = sel.value;
+            const target = currentOrders.find(o => o.id == orderId);
+            if (!target) return;
+
+            let lrNum = target.lr_number || '';
+            if (newStatus === 'shipped') {
+              const entered = prompt('నవత LR / బిల్టీ నంబర్ నమోదు చేయండి (Navata Lorry Receipt No):', lrNum);
+              if (entered !== null) {
+                lrNum = entered.trim();
+              }
+            }
+
+            target.status = newStatus;
+            if (lrNum) target.lr_number = lrNum;
+
+            // Immediately send message directly via WhatsApp
+            sendWhatsAppDirectly(target, newStatus, lrNum);
+
+            // Update in backend
+            await updateOrderStatus(orderId, newStatus, lrNum);
+          });
+        });
+
+        // Wire single WhatsApp button click
+        ordersTbody.querySelectorAll('.btn-wa-single-notify').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const orderId = btn.dataset.orderId;
+            const target = currentOrders.find(o => o.id == orderId);
+            if (target) {
+              sendWhatsAppDirectly(target, target.status || 'received', target.lr_number);
+            }
+          });
+        });
+      }
+
+      async function updateOrderStatus(orderId, newStatus, lrNum) {
+        try {
+          const bodyPayload = { order_id: parseInt(orderId, 10), status: newStatus };
+          if (lrNum) bodyPayload.lr_number = lrNum;
+
+          const res = await fetch('/api/update-status', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-admin-password': adminToken,
+              'Authorization': `Bearer ${adminToken}`
+            },
+            body: JSON.stringify(bodyPayload)
+          });
+
+          if (res.ok) {
+            const target = currentOrders.find(o => o.id == orderId);
+            if (target) {
+              target.status = newStatus;
+              if (lrNum) target.lr_number = lrNum;
+            }
+            updateStats(currentOrders);
+            showToast(`ఆర్డర్ స్థితి అప్‌డేట్ చేయబడింది (${newStatus})! WhatsApp సందేశం సిద్ధం చేయబడింది.`);
+          }
+        } catch (err) {
+          console.warn('Status sync error:', err);
+        }
+      }
+    });
+  </script>
+</Base>

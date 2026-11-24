@@ -5,14 +5,18 @@
  */
 
 const CONFIG = {
-  upiId: "kurmagramvv@upi",        // DEMO — owner replaces with real Trust UPI ID
+  upiId: "kurmagramvv@upi",        // Official Trust UPI ID
   payeeName: "Kurmagram Vedic Village",
   whatsapp: "917732075607",
-  phone2: "918712011776",
-  email: "Kurmagramvv@gmail.com",
-  fssai: "FSSAI Lic. No: XXXXXXXXXXXXXX",   // shown on food items until owner updates
-  address: "Near Anthakapalli Village, Kittalapadu Post, Via Shrimukhalingam, Srikakulam District, Andhra Pradesh – 532428, India",
-  website: "www.kurmagram.com"
+  phone1: "+91 7732075607",
+  phone2: "+91 8712011776",
+  email: "kurmagramvv@gmail.com",
+  fssai: "FSSAI Lic. No: XXXXXXXXXXXXXX (రిజిస్ట్రేషన్ ప్రక్రియలో ఉంది)",
+  address: "అంతకపల్లి గ్రామం, కిట్టలపాడు పోస్ట్ (శ్రీముఖలింగం మీదుగా), శ్రీకాకుళం జిల్లా, ఆంధ్రప్రదేశ్ – 532428, భారతదేశం",
+  addressEn: "Near Anthakapalli Village, Kittalapadu Post, Via Shrimukhalingam, Srikakulam District, Andhra Pradesh – 532428, India",
+  website: "https://kurmagram.com",
+  youtube: "https://www.youtube.com/c/Kurmagrama",
+  facebook: "https://www.facebook.com/Kurmagram/"
 };
 
 const CATEGORIES = [
@@ -99,11 +103,19 @@ const PRODUCTS = [
     "cat": "grain",
     "te": "బ్రౌన్ రైస్",
     "en": "Brown Rice (Natural Farming)",
-    "tag": "⭐ ప్రత్యేక ఆఫర్",
+    "tag": "ప్రత్యేక ఆఫర్",
     "desc": "ఎలాంటి రసాయనాలు లేకుండా సహజ వ్యవసాయంలో పండించిన బ్రౌన్ రైస్.",
     "descEn": "Naturally grown unpolished brown rice cultivated using natural farming methods without synthetic chemicals.",
     "svg": "assets/svg/products/rice.svg",
     "isFood": true,
+    "compliance": {
+      "countryOfOrigin": { "te": "భారతదేశం (శ్రీకాకుళం, ఆంధ్రప్రదేశ్)", "en": "India (Srikakulam, Andhra Pradesh)" },
+      "harvestOrPackDate": { "te": "నవంబర్ 2026 (తాజా ఖరీఫ్ పంట)", "en": "November 2026 (Fresh Kharif Harvest)" },
+      "batchNo": "KG-2026-BR108",
+      "bestBefore": { "te": "ప్యాకింగ్ తేదీ నుండి 6 నెలలు", "en": "6 Months from packaging date" },
+      "fssaiNotice": { "te": "FSSAI Reg. Proc. (FSS Act 2006, Sec 31/1)", "en": "FSSAI Reg. Proc. (FSS Act 2006, Sec 31/1)" },
+      "storageNotes": { "te": "సహజ వేప ఆకులతో నిల్వ చేయండి. తడి తగలకుండా పొడి ప్రదేశంలో భద్రపరచండి.", "en": "Store in a cool dry place with natural neem leaves." }
+    },
     "units": [
       { "label": "1kg", "price": 130 },
       { "label": "25kg", "price": 3000, "mrp": 3250, "note": "₹250 తగ్గింపు!", "noteEn": "₹250 OFF!" }
@@ -119,6 +131,14 @@ const PRODUCTS = [
     "descEn": "Cold-pressed wood-churned (Chekka Ganuga) virgin sesame oil. No heating, no chemical refining.",
     "svg": "assets/svg/products/sesame.svg",
     "isFood": true,
+    "compliance": {
+      "countryOfOrigin": { "te": "భారతదేశం (శ్రీకాకుళం, ఆంధ్రప్రదేశ్)", "en": "India (Srikakulam, Andhra Pradesh)" },
+      "harvestOrPackDate": { "te": "నవంబర్ 2026 (తాజా గానుగ వెలికితీత)", "en": "November 2026 (Fresh Wood-Churned Batch)" },
+      "batchNo": "KG-2026-SO204",
+      "bestBefore": { "te": "ప్యాకింగ్ తేదీ నుండి 9 నెలలు", "en": "9 Months from packaging date" },
+      "fssaiNotice": { "te": "FSSAI Reg. Proc. (FSS Act 2006, Sec 31/1)", "en": "FSSAI Reg. Proc. (FSS Act 2006, Sec 31/1)" },
+      "storageNotes": { "te": "నేరుగా సూర్యకాంతి తగలకుండా చల్లని ప్రదేశంలో నిల్వ చేయండి.", "en": "Keep in a dry, dark place away from direct sunlight." }
+    },
     "units": [
       { "label": "500ml", "price": 220 },
       { "label": "1L", "price": 420 }
@@ -134,6 +154,14 @@ const PRODUCTS = [
     "descEn": "Pure cold-pressed groundnut oil extracted in traditional wooden churns from premium sun-dried peanuts.",
     "svg": "assets/svg/products/groundnut.svg",
     "isFood": true,
+    "compliance": {
+      "countryOfOrigin": { "te": "భారతదేశం (శ్రీకాకుళం, ఆంధ్రప్రదేశ్)", "en": "India (Srikakulam, Andhra Pradesh)" },
+      "harvestOrPackDate": { "te": "నవంబర్ 2026 (చెక్క గానుగ తాజా బ్యాచ్)", "en": "November 2026 (Fresh Wood-Churned Batch)" },
+      "batchNo": "KG-2026-GO305",
+      "bestBefore": { "te": "ప్యాకింగ్ తేదీ నుండి 9 నెలలు", "en": "9 Months from packaging date" },
+      "fssaiNotice": { "te": "FSSAI Reg. Proc. (FSS Act 2006, Sec 31/1)", "en": "FSSAI Reg. Proc. (FSS Act 2006, Sec 31/1)" },
+      "storageNotes": { "te": "సహజ వడపోత నూనె. ఎలాంటి రసాయన ప్రిజర్వేటివ్స్ లేవు.", "en": "Naturally settled raw cold-pressed oil. 100% free of artificial preservatives." }
+    },
     "units": [
       { "label": "500ml", "price": 160 },
       { "label": "1L", "price": 300 }

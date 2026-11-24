@@ -1,0 +1,427 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import OfferStrip from '../../components/OfferStrip.astro';
+import Footer from '../../components/Footer.astro';
+import { PRODUCTS, CONFIG, SITE, Product } from '../../config';
+
+export async function getStaticPaths() {
+  return PRODUCTS.map((prod) => ({
+    params: { id: prod.id },
+    props: { prod },
+  }));
+}
+
+interface Props {
+  prod: Product;
+}
+
+const { prod } = Astro.props;
+const isFood = !!prod.isFood;
+const compliance = prod.compliance;
+
+// Related products from other commodities
+const relatedProducts = PRODUCTS.filter((p) => p.id !== prod.id).slice(0, 3);
+---
+
+<Base 
+  title={`${prod.te} | ${prod.en} | ${SITE.name}`} 
+  description={prod.desc} 
+  canonicalPath={`/product/${prod.id}`}
+>
+  <Header activeNav="shop" />
+
+  <main id="mainContent" class="product-detail-page">
+    <!-- Broadsheet Masthead Breadcrumb Bar -->
+    <div class="hero-broadsheet-bar product-detail-masthead">
+      <div class="container hero-broadsheet-inner">
+        <div class="detail-breadcrumbs">
+          <a href="/" class="crumb-link">హోమ్</a>
+          <span class="crumb-sep">&bull;</span>
+          <a href="/shop" class="crumb-link">ఉత్పత్తుల భాండాగారం</a>
+          <span class="crumb-sep">&bull;</span>
+          <span class="crumb-current">{prod.te}</span>
+        </div>
+        <span class="masthead-center">COMMODITY REGISTER &bull; FOLIO 108</span>
+        <span class="masthead-right">నంద గోకులం గోశాల ట్రస్ట్ (ESTD. 2018)</span>
+      </div>
+    </div>
+
+    <!-- Product Detail Editorial Split Vista -->
+    <section class="product-detail-section" aria-labelledby="productTitle">
+      <div class="container">
+        <div class="product-detail-grid">
+          
+          <!-- Left Column: Art Gallery Frame & Provenance Seal -->
+          <div class="product-detail-media">
+            <div class="detail-art-frame">
+              <!-- Corner Vintage Stamped Ink Seal -->
+              <div class="detail-corner-seal" aria-hidden="true">
+                <img src="/assets/svg/kalamkari/vintage-seal.svg" alt="Certified Natural Seal" width="120" height="120" />
+              </div>
+
+              <!-- Product Line Art Illustration with Paper Blend -->
+              <div class="detail-art-canvas">
+                <img 
+                  src={prod.svg} 
+                  alt={prod.te} 
+                  class="detail-art-img" 
+                  width="320" 
+                  height="320" 
+                  loading="eager"
+                  fetchpriority="high"
+                />
+              </div>
+
+              <!-- Broadsheet Provenance Cutline Strip -->
+              <div class="detail-art-cutline">
+                <span class="cutline-provenance">శ్రీకాకుళం సహజ వ్యవసాయ క్షేత్రం &bull; నిఖార్సయిన గ్రామీణ స్వచ్ఛత</span>
+                <span class="cutline-batch">ESTD. 2018 &bull; ధర్మబద్ధ వ్యవసాయం</span>
+              </div>
+            </div>
+
+            <!-- Trust Micro-Badges Row -->
+            <div class="detail-trust-pills">
+              <div class="trust-pill-item">
+                <img src="/assets/svg/kalamkari/cow-calf.svg" alt="" width="20" height="20" />
+                <span>అహింసా గో సంరక్షణ</span>
+              </div>
+              <div class="trust-pill-item">
+                <img src="/assets/svg/kalamkari/paddy-stalk.svg" alt="" width="20" height="20" />
+                <span>100% రసాయన రహితం</span>
+              </div>
+              <div class="trust-pill-item">
+                <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="" width="20" height="20" />
+                <span>0% UPI లావాదేవీ రుసుము</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Editorial Typography, Units, Price & Actions -->
+          <div class="product-detail-info">
+            <!-- Commodity Tags & Registry Stamp -->
+            <div class="detail-meta-header">
+              <span class="detail-tag-badge">{prod.tag}</span>
+              <span class="detail-sku-badge">REG. ID: KG-PRD-{prod.id.toUpperCase()}</span>
+            </div>
+
+            <!-- Massive Telugu & English Display Headlines -->
+            <h1 id="productTitle" class="detail-title-te">{prod.te}</h1>
+            <p class="detail-title-en">{prod.en}</p>
+
+            <div class="detail-divider-rule" aria-hidden="true"></div>
+
+            <!-- Narrative Description -->
+            <div class="detail-desc-block">
+              <p class="detail-desc-lead">{prod.desc}</p>
+              <p class="detail-desc-sub">{prod.descEn}</p>
+            </div>
+
+            <!-- Price in Distinct Antique Brass Box -->
+            <div class="detail-pricing-section">
+              <div class="ledger-brass-box detail-price-box" id="detailPriceBox">
+                <span class="price-val" id="detailPriceVal">₹{prod.units[0].price}</span>
+                <span class="unit-tag" id="detailUnitTag">/ {prod.units[0].label}</span>
+                {prod.units[0].mrp && <span class="mrp-val" id="detailMrpVal">₹{prod.units[0].mrp}</span>}
+                {prod.units[0].note && <span class="discount-badge" id="detailDiscountBadge">{prod.units[0].note}</span>}
+              </div>
+              <span class="detail-tax-note">అన్ని పన్నులు మరియు ప్రాథమిక ప్యాకింగ్ కలిపి &bull; 0% ప్లాట్‌ఫారమ్ రుసుము</span>
+            </div>
+
+            <!-- Unit Selector (Sharp Rectangular Buttons) -->
+            <div class="detail-units-control">
+              <label class="control-label">పరిమాణం ఎంచుకోండి / SELECT SIZE:</label>
+              <div class="detail-unit-pills" role="radiogroup" aria-label="పరిమాణం ఎంచుకోండి">
+                {prod.units.map((unit, idx) => (
+                  <button
+                    type="button"
+                    class={`unit-pill detail-unit-btn detail-unit-pill ${idx === 0 ? 'selected active' : ''}`}
+                    data-unit-index={idx}
+                    data-price={unit.price}
+                    data-label={unit.label}
+                    data-mrp={unit.mrp || ''}
+                    data-note={unit.note || ''}
+                    role="radio"
+                    aria-checked={idx === 0}
+                  >
+                    {unit.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- Quantity Stepper & Actions -->
+            <div class="detail-actions-control">
+              <div class="qty-stepper-box">
+                <label for="detailQtyInput" class="control-label sr-only">పరిమాణం సంఖ్య</label>
+                <button type="button" id="detailQtyDecBtn" class="stepper-btn" aria-label="ఒకటి తగ్గించు">-</button>
+                <input 
+                  type="number" 
+                  id="detailQtyInput" 
+                  class="stepper-input" 
+                  value="1" 
+                  min="1" 
+                  max="50" 
+                  aria-label="కొనుగోలు పరిమాణం"
+                />
+                <button type="button" id="detailQtyIncBtn" class="stepper-btn" aria-label="ఒకటి పెంచు">+</button>
+              </div>
+
+              <!-- Primary CTA: Add to Cart -->
+              <button 
+                type="button" 
+                id="detailAddToCartBtn" 
+                class="btn btn-sharp-primary btn-detail-add" 
+                data-id={prod.id}
+                aria-label={`కార్ట్‌కి చేర్చు - ${prod.te}`}
+              >
+                కార్ట్‌కి చేర్చు &rarr;
+              </button>
+            </div>
+
+            <!-- Secondary Direct Checkout & WhatsApp Handoff -->
+            <div class="detail-secondary-actions">
+              <button 
+                type="button" 
+                id="detailBuyNowBtn" 
+                class="btn btn-sharp-secondary btn-detail-buy" 
+                data-id={prod.id}
+              >
+                ఇప్పుడే కొనండి (Direct UPI) &rarr;
+              </button>
+              <a 
+                href={`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(`నమస్కారం, కూర్మగ్రామ వేదిక్ విలేజ్ నుండి ${prod.te} (${prod.en}) గురించి వివరాలు తెలుసుకోవాలనుకుంటున్నాను.`)}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="detail-whatsapp-link"
+              >
+                <svg class="ph-icon" style="width: 16px; height: 16px;"><use href="#ph-phone"/></svg>
+                <span>WhatsApp ద్వారా విచారించండి</span>
+              </a>
+            </div>
+
+            <!-- ==============================================================
+                 PHASE 2.5 COMPLIANCE: LEGAL METROLOGY & BATCH FRESHNESS
+                 Mandatory regulatory disclosures for packaged food & farm goods
+                 ============================================================== -->
+            <div class="compliance-ledger-box" role="region" aria-label="చట్టబద్ధ వివరాలు మరియు నిల్వ సమాచారం">
+              <div class="compliance-header">
+                <span class="compliance-title">
+                  {isFood ? 'చట్టబద్ధ వివరాలు & తాజా బ్యాచ్ సమాచారం / LEGAL METROLOGY & FOOD FRESHNESS' : 'నిఖార్సయిన మూలం & తయారీ సమాచారం / PROVENANCE & AUTHENTICITY'}
+                </span>
+                <span class="compliance-verified-tag">100% VERIFIED</span>
+              </div>
+
+              <div class="compliance-table">
+                <div class="compliance-row">
+                  <span class="compliance-key">మూల దేశం / Country of Origin</span>
+                  <span class="compliance-val">{compliance ? compliance.countryOfOrigin.te : 'భారతదేశం (శ్రీకాకుళం, ఆంధ్రప్రదేశ్)'}</span>
+                </div>
+
+                <div class="compliance-row">
+                  <span class="compliance-key">తయారీ & ప్యాకింగ్ ప్రదేశం / Made At</span>
+                  <span class="compliance-val">నంద గోకులం గోశాల, అంతకపల్లి గ్రామం, శ్రీకాకుళం – 532428</span>
+                </div>
+
+                {isFood && compliance && (
+                  <>
+                    <div class="compliance-row">
+                      <span class="compliance-key">తాజా పంట / ప్యాకింగ్ తేదీ (Batch Freshness)</span>
+                      <span class="compliance-val font-semibold">{compliance.harvestOrPackDate.te}</span>
+                    </div>
+
+                    <div class="compliance-row">
+                      <span class="compliance-key">బ్యాచ్ నంబర్ (Batch No.)</span>
+                      <span class="compliance-val font-mono">{compliance.batchNo}</span>
+                    </div>
+
+                    <div class="compliance-row">
+                      <span class="compliance-key">ఉత్తమ వినియోగ గడువు (Best Before)</span>
+                      <span class="compliance-val">{compliance.bestBefore.te}</span>
+                    </div>
+
+                    <div class="compliance-row">
+                      <span class="compliance-key">FSSAI రిజిస్ట్రేషన్ ప్రాసెస్ (Compliance)</span>
+                      <span class="compliance-val">{compliance.fssaiNotice.te}</span>
+                    </div>
+
+                    {compliance.storageNotes && (
+                      <div class="compliance-row">
+                        <span class="compliance-key">నిల్వ సూచనలు (Storage Notes)</span>
+                        <span class="compliance-val">{compliance.storageNotes.te}</span>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {!isFood && (
+                  <div class="compliance-row">
+                    <span class="compliance-key">స్వచ్ఛతా హామీ / Purity Guarantee</span>
+                    <span class="compliance-val">రసాయన రంగులు, సువాసనలు లేదా కృత్రిమ ప్రిజర్వేటివ్స్ లేవు. సాంప్రదాయ పద్ధతిలో తయారీ.</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kalamkari Handloom Vine Divider -->
+    <div class="kalamkari-divider-wrap" aria-hidden="true">
+      <img src="/assets/svg/kalamkari/vine-divider.svg" alt="" class="kalamkari-vine-svg" width="800" height="24" />
+    </div>
+
+    <!-- Related Products Ledger Band -->
+    <section class="related-ledger-section" aria-labelledby="relatedTitle">
+      <div class="container">
+        <div class="related-header">
+          <span class="ledger-eyebrow">ఇతర సహజ ఉత్పత్తులు</span>
+          <h2 id="relatedTitle" class="related-title">సంబంధిత ప్రకృతి ఫలాలు</h2>
+        </div>
+
+        <div class="catalog-ledger-rows">
+          {relatedProducts.map((relProd, index) => (
+            <article class="product-card product-ledger-row" id={`prod-card-${relProd.id}`} data-id={relProd.id} data-category={relProd.cat}>
+              <div class="ledger-item-col-left">
+                <span class="ledger-row-num">{(index + 1).toString().padStart(2, '0')}</span>
+                <a href={`/product/${relProd.id}`} class="ledger-row-art" aria-label={`View ${relProd.te}`}>
+                  <img src={relProd.svg} alt="" class="ledger-row-svg" width="56" height="56" loading="lazy" />
+                </a>
+                <div class="ledger-row-titles">
+                  <div class="ledger-title-line">
+                    <a href={`/product/${relProd.id}`} class="product-title-link">
+                      <h3 class="product-name-te ledger-name-te">{relProd.te}</h3>
+                    </a>
+                    <span class="ledger-tag-stamp">{relProd.tag}</span>
+                  </div>
+                  <span class="product-name-en ledger-name-en">{relProd.en}</span>
+                </div>
+              </div>
+
+              <div class="ledger-item-col-units">
+                <span class="unit-pill selected active">{relProd.units[0].label}</span>
+              </div>
+
+              <div class="ledger-item-col-price">
+                <div class="ledger-brass-box price-display price-box">
+                  <span class="price-val">₹{relProd.units[0].price}</span>
+                  <span class="unit-tag">/ {relProd.units[0].label}</span>
+                </div>
+              </div>
+
+              <div class="ledger-item-col-action">
+                <a href={`/product/${relProd.id}`} class="btn-detail-link catalog-link-action">
+                  వివరాలు చూడండి &rarr;
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <OfferStrip />
+  </main>
+
+  <Footer />
+</Base>
+
+<script is:inline define:vars={{ productId: prod.id, prodUnits: prod.units }}>
+  // Dedicated Product Detail Interaction Controller
+  document.addEventListener('DOMContentLoaded', () => {
+    let selectedUnitIndex = 0;
+    const qtyInput = document.getElementById('detailQtyInput');
+    const decBtn = document.getElementById('detailQtyDecBtn');
+    const incBtn = document.getElementById('detailQtyIncBtn');
+    const addBtn = document.getElementById('detailAddToCartBtn');
+    const buyBtn = document.getElementById('detailBuyNowBtn');
+    const priceBox = document.getElementById('detailPriceBox');
+    const priceVal = document.getElementById('detailPriceVal');
+    const unitTag = document.getElementById('detailUnitTag');
+    const mrpVal = document.getElementById('detailMrpVal');
+    const discountBadge = document.getElementById('detailDiscountBadge');
+    const unitBtns = document.querySelectorAll('.detail-unit-btn');
+
+    // Unit switcher
+    unitBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(e.currentTarget.dataset.unitIndex, 10);
+        selectedUnitIndex = idx;
+
+        unitBtns.forEach((b, i) => {
+          if (i === idx) {
+            b.classList.add('selected', 'active');
+            b.setAttribute('aria-checked', 'true');
+          } else {
+            b.classList.remove('selected', 'active');
+            b.setAttribute('aria-checked', 'false');
+          }
+        });
+
+        const currentUnit = prodUnits[idx];
+        if (currentUnit && priceVal && unitTag) {
+          priceVal.textContent = '₹' + currentUnit.price;
+          unitTag.textContent = '/ ' + currentUnit.label;
+
+          if (currentUnit.mrp && mrpVal) {
+            mrpVal.textContent = '₹' + currentUnit.mrp;
+            mrpVal.style.display = 'inline';
+          } else if (mrpVal) {
+            mrpVal.style.display = 'none';
+          }
+
+          if (currentUnit.note && discountBadge) {
+            discountBadge.textContent = currentUnit.note;
+            discountBadge.style.display = 'inline-block';
+          } else if (discountBadge) {
+            discountBadge.style.display = 'none';
+          }
+        }
+      });
+    });
+
+    // Quantity Stepper
+    if (decBtn && qtyInput) {
+      decBtn.addEventListener('click', () => {
+        let val = parseInt(qtyInput.value, 10) || 1;
+        if (val > 1) {
+          qtyInput.value = val - 1;
+        }
+      });
+    }
+
+    if (incBtn && qtyInput) {
+      incBtn.addEventListener('click', () => {
+        let val = parseInt(qtyInput.value, 10) || 1;
+        if (val < 50) {
+          qtyInput.value = val + 1;
+        }
+      });
+    }
+
+    // Add to Cart
+    if (addBtn) {
+      addBtn.addEventListener('click', () => {
+        const qty = parseInt(qtyInput?.value || '1', 10) || 1;
+        if (window.store) {
+          window.store.addToCart(productId, selectedUnitIndex, qty);
+          window.store.showToast(`బుట్టలోకి చేర్చబడింది (${qty} ${prodUnits[selectedUnitIndex].label})!`);
+        }
+      });
+    }
+
+    // Buy Now -> Direct Checkout Trigger
+    if (buyBtn) {
+      buyBtn.addEventListener('click', () => {
+        const qty = parseInt(qtyInput?.value || '1', 10) || 1;
+        if (window.store) {
+          window.store.addToCart(productId, selectedUnitIndex, qty);
+          // Navigate to /checkout or open checkout modal
+          window.location.href = '/checkout';
+        }
+      });
+    }
+  });
+</script>

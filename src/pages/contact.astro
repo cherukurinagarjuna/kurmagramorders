@@ -1,0 +1,263 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, CONFIG } from '../config';
+---
+
+<Base 
+  title="సంప్రదించండి & ఆశ్రమ మార్గం | కూర్మగ్రామ వేదిక్ విలేజ్" 
+  description="కూర్మగ్రామ వేదిక్ విలేజ్ మరియు నంద గోకులం గోశాల చిరునామా, ఫోన్ నంబర్లు, WhatsApp హెల్ప్‌లైన్ మరియు ప్రయాణ మార్గదర్శి."
+  canonicalPath="/contact"
+>
+  <Header activeNav="contact" />
+
+  <main id="mainContent" class="editorial-page-main">
+    <!-- Editorial Broadsheet Masthead -->
+    <header class="broadsheet-masthead">
+      <div class="container">
+        <!-- Breadcrumbs -->
+        <nav class="editorial-breadcrumbs" aria-label="మార్గం">
+          <a href="/">హోమ్</a>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-current">సంప్రదించండి & క్షేత్ర దర్శనం</span>
+        </nav>
+
+        <div class="masthead-crest-row">
+          <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="" width="54" height="54" class="kalamkari-crest-svg" />
+          <span class="masthead-vintage-tag">ఆశ్రమ క్షేత్ర సంప్రదింపుల రికార్డు &bull; SRIKAKULAM</span>
+        </div>
+
+        <h1 class="broadsheet-main-title">
+          సంప్రదించండి &bull; ఆశ్రమ మార్గం
+        </h1>
+        <p class="broadsheet-main-sub">
+          గోశాల దర్శనం, సహజ ఉత్పత్తుల విచారణ లేదా వైదిక జీవన అనుభూతి కోసం మమ్మల్ని సంప్రదించండి
+        </p>
+
+        <!-- Metric Ledger Bar -->
+        <div class="editorial-metric-ledger">
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౨౪/౭</span>
+            <span class="metric-ledger-label">WhatsApp సహాయ కేంద్రం</span>
+          </div>
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౩౨ కి.మీ</span>
+            <span class="metric-ledger-label">శ్రీకాకుళం రోడ్ రైల్వే స్టేషన్ నుండి</span>
+          </div>
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౬-౧౨</span>
+            <span class="metric-ledger-label">ఉదయపు గోసేవ & దర్శన వేళలు</span>
+          </div>
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౧౦౦%</span>
+            <span class="metric-ledger-label">సాదర ఆతిథ్యం & సేవా భావం</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <div class="container editorial-body-wrap">
+
+      <!-- Section 1: Contact Channels Grid -->
+      <section class="editorial-feature-section">
+        <div class="section-kicker">
+          <span>01 &bull; ప్రత్యక్ష సంప్రదింపు మార్గాలు</span>
+        </div>
+        <h2 class="editorial-section-title">హెల్ప్‌లైన్ & సందర్శన సమయాలు</h2>
+
+        <div class="contact-channels-grid">
+          <!-- Card 1: WhatsApp Primary -->
+          <div class="contact-channel-card highlight-card">
+            <div class="channel-icon-wrap">
+              <svg width="28" height="28" viewBox="0 0 256 256" fill="currentColor">
+                <path d="M128 24a104 104 0 0 0-91.82 152.88l-11.36 41.65a8 8 0 0 0 9.77 9.77l41.65-11.36A104 104 0 1 0 128 24zm0 192a87.87 87.87 0 0 1-44.06-11.81 8 8 0 0 0-6.54-.67l-28.52 7.78 7.78-28.52a8 8 0 0 0-.67-6.54A88 88 0 1 1 128 216zm45.2-61.2-19.12-8.32a14 14 0 0 0-16.12 3.6l-5.63 6.87a55.15 55.15 0 0 1-28.48-28.48l6.87-5.63a14 14 0 0 0 3.6-16.12l-8.32-19.12a14 14 0 0 0-16.48-7.8l-14 3.5a14 14 0 0 0-10.42 12.18c-.89 12.63 3.69 34 23.59 53.9s41.27 24.48 53.9 23.59a14 14 0 0 0 12.18-10.42l3.5-14a14 14 0 0 0-7.8-16.48z"/>
+              </svg>
+            </div>
+            <div class="channel-meta">
+              <span class="channel-tag">ప్రధాన WhatsApp & ఆర్డర్లు</span>
+              <h3 class="channel-value">+{CONFIG.whatsapp}</h3>
+              <p class="channel-note">ఆర్డర్లు, పార్శిల్ ట్రాకింగ్ మరియు తక్షణ విచారణలకు అత్యంత వేగవంతమైన మార్గం.</p>
+              <a 
+                href={`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('నమస్తే, నేను కూర్మగ్రామ సమాచారం తెలుసుకోవాలనుకుంటున్నాను.')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-channel-action"
+              >
+                WhatsApp లో మాట్లాడండి &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 2: Phone Helpline -->
+          <div class="contact-channel-card">
+            <div class="channel-icon-wrap">
+              <svg width="28" height="28" viewBox="0 0 256 256" fill="currentColor">
+                <path d="M222.37 158.46l-47.11-21.11-.13-.06a16 16 0 0 0-15.17 1.4 8.12 8.12 0 0 0-.75.56L134.87 160c-15.42-7.49-31.34-23.41-38.83-38.83l20.75-24.34.56-.75a16 16 0 0 0 1.4-15.17l-.06-.13-21.11-47.11A16 16 0 0 0 82.24 24H48a16 16 0 0 0-16 16c0 105.87 86.13 192 192 192a16 16 0 0 0 16-16v-34.24a16 16 0 0 0-9.63-14.73zM208 216c-97 0-176-79-176-176h34.24l21.11 47.11-20.76 24.35a8 8 0 0 0-.52 8.65c9.2 18.89 27.87 37.56 46.76 46.76a8 8 0 0 0 8.65-.52l24.35-20.76 47.11 21.11V216z"/>
+              </svg>
+            </div>
+            <div class="channel-meta">
+              <span class="channel-tag">ఫోన్ కాల్ హెల్ప్‌లైన్</span>
+              <h3 class="channel-value">{CONFIG.phone1}</h3>
+              <p class="channel-note">రెండవ నంబర్: {CONFIG.phone2} (ఉదయం 9:00 నుండి సాయంత్రం 6:00 వరకు అందుబాటులో ఉంటుంది).</p>
+              <a href={`tel:${CONFIG.phone1}`} class="btn-channel-action-secondary">
+                ఇప్పుడే కాల్ చేయండి &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 3: Email -->
+          <div class="contact-channel-card">
+            <div class="channel-icon-wrap">
+              <svg width="28" height="28" viewBox="0 0 256 256" fill="currentColor">
+                <path d="M224 48H32a8 8 0 0 0-8 8v136a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a8 8 0 0 0-8-8zm-96 85.15L52.57 64h150.86zm80 74.85H40V74.19l82.59 66.07a8 8 0 0 0 10.82 0L216 74.19V208z"/>
+              </svg>
+            </div>
+            <div class="channel-meta">
+              <span class="channel-tag">అధికారిక ఈమెయిల్</span>
+              <h3 class="channel-value">{CONFIG.email}</h3>
+              <p class="channel-note">ఆశ్రమ విరాళాలు, వాలంటీర్ సేవలు మరియు అధికారిక సమాచార మార్పిడి కోసం.</p>
+              <a href={`mailto:${CONFIG.email}`} class="btn-channel-action-secondary">
+                ఈమెయిల్ రాయండి &rarr;
+              </a>
+            </div>
+          </div>
+
+          <!-- Card 4: Visiting Hours -->
+          <div class="contact-channel-card">
+            <div class="channel-icon-wrap">
+              <svg width="28" height="28" viewBox="0 0 256 256" fill="currentColor">
+                <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24zm0 192a88 88 0 1 1 88-88 88.1 88.1 0 0 1-88 88zm64-88a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8V72a8 8 0 0 1 16 0v48h48a8 8 0 0 1 8 8z"/>
+              </svg>
+            </div>
+            <div class="channel-meta">
+              <span class="channel-tag">ఆశ్రమ దర్శన వేళలు</span>
+              <h3 class="channel-value">ఉదయం 6:00 – 12:00</h3>
+              <p class="channel-note">సాయంత్రపు దర్శనం: సాయంత్రం 4:00 నుండి 7:00 వరకు. ఆశ్రమ మధ్యాహ్న నిశ్శబ్ద సమయం: 12:30 – 3:30.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Handloom Divider -->
+      <div class="editorial-vine-break" aria-hidden="true">
+        <svg viewBox="0 0 1200 24" width="100%" height="24" fill="none" stroke="currentColor">
+          <path d="M0 12 Q 300 0, 600 12 T 1200 12" stroke="var(--color-ittadi)" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <circle cx="600" cy="12" r="5" fill="#A62B2B"/>
+        </svg>
+      </div>
+
+      <!-- Section 2: Postal Address & Route Guide -->
+      <section class="editorial-feature-section">
+        <div class="section-kicker">
+          <span>02 &bull; చిరునామా & ప్రయాణ మార్గం</span>
+        </div>
+        <h2 class="editorial-section-title">ఆశ్రమానికి చేరుకునే విధానం</h2>
+
+        <div class="address-broadsheet-box">
+          <div class="address-text-side">
+            <h3 class="address-title">ఖచ్చితమైన పోస్టల్ చిరునామా</h3>
+            <p class="address-line">
+              <strong>కూర్మగ్రామ వేదిక్ విలేజ్ & నంద గోకులం గోశాల</strong><br />
+              అంతకపల్లి గ్రామం, కిట్టలపాడు పోస్ట్ (శ్రీముఖలింగం మీదుగా),<br />
+              శ్రీకాకుళం జిల్లా, ఆంధ్రప్రదేశ్ – 532428, భారతదేశం.
+            </p>
+            <p class="address-line-en">
+              <strong>English:</strong> Kurmagram Vedic Village, Near Anthakapalli Village, Kittalapadu Post (Via Shrimukhalingam), Srikakulam District, AP - 532428, India.
+            </p>
+            <div class="gps-stamp">
+              <strong>భౌగోళిక స్థానం (GPS):</strong> 18.5833° N, 83.9500° E
+            </div>
+          </div>
+
+          <div class="travel-routes-side">
+            <h3 class="travel-routes-title">ప్రయాణ సౌకర్యాలు</h3>
+            <ul class="travel-routes-list">
+              <li>
+                <strong>రైలు మార్గం:</strong> సమీప రైల్వే స్టేషన్ <em>శ్రీకాకుళం రోడ్ (ఆమదాలవలస - CHE)</em>. దూరం సుమారు 32 కి.మీ. స్టేషన్ నుండి సారవకోట / హిరమండలం బస్సులు లేదా ప్రైవేట్ ఆటోలలో కిట్టలపాడు చేరుకోవచ్చు.
+              </li>
+              <li>
+                <strong>రోడ్డు మార్గం:</strong> శ్రీకాకుళం పట్టణం నుండి నరసన్నపేట లేదా సరుబుజ్జిలి మీదుగా శ్రీముఖలింగం రోడ్డులో అంతకపల్లి గ్రామానికి ఆర్టీసీ బస్సులు మరియు ప్రైవేట్ వాహనాలు నిరంతరం ఉంటాయి.
+              </li>
+              <li>
+                <strong>విమాన మార్గం:</strong> సమీప విమానాశ్రయం <em>విశాఖపట్నం అంతర్జాతీయ విమానాశ్రయం (VTZ)</em>. దూరం సుమారు 125 కి.మీ (రహదారి ద్వారా 2.5 నుండి 3 గంటల ప్రయాణం).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Interactive WhatsApp Message Builder -->
+      <section class="editorial-feature-section">
+        <div class="section-kicker">
+          <span>03 &bull; సందేశం పంపండి</span>
+        </div>
+        <h2 class="editorial-section-title">క్షేత్రానికి మీ సందేశాన్ని పంపండి</h2>
+
+        <div class="query-builder-box">
+          <p class="query-builder-intro">
+            కింది వివరాలను నమోదు చేయండి; ఇది ఎలాంటి సైట్ డేటాబేస్ లో నిల్వ చేయబడదు. నేరుగా మీ మొబైల్ లేదా కంప్యూటర్ నుండి WhatsApp ద్వారా మా డెస్క్‌కు చేరవేయబడుతుంది:
+          </p>
+          <form id="contactQueryForm" class="query-form-grid" onsubmit="event.preventDefault(); window.submitContactQuery();">
+            <div class="form-group">
+              <label for="q-name">మీ పేరు *</label>
+              <input type="text" id="q-name" required placeholder="ఉదా: రాఘవ శర్మ" class="broadsheet-input" />
+            </div>
+            <div class="form-group">
+              <label for="q-phone">మీ మొబైల్ నంబర్ *</label>
+              <input type="tel" id="q-phone" required placeholder="ఉదా: 9876543210" class="broadsheet-input" />
+            </div>
+            <div class="form-group full-width">
+              <label for="q-topic">విషయం / ఆసక్తి</label>
+              <select id="q-topic" class="broadsheet-input">
+                <option value="ఉత్పత్తుల కొనుగోలు విచారణ">సహజ ఉత్పత్తుల కొనుగోలు లేదా బల్క్ ఆర్డర్</option>
+                <option value="ఆశ్రమ సందర్శన సమాచారం">ఆశ్రమం & గోశాల సందర్శన / బస సమాచారం</option>
+                <option value="గో సంరక్షణ & సేవా సమాచారం">గో సంరక్షణ & స్వచ్ఛంద సేవ</option>
+                <option value="సాధారణ విచారణ">ఇతర సాధారణ సమాచారం</option>
+              </select>
+            </div>
+            <div class="form-group full-width">
+              <label for="q-message">మీ సందేశం లేదా ప్రశ్న *</label>
+              <textarea id="q-message" rows="4" required placeholder="మీ ప్రశ్న లేదా సందేశాన్ని ఇక్కడ రాయండి..." class="broadsheet-input"></textarea>
+            </div>
+            <div class="form-group full-width">
+              <button type="submit" class="btn-editorial-primary">
+                WhatsApp లో సందేశం పంపండి &rarr;
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<script is:inline>
+  window.submitContactQuery = function() {
+    const name = document.getElementById('q-name').value.trim();
+    const phone = document.getElementById('q-phone').value.trim();
+    const topic = document.getElementById('q-topic').value;
+    const msg = document.getElementById('q-message').value.trim();
+
+    if (!name || !msg) {
+      alert('దయచేసి మీ పేరు మరియు సందేశాన్ని నమోదు చేయండి.');
+      return;
+    }
+
+    const text = `*కూర్మగ్రామ వేదిక్ విలేజ్ విచారణ*\n` +
+      `--------------------------\n` +
+      `పేరు: ${name}\n` +
+      `మొబైల్: ${phone}\n` +
+      `విషయం: ${topic}\n` +
+      `సందేశం:\n${msg}\n` +
+      `--------------------------\n` +
+      `(వెబ్‌సైట్ నుండి పంపబడింది)`;
+
+    const url = `https://wa.me/917732075607?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+</script>

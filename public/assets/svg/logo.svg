@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60" fill="none">
+  <!-- Kurmagram Vedic Village Logo: Sacred Kurma (Tortoise) Emblem + Wordmark -->
+  <g transform="translate(4, 6)">
+    <!-- Shield / Seal Glow -->
+    <circle cx="24" cy="24" r="23" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2"/>
+    <circle cx="24" cy="24" r="20" stroke="#e8890c" stroke-width="1.2" stroke-dasharray="2 2"/>
+    
+    <!-- Sacred Tortoise (Kurma Avatar) Shell -->
+    <ellipse cx="24" cy="24" rx="14" ry="11" fill="#2f6b3a" stroke="#1c4423" stroke-width="2"/>
+    <!-- Shell Pattern Lines -->
+    <path d="M24 14 V34 M15 20 H33 M15 28 H33 M18 16 L30 32 M18 32 L30 16" stroke="#faf5e9" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+    
+    <!-- Tortoise Head & Limbs -->
+    <circle cx="39" cy="24" r="3.2" fill="#2f6b3a" stroke="#1c4423" stroke-width="1.5"/>
+    <ellipse cx="14" cy="15" rx="3.5" ry="2.2" transform="rotate(-30 14 15)" fill="#2f6b3a" stroke="#1c4423" stroke-width="1.5"/>
+    <ellipse cx="32" cy="14" rx="3.5" ry="2.2" transform="rotate(30 32 14)" fill="#2f6b3a" stroke="#1c4423" stroke-width="1.5"/>
+    <ellipse cx="14" cy="33" rx="3.5" ry="2.2" transform="rotate(30 14 33)" fill="#2f6b3a" stroke="#1c4423" stroke-width="1.5"/>
+    <ellipse cx="32" cy="34" rx="3.5" ry="2.2" transform="rotate(-30 32 34)" fill="#2f6b3a" stroke="#1c4423" stroke-width="1.5"/>
+    <path d="M10 24 L7 24" stroke="#1c4423" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Tilak / Saffron Sun dot -->
+    <circle cx="24" cy="24" r="2.8" fill="#e8890c"/>
+  </g>
+
+  <!-- Typography: Telugu Primary & English Subtitle -->
+  <text x="62" y="27" font-family="'Noto Sans Telugu', 'Poppins', sans-serif" font-size="18" font-weight="700" fill="#1c4423" letter-spacing="0.5">కూర్మగ్రామము</text>
+  <text x="63" y="44" font-family="'Poppins', sans-serif" font-size="10.5" font-weight="600" fill="#6b4f2a" letter-spacing="1.8">KURMAGRAM VEDIC VILLAGE</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" fill="none">
+  <!-- Traditional Andhra Chekka Ganuga (Wooden Cold-Press Churn): 2px Iron-Black Stroke -->
+  <defs>
+    <linearGradient id="woodGrain" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ECE2CE"/>
+      <stop offset="50%" stop-color="#D4C3A3"/>
+      <stop offset="100%" stop-color="#ECE2CE"/>
+    </linearGradient>
+  </defs>
+
+  <g stroke="#231F1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Heavy Sal Wood Mortar Base -->
+    <path d="M 60 130 L 70 80 L 130 80 L 140 130 Q 100 145 60 130 Z" fill="url(#woodGrain)"/>
+    <ellipse cx="100" cy="80" rx="30" ry="8" fill="#B5944B" opacity="0.6"/>
+
+    <!-- Stone / Wood Foundation Pedestal -->
+    <rect x="50" y="130" width="100" height="25" rx="3" fill="#D4C3A3"/>
+    <line x1="55" y1="142" x2="145" y2="142" stroke="#231F1D" stroke-width="1.2" stroke-dasharray="4 2"/>
+
+    <!-- Turning Wooden Pestle (Angled) -->
+    <path d="M 94 90 L 115 25 L 125 28 L 106 90 Z" fill="#D4C3A3"/>
+    
+    <!-- Heavy Draft Lever Arm (Crossbar for Bullock draft) -->
+    <line x1="40" y1="35" x2="160" y2="35" stroke="#231F1D" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="118" cy="35" r="7" fill="#A62B2B" stroke="#231F1D" stroke-width="2"/>
+
+    <!-- Spout & Pure Golden Virgin Oil Flow -->
+    <path d="M 125 125 L 145 132 L 145 140 L 125 135 Z" fill="#B5944B"/>
+    <!-- Golden Oil Drops -->
+    <path d="M 148 144 Q 151 150 148 154 Q 145 150 148 144 Z" fill="#D97706"/>
+    <path d="M 152 160 Q 155 166 152 170 Q 149 166 152 160 Z" fill="#D97706"/>
+
+    <!-- Collection Brass Vessel (Ittadi Ginde) -->
+    <path d="M 140 170 L 142 188 Q 155 194 168 188 L 170 170 Z" fill="#B5944B"/>
+    <ellipse cx="155" cy="170" rx="15" ry="4" fill="#D97706"/>
+
+    <!-- Traditional Sesames & Peanuts surrounding base -->
+    <g fill="#A62B2B" stroke="#231F1D" stroke-width="1.2">
+      <ellipse cx="44" cy="155" rx="4" ry="2.5" transform="rotate(-20 44 155)"/>
+      <ellipse cx="52" cy="160" rx="4" ry="2.5" transform="rotate(30 52 160)"/>
+      <ellipse cx="38" cy="165" rx="4" ry="2.5" transform="rotate(10 38 165)"/>
+    </g>
+  </g>
+</svg>

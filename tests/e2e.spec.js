@@ -13,7 +13,7 @@ test.describe('Kurmagram Vedic Village E2E Acceptance Suite (T1 - T14)', () => {
     const externalRequests = [];
     page.on('request', (req) => {
       const url = req.url();
-      if (!url.startsWith('http://localhost:3000') && !url.startsWith('data:') && !url.startsWith('blob:')) {
+      if (!url.startsWith('http://localhost:3000') && !url.startsWith('http://127.0.0.1:3000') && !url.startsWith('data:') && !url.startsWith('blob:')) {
         externalRequests.push(url);
       }
     });

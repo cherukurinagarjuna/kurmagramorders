@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 200" width="160" height="200" fill="none">
+  <!-- Srikakulam Organic Paddy Stalks: 2px Iron-Black Stroke, Natural Turmeric & Harita Green -->
+  <g stroke="#231F1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main Stalk Arch -->
+    <path d="M 50 190 Q 60 110 110 50 Q 125 35 140 30" fill="none" stroke="#231F1D" stroke-width="2.2"/>
+    <path d="M 50 190 Q 75 130 90 80 Q 95 65 105 55" fill="none" stroke="#231F1D" stroke-width="1.8"/>
+
+    <!-- Slender Graceful Leaves -->
+    <path d="M 54 160 C 20 130 15 90 40 60 C 45 85 45 120 56 145 Z" fill="#2D6A4F"/>
+    <path d="M 68 130 C 105 110 120 85 105 60 C 95 80 85 100 68 120 Z" fill="#2D6A4F"/>
+
+    <!-- Clustered Golden Paddy Grains (Pasupu Amber & Khadi highlights) -->
+    <!-- Top Panicle -->
+    <ellipse cx="138" cy="32" rx="6" ry="3.5" transform="rotate(-15 138 32)" fill="#D97706"/>
+    <ellipse cx="128" cy="38" rx="6.5" ry="4" transform="rotate(-30 128 38)" fill="#D97706"/>
+    <ellipse cx="118" cy="46" rx="7" ry="4.2" transform="rotate(-40 118 46)" fill="#D97706"/>
+    <ellipse cx="108" cy="56" rx="7" ry="4.2" transform="rotate(-45 108 56)" fill="#D97706"/>
+    <ellipse cx="98" cy="68" rx="7.2" ry="4.5" transform="rotate(-55 98 68)" fill="#D97706"/>
+    <ellipse cx="88" cy="82" rx="7.5" ry="4.5" transform="rotate(-60 88 82)" fill="#D97706"/>
+    <ellipse cx="80" cy="98" rx="7.5" ry="4.5" transform="rotate(-65 80 98)" fill="#D97706"/>
+    <ellipse cx="72" cy="116" rx="7.5" ry="4.5" transform="rotate(-70 72 116)" fill="#D97706"/>
+
+    <!-- Secondary Panicle Grains -->
+    <ellipse cx="125" cy="52" rx="6.5" ry="3.8" transform="rotate(20 125 52)" fill="#B5944B"/>
+    <ellipse cx="115" cy="64" rx="6.8" ry="4" transform="rotate(15 115 64)" fill="#B5944B"/>
+    <ellipse cx="104" cy="78" rx="7" ry="4.2" transform="rotate(10 104 78)" fill="#B5944B"/>
+    <ellipse cx="94" cy="94" rx="7.2" ry="4.2" transform="rotate(5 94 94)" fill="#B5944B"/>
+    <ellipse cx="86" cy="112" rx="7.2" ry="4.2" transform="rotate(0 86 112)" fill="#B5944B"/>
+
+    <!-- Subtle Grain Awns / Bristles -->
+    <line x1="144" y1="31" x2="154" y2="28" stroke="#231F1D" stroke-width="1.2"/>
+    <line x1="134" y1="36" x2="144" y2="31" stroke="#231F1D" stroke-width="1.2"/>
+    <line x1="124" y1="44" x2="134" y2="38" stroke="#231F1D" stroke-width="1.2"/>
+    <line x1="114" y1="53" x2="124" y2="47" stroke="#231F1D" stroke-width="1.2"/>
+  </g>
+</svg>

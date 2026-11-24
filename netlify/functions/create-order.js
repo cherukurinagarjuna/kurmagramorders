@@ -1,6 +1,6 @@
 'use strict';
 
-const { getPool }                            = require('./lib/db');
+const ordersDb                                = require('./lib/orders-db');
 const { json, normalizeIndianPhone, waLink } = require('./lib/helpers');
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -22,6 +22,8 @@ function validateAmount(val) {
 // Handler
 // Accepts:
 // {
+//   order_code?: string,
+//   order_no?: string,
 //   name: string,
 //   phone: string,
 //   address: string,
@@ -42,7 +44,7 @@ exports.handler = async (event) => {
     return json(400, { ok: false, error: 'Request body must be valid JSON' });
   }
 
-  const { name, phone, address, amount, items, product_details, payment_ref } = body;
+  const { name, phone, address, amount, items, product_details, payment_ref, order_code, order_no } = body;
 
   const cleanName    = validateStr(name, 2, 100);
   const cleanAddress = validateStr(address, 10, 500);
@@ -78,74 +80,54 @@ exports.handler = async (event) => {
     return json(400, { ok: false, error: 'Product details or items are required' });
   }
 
-  // Database transaction
-  const pool = getPool();
-  let client;
-
   try {
-    client = await pool.connect();
-    await client.query('BEGIN');
+    const createdOrder = await ordersDb.createOrder({
+      order_code: order_code || order_no,
+      order_no: order_no || order_code,
+      name: cleanName,
+      phone: cleanPhone,
+      address: cleanAddress,
+      amount: cleanAmount,
+      items: Array.isArray(items) && items.length > 0 ? items : [
+        { name: cleanProduct, quantity: 1, price: cleanAmount, subtotal: cleanAmount }
+      ],
+      product_details: cleanProduct,
+      payment_ref: cleanRef,
+      status: 'received'
+    });
 
-    // 1. Get sequence value
-    const seqResult = await client.query("SELECT nextval('order_code_seq') AS n");
-    const n = Number(seqResult.rows[0].n);
-
-    // 2. Build human-readable order code
-    const year = new Date().getFullYear();
-    const order_code = `RICE-${year}-${String(n).padStart(4, '0')}`;
-
-    // 3. Insert into orders table with payment_ref
-    const insertOrder = await client.query(
-      `INSERT INTO orders
-         (order_code, customer_name, customer_phone, delivery_address,
-          product_details, amount, status, payment_ref, payment_status)
-       VALUES ($1, $2, $3, $4, $5, $6, 'placed', $7, 'pending_verification')
-       RETURNING id`,
-      [order_code, cleanName, cleanPhone, cleanAddress, cleanProduct, cleanAmount, cleanRef]
-    );
-    const orderId = insertOrder.rows[0].id;
-
-    // 4. Build WhatsApp notification link for customer
-    const businessPhone = (process.env.BUSINESS_WHATSAPP || '').replace(/\D/g, '');
-    const siteUrl = (process.env.SITE_URL || '').replace(/\/$/, '');
-    const trackLink = siteUrl ? `${siteUrl}/track.html?code=${order_code}` : '';
+    // Build WhatsApp notification link for customer (Directed strictly to +91 7732075607)
+    const rawBizPhone = (process.env.BUSINESS_WHATSAPP || '917732075607').replace(/\D/g, '');
+    const businessPhone = rawBizPhone.length === 10 ? `91${rawBizPhone}` : (rawBizPhone || '917732075607');
 
     const waConfirmationMsg =
-      `హరే కృష్ణ! 🙏\n\n` +
-      `I have made the UPI payment for my order.\n\n` +
-      `📦 *Order Code:* ${order_code}\n` +
+      `హరే కృష్ణ! 🙏\n` +
+      `ధన్యవాదాలు (Thank you) — నేను కూర్మగ్రామ వేదిక్ విలేజ్ సహజ ఉత్పత్తుల కోసం UPI చెల్లింపు పూర్తి చేశాను.\n\n` +
+      `✅ *ఆర్డర్ నమోదైంది (Order Created)*\n` +
+      `📦 *Order No:* ${createdOrder.order_no}\n` +
       `👤 *Name:* ${cleanName}\n` +
       `📱 *Phone:* ${cleanPhone}\n` +
       `🌾 *Items:* ${cleanProduct}\n` +
       `💰 *Amount Paid:* ₹${cleanAmount}\n` +
       `🔢 *UPI UTR / Ref:* ${cleanRef}\n` +
-      `📍 *Delivery Address:* ${cleanAddress}\n\n` +
-      `Please find my attached payment screenshot. Kindly verify and confirm dispatch!`;
+      `📍 *Delivery Address:* ${cleanAddress}\n` +
+      `🚚 *Shipping Notice:* నవత రోడ్ ట్రాన్స్‌పోర్ట్ (రవాణా ఛార్జీలు అదనం - https://www.navata.com/freight-cal)\n\n` +
+      `చెల్లింపు స్క్రీన్‌షాట్ ఇక్కడ జతచేస్తున్నాను. దయచేసి ధ్రువీకరించి సరుకును నవత రోడ్ ట్రాన్స్‌పోర్ట్ ద్వారా పంపగలరు.\n` +
+      `ధన్యవాదాలు! (Thank you!) 🙏`;
 
     const customerWaLink = `https://wa.me/${businessPhone}?text=${encodeURIComponent(waConfirmationMsg)}`;
 
-    // 5. Audit log
-    await client.query(
-      `INSERT INTO notification_log
-         (order_id, channel, message_type, phone, message_body, status)
-       VALUES ($1, 'whatsapp', 'order_confirmation', $2, $3, 'pending')`,
-      [orderId, cleanPhone, waConfirmationMsg]
-    );
-
-    await client.query('COMMIT');
-
     return json(201, {
       ok: true,
-      order_code,
+      order_no: createdOrder.order_no,
+      order_code: createdOrder.order_code,
       amount: cleanAmount,
+      total_amount: createdOrder.total_amount,
       name: cleanName,
       customer_wa_link: customerWaLink,
     });
   } catch (err) {
-    if (client) await client.query('ROLLBACK').catch(() => {});
-    console.error('[create-order] DB error:', err.message);
-    return json(500, { ok: false, error: 'Could not create order' });
-  } finally {
-    if (client) client.release();
+    console.error('[create-order] Error:', err.message);
+    return json(500, { ok: false, error: 'Could not create order: ' + err.message });
   }
 };

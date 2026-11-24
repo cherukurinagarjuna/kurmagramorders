@@ -1,0 +1,551 @@
+{
+  "version": 2,
+  "skills": {
+    "accessibility": {
+      "source": "addyosmani/web-quality-skills",
+      "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "sourceType": "github",
+      "skillPath": "skills/accessibility/SKILL.md",
+      "computedHash": "c668809f5df57feb87cc06f1bc37fb340d1d92e26bacb6edbeab9258d22e76a5"
+    },
+    "ai-seo": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/ai-seo/SKILL.md",
+      "computedHash": "b231401a20cfc692bf79f0780add0d896ee4a64bb4b6748bcd1a449fb5e65a2d"
+    },
+    "astro-i18n-setup": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/astro-i18n-setup/SKILL.md",
+      "computedHash": "c1692bb70eae7963294a0f72a993b6226f0d360ba683b91acfec6c121d67eb59"
+    },
+    "beautiful-article": {
+      "source": "ConardLi/garden-skills",
+      "commit": "f2d7adeaf53dcce3d0eb19cbffe8c04f4c636c2a",
+      "sourceType": "github",
+      "skillPath": "skills/beautiful-article/SKILL.md",
+      "computedHash": "7e0a775e8782df33477057a0eb758993519819f8748f4e21c4b36911df2a9573"
+    },
+    "best-practices": {
+      "source": "addyosmani/web-quality-skills",
+      "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "sourceType": "github",
+      "skillPath": "skills/best-practices/SKILL.md",
+      "computedHash": "071ad7608cf92ad980330a6b1646f6bc568f5651d615e4c4a9fde225ceb9360c"
+    },
+    "business-listings-setup": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/business-listings-setup/SKILL.md",
+      "computedHash": "86be21a3548bcfddc63abc99449d13af0380f9b5ad803e7067ed76086e901e4c"
+    },
+    "copywriting": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/copywriting/SKILL.md",
+      "computedHash": "d5b5bb0b218d8d913c7aef5f833e6a07a97259301d5ac85b594621a40a65868d"
+    },
+    "core-web-vitals": {
+      "source": "addyosmani/web-quality-skills",
+      "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "sourceType": "github",
+      "skillPath": "skills/core-web-vitals/SKILL.md",
+      "computedHash": "de50c203aa9dafa8dee9dd8c06782e3fc610704b83c1c408e4c5ee2337c4cd2a"
+    },
+    "customer-research": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/customer-research/SKILL.md",
+      "computedHash": "ff01496768275ea3a86f1dbeec19e53203e91fdd52e8c5e58cd12d6d88dbbddd"
+    },
+    "deploy-to-vercel": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/deploy-to-vercel/SKILL.md",
+      "computedHash": "66b99dfa063b1c405155e9bffd99c04ca3e312e81b168d540b757bb194b7400a"
+    },
+    "design-md": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-utilities/skills/design-md/SKILL.md",
+      "computedHash": "a214568e811ed7f27a572e0079bf71b9b455637aec6fd817a942cc4aa33d6ffa"
+    },
+    "double-knuth": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/double-knuth/SKILL.md",
+      "computedHash": "f0df9862d9c2eb53f1646c5dc6816baeea434620f0c16339f9b37687a242307f"
+    },
+    "enhance-prompt": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-utilities/skills/enhance-prompt/SKILL.md",
+      "computedHash": "db82ccce387dbe18310325d77e66d72f2d64948838dfb456103d558c58c62dbb"
+    },
+    "facts-check": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/facts-check/SKILL.md",
+      "computedHash": "39eea42985c6b6887d41eb170898db8178e4757ed6dde777fdf5874f0c9eeef4"
+    },
+    "gpt-image-2": {
+      "source": "ConardLi/garden-skills",
+      "commit": "f2d7adeaf53dcce3d0eb19cbffe8c04f4c636c2a",
+      "sourceType": "github",
+      "skillPath": "skills/gpt-image-2/SKILL.md",
+      "computedHash": "51d57ae03f93f1b16e06b398c4d00de2f4c746cfd1221d0c2a3f96f4bb143ff1"
+    },
+    "image": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/image/SKILL.md",
+      "computedHash": "7f4c39106558a762c9ccf5f17540483a926a1ca68a9b8bd326b26fb04e387ac8"
+    },
+    "independent-review": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/independent-review/SKILL.md",
+      "computedHash": "a2ce2b3cab8abfd1d81741096682263f5269007fca8f84f76898967a7148a083"
+    },
+    "internal-link-audit": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/internal-link-audit/SKILL.md",
+      "computedHash": "49ad92159f3e50157c05934a38891465f3c9add6f3c89f15597f8a2ebba1feb6"
+    },
+    "kb-retriever": {
+      "source": "ConardLi/garden-skills",
+      "commit": "f2d7adeaf53dcce3d0eb19cbffe8c04f4c636c2a",
+      "sourceType": "github",
+      "skillPath": "skills/kb-retriever/SKILL.md",
+      "computedHash": "76ee45af3e69c69aa2f81c5bf1bf523fbe4ab75b7e279239ef68942f48237ef8"
+    },
+    "keystatic-setup": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/keystatic-setup/SKILL.md",
+      "computedHash": "cd62eedf22edcbc887c91c540e73f0860c29a2832164bbc15aa025a55acf87cb"
+    },
+    "motion-showreel": {
+      "source": "ConardLi/garden-skills",
+      "commit": "f2d7adeaf53dcce3d0eb19cbffe8c04f4c636c2a",
+      "sourceType": "github",
+      "skillPath": "skills/motion-showreel/SKILL.md",
+      "computedHash": "85f3a49486c095794c3463103e944df0368a7b1c6721fcd9038d7dc9670929ac"
+    },
+    "new-website": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/new-website/SKILL.md",
+      "computedHash": "c72ef0ecd6c8bc80503767d92defdfa44efb93103241d0a8891805a2f9a79986"
+    },
+    "og-images": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/og-images/SKILL.md",
+      "computedHash": "aa9b008f1a9aaebfefb65d1ab3ca3f045ceb176078d93a77e17e78b0adf02be3"
+    },
+    "outgoing-link-audit": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/outgoing-link-audit/SKILL.md",
+      "computedHash": "b5d541dac058d41be54ca1d65174e406f420e17af0b8dd0cce7802054a258cc4"
+    },
+    "performance": {
+      "source": "addyosmani/web-quality-skills",
+      "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "sourceType": "github",
+      "skillPath": "skills/performance/SKILL.md",
+      "computedHash": "06902ebc4a8b91bfb8d1a99a03f186f0535b03d1a776ef751206104ef9b86c4c"
+    },
+    "react-vite-dashboard": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-build/skills/react-vite-dashboard/SKILL.md",
+      "computedHash": "51579332c6abffcbf325e91a63468f4fd44216abc2187ad24ead213fe8f19800"
+    },
+    "remotion": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-build/skills/remotion/SKILL.md",
+      "computedHash": "394d5cfcb175f4db20c7e2a45ee8580f72c5c81d1c409a0b0a73fb33956e0921"
+    },
+    "schema-markup": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/schema-markup/SKILL.md",
+      "computedHash": "f9685bb789a49fa7942131436fb4765c99793ae69bd99eae89580b2fe4d4a6c8"
+    },
+    "scroll-craft": {
+      "source": "nateherkai/scroll-craft",
+      "commit": "75d81f74e83692add18cd7a8a8e078b8a887a579",
+      "sourceType": "github",
+      "skillPath": "plugins/nateherk-design/skills/scroll-craft/SKILL.md",
+      "computedHash": "313906594cddf8d38d2d5cd3eda0436d7f4c912808d5255e1d579fcb8b8befaf"
+    },
+    "search-console-insights": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/search-console-insights/SKILL.md",
+      "computedHash": "6d20e3e21aa49764c352a22d1e6b947631951e0c35839735366339a8a30ca50c"
+    },
+    "search-console-setup": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/search-console-setup/SKILL.md",
+      "computedHash": "646ab20561834a7309bd596467fc5e9e68e79be86b2ce3eb8a3c0cb01b46bc03"
+    },
+    "seo": {
+      "source": "addyosmani/web-quality-skills",
+      "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "sourceType": "github",
+      "skillPath": "skills/seo/SKILL.md",
+      "computedHash": "fa30e94756c5c40663f4527e8220a985393abbe3a6256e43d02589948027467e"
+    },
+    "seo-audit": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/seo-audit/SKILL.md",
+      "computedHash": "b5339c48745492b14eec546185c22292073765dde24e3b3ca1820588b9f09123"
+    },
+    "seo-reposition": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/seo-reposition/SKILL.md",
+      "computedHash": "8d6568bae38ed627d6e9252c756c7ffa48b17e373a3d4e5e171bc38b3ef2d1b3"
+    },
+    "shadcn-ui": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-build/skills/shadcn-ui/SKILL.md",
+      "computedHash": "95d5a0ce0dfa4897f909b9eaf2025f02676f9cb1b3d1bbeabb9c9e8329e21a3d"
+    },
+    "site-architecture": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/site-architecture/SKILL.md",
+      "computedHash": "fcf589ac721bc9b92d768514e21aa7116857a60f6d0f3bb2518f6e239dd50b0f"
+    },
+    "site-md": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-utilities/skills/site-md/SKILL.md",
+      "computedHash": "6775063b4167ae332a77350ab08ce5909d041290135a0dc1304f526ab20fd585"
+    },
+    "stitch-loop": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-utilities/skills/stitch-loop/SKILL.md",
+      "computedHash": "23e76b90139337f40e9fe270144e34942215a8f896183dbf62f0454b872ee4c2"
+    },
+    "stitch::code-to-design": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-design/skills/code-to-design/SKILL.md",
+      "computedHash": "1701b7d0809c1e44aaaad89a9cb9756e285249e02ad8b554c8ebf30a1378cebb"
+    },
+    "stitch::extract-design-md": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-design/skills/extract-design-md/SKILL.md",
+      "computedHash": "ebbb969798ca2c97764cc42f1378bdb532202bfa40d0d393414a46857d303454"
+    },
+    "stitch::extract-static-html": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-design/skills/extract-static-html/SKILL.md",
+      "computedHash": "190fe15f78b9a4c688bb118d5ec35bd5435f72f085b2634ee371207115e089c8"
+    },
+    "stitch::generate-design": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-design/skills/generate-design/SKILL.md",
+      "computedHash": "4372b0abfe5775a0e2c77317a794d0c01e72ee68e989b5bca790495dde0f7136"
+    },
+    "stitch::manage-design-system": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-design/skills/manage-design-system/SKILL.md",
+      "computedHash": "71bd761c3fa423ec4c90374448c2f72a36e1e98f3203d765010677bd3997fe0f"
+    },
+    "stitch::react-components": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-build/skills/react-components/SKILL.md",
+      "computedHash": "67569a59351201063e8c4f89244edd9fb7531d4ba1595a720ee4e061b79b094f"
+    },
+    "stitch::react-native": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-build/skills/react-native/SKILL.md",
+      "computedHash": "3c23bdedbe8001195d47774b127f5f53b024b4622cd811598f9279d7a83f7a8c"
+    },
+    "stitch::upload-to-stitch": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-design/skills/upload-to-stitch/SKILL.md",
+      "computedHash": "8f45a43a44aab306e9ea2cd7edbb13def6183dbcc79f26b97fa16e7f716ac4e6"
+    },
+    "taste-design": {
+      "source": "google-labs-code/stitch-skills",
+      "commit": "62fdcd679747aca0792e5dd6591b10ddfad56825",
+      "sourceType": "github",
+      "skillPath": "plugins/stitch-utilities/skills/taste-design/SKILL.md",
+      "computedHash": "4ff03a5f77abd909807af1f9921266483caf14eed4f1228bcfc3b4fa93bda4b4"
+    },
+    "vercel-cli-with-tokens": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/vercel-cli-with-tokens/SKILL.md",
+      "computedHash": "a294080c5464284c5ed06bde9e5bf0fb16981958600f4ae829eaab5d7f17d29a"
+    },
+    "vercel-composition-patterns": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/composition-patterns/SKILL.md",
+      "computedHash": "f711ed8b16162eaa712abbcdbbae6c926f86c57e60127735fecc3ad0dd85b3fa"
+    },
+    "vercel-optimize": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/vercel-optimize/SKILL.md",
+      "computedHash": "f69b2d70e9928eb4ae0b0acdaabb2ba2f42ba694aa33df52b4ee41e8fb9ced60"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/react-best-practices/SKILL.md",
+      "computedHash": "7991ed4fbecdac23f47c1a40c243e00a212a9e7f3604db93959b3ae11dffe299"
+    },
+    "vercel-react-native-skills": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/react-native-skills/SKILL.md",
+      "computedHash": "4c160f1f4e623b989cadb71f42a0813be574d172acf5e32a6411c87f3e28c05a"
+    },
+    "vercel-react-view-transitions": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/react-view-transitions/SKILL.md",
+      "computedHash": "d5bdffc1f132ae0d6d9260c260ae206d48cd83cb148e3e3b75fc1a3b94b249fa"
+    },
+    "web-design-engineer": {
+      "source": "ConardLi/garden-skills",
+      "commit": "f2d7adeaf53dcce3d0eb19cbffe8c04f4c636c2a",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-engineer/SKILL.md",
+      "computedHash": "c8fcbb8fa6b93cb47a1dec38c300489a2eb10b2874dc1a03e0e69163cf8b40d2"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "5994e4cfd86144903d2ba750f862b9e36af15e3297aac983679e347b99f6cb71"
+    },
+    "web-quality-audit": {
+      "source": "addyosmani/web-quality-skills",
+      "commit": "afa8da942115f2961fdbfa80807ea0b232ff6c00",
+      "sourceType": "github",
+      "skillPath": "skills/web-quality-audit/SKILL.md",
+      "computedHash": "fed16ecc3591b557381b15f4c1659b5536f064cecea851799c2dad4668b325b4"
+    },
+    "web-video-presentation": {
+      "source": "ConardLi/garden-skills",
+      "commit": "f2d7adeaf53dcce3d0eb19cbffe8c04f4c636c2a",
+      "sourceType": "github",
+      "skillPath": "skills/web-video-presentation/SKILL.md",
+      "computedHash": "37632c3d19c047ff0eb7b3e7c3159c0adad9c040554f52cf4d3324a42ae3df9d"
+    },
+    "website-brand-kit": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-brand-kit/SKILL.md",
+      "computedHash": "ae80e43ed4e24d11e080c634a0297246f8ac057edcd71fa277bc396eadbcc2fb"
+    },
+    "website-contact-form": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-contact-form/SKILL.md",
+      "computedHash": "a7750337683603443b6673f1ef2ae0f7218633132ae7070345a2bd5a368343a4"
+    },
+    "website-content-guide": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-content-guide/SKILL.md",
+      "computedHash": "f54230ee137ee30c6112addac0dae9fa26a2b6e112b82051de370fed2e1648b3"
+    },
+    "website-design-system": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-design-system/SKILL.md",
+      "computedHash": "3cf34a9252a05b1579193ba8379efa3c4ae6475d450d56065d02ab285fb7a333"
+    },
+    "website-hero-carousel": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-hero-carousel/SKILL.md",
+      "computedHash": "d3eb7d16fdf60be09de618db8a4095775c7b09d879686aca12bd3ab5663fa758"
+    },
+    "website-launch-check": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-launch-check/SKILL.md",
+      "computedHash": "dab75f8b30ee1fe6a55cf2204bd497909e7673c721e79fb59f872a15035ef5ac"
+    },
+    "website-motion": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-motion/SKILL.md",
+      "computedHash": "68b50163e7a5d0562394c790fb44c21651671dec8bcca5746116070c9ac3ab84"
+    },
+    "website-new-page": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-new-page/SKILL.md",
+      "computedHash": "379246f46da4c73971fdf9eba20cfaab749b2eb05345f7aee6a9b86ed6bf24cf"
+    },
+    "website-permissions": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-permissions/SKILL.md",
+      "computedHash": "c9f2d20a6ac20b10293b8727fe3b560838487355cba608d910ae9095245d34e6"
+    },
+    "website-positioning": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-positioning/SKILL.md",
+      "computedHash": "89af4792c58a208e50abdcef49237f8f3be132ab5e76831848b5d006bda1e6e5"
+    },
+    "website-positioning-check": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-positioning-check/SKILL.md",
+      "computedHash": "a72738af684f6bc7851e94b596f825c2749ffc9966631d87aa93593ce65d1d65"
+    },
+    "website-qa": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-qa/SKILL.md",
+      "computedHash": "6f0d24cb39a9d2846783cfcb3b1a9093de7d72f639b81d88f9465767e8d41a8d"
+    },
+    "website-review": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-review/SKILL.md",
+      "computedHash": "cd5d01e60d6d19e29c7f0d81ba68bec800f54ca12b2a46bb6bb682bc9c1d769f"
+    },
+    "website-scorecard": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-scorecard/SKILL.md",
+      "computedHash": "01f441be40d91e4da7bbef4034045fe1bff55a64bd86adbd5a6e9d8ff8754d0b"
+    },
+    "website-seo-geo": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-seo-geo/SKILL.md",
+      "computedHash": "e247c65b4e1b49aec81f3c813c1c3223e6c1fad47585110c53cad3bcc96842ef"
+    },
+    "website-story": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-story/SKILL.md",
+      "computedHash": "1af62a45f25a507197cdb738a4e002aca89fcc2bf3d232d397c6810c5269eba2"
+    },
+    "website-tagline": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-tagline/SKILL.md",
+      "computedHash": "5694c1e58dc3eac584c0f62925f09823a363eedb1fbb062146f035c7ce1a85f7"
+    },
+    "website-team-setup": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-team-setup/SKILL.md",
+      "computedHash": "5d34a4bd0df107e785e03e549fdd11a474a63bbd578543dc9126393f13e12d27"
+    },
+    "website-testimonials": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/website-testimonials/SKILL.md",
+      "computedHash": "89126a06b1fc6c2d7cf108281775c5a08abf7cfde8b14aa4eb82a2cf943ebf4e"
+    },
+    "wordpress-inspector": {
+      "source": "karero/croftweaver",
+      "commit": "519845a6eb1ddbd3773302cf6f8b106050b52f6b",
+      "sourceType": "github",
+      "skillPath": "skills/wordpress-inspector/SKILL.md",
+      "computedHash": "22c909c1dbe3e66daf3bf998420ed78592d019cccaf209897356a3c0b36ef968"
+    },
+    "writing-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "commit": "5a37a6329fbad3666c3207392a6a7c0110e92efb",
+      "sourceType": "github",
+      "skillPath": "skills/writing-guidelines/SKILL.md",
+      "computedHash": "fe1390adbe2f7ba68d5fb85d3b14a1d55e71ce04cff5c175245c550d1c3a6f7e"
+    }
+  }
+}

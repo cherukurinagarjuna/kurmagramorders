@@ -11,17 +11,16 @@ function getPool() {
     pool = new Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: {
-        // Neon / most hosted Postgres providers require SSL.
-        // rejectUnauthorized: false only if the host uses a self-signed cert.
-        rejectUnauthorized: true,
+        rejectUnauthorized: false,
       },
-      max: 5,                // keep connection count low in serverless
-      idleTimeoutMillis: 30_000,
-      connectionTimeoutMillis: 5_000,
+      max: 2,
+      idleTimeoutMillis: 5_000,
+      connectionTimeoutMillis: 2_000,
     });
 
     pool.on('error', (err) => {
-      console.error('[db] Unexpected pool error', err);
+      // Prevent uncaught errors from crashing process on disconnect
+      console.warn('[db pool non-fatal]', err.message);
     });
   }
   return pool;

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Sunni Pindi (Herbal Bath Powder) Pouch Illustration -->
+  <defs>
+    <linearGradient id="pouchGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#dfcfaf"/>
+      <stop offset="60%" stop-color="#caa97d"/>
+      <stop offset="100%" stop-color="#ab895e"/>
+    </linearGradient>
+    <linearGradient id="powderGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#d49a37"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Circular background halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Herbal Powder Heap on Leaf -->
+  <path d="M110 185 Q150 155 190 185 Q150 195 110 185 Z" fill="url(#powderGrad)" stroke="#6b4f2a" stroke-width="2"/>
+  <circle cx="135" cy="178" r="2.5" fill="#8f6b28"/>
+  <circle cx="152" cy="172" r="3" fill="#8f6b28"/>
+  <circle cx="168" cy="177" r="2" fill="#8f6b28"/>
+
+  <!-- Kraft Standup Pouch -->
+  <path d="M105 60 L195 60 L185 175 Q150 185 115 175 Z" fill="url(#pouchGrad)" stroke="#6b4f2a" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Pouch Top Seal & Notch -->
+  <path d="M100 50 L200 50 L195 60 L105 60 Z" fill="#b9976b" stroke="#6b4f2a" stroke-width="2"/>
+  <line x1="105" y1="55" x2="195" y2="55" stroke="#6b4f2a" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <path d="M102 55 L106 55" stroke="#6b4f2a" stroke-width="2"/>
+  <path d="M198 55 L194 55" stroke="#6b4f2a" stroke-width="2"/>
+
+  <!-- Pouch Label Banner -->
+  <rect x="118" y="85" width="64" height="65" rx="6" fill="#fffdf7" stroke="#2f6b3a" stroke-width="1.8"/>
+  <circle cx="150" cy="104" r="10" fill="#2f6b3a"/>
+  <!-- Leaf icon inside seal -->
+  <path d="M146 108 Q146 99 154 99 Q154 108 146 108 Z" fill="#fffdf7"/>
+  <line x1="148" y1="106" x2="152" y2="101" stroke="#2f6b3a" stroke-width="1"/>
+  <text x="150" y="125" font-family="'Noto Sans Telugu', sans-serif" font-size="9" font-weight="700" fill="#1c4423" text-anchor="middle">సున్నిపిండి</text>
+  <text x="150" y="137" font-family="'Poppins', sans-serif" font-size="7" font-weight="600" fill="#6b4f2a" text-anchor="middle">HERBAL BATH</text>
+
+  <!-- Fresh Turmeric & Neem Leaves -->
+  <g stroke="#6b4f2a" stroke-width="1.8" stroke-linejoin="round">
+    <!-- Left Leaf -->
+    <path d="M85 160 C70 140 75 120 95 115 C95 135 105 150 85 160 Z" fill="#2f6b3a"/>
+    <path d="M85 160 C87 145 92 130 95 115" stroke="#faf5e9" stroke-width="1.2"/>
+    <!-- Right Leaf -->
+    <path d="M215 160 C230 140 225 120 205 115 C205 135 195 150 215 160 Z" fill="#3d854c"/>
+    <path d="M215 160 C213 145 208 130 205 115" stroke="#faf5e9" stroke-width="1.2"/>
+  </g>
+</svg>

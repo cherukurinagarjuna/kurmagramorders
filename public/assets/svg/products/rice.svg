@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Brown Rice (Natural Farming) Sack + Golden Paddy Stalks -->
+  <defs>
+    <linearGradient id="juteSack" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#caa97d"/>
+      <stop offset="60%" stop-color="#b08b58"/>
+      <stop offset="100%" stop-color="#8a6332"/>
+    </linearGradient>
+    <linearGradient id="riceGrain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8cfab"/>
+      <stop offset="100%" stop-color="#bfa075"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Shadow -->
+  <ellipse cx="145" cy="190" rx="55" ry="14" fill="#dfcfaf"/>
+
+  <!-- Golden Paddy Stalks in Background -->
+  <g stroke="#e8890c" stroke-width="2" stroke-linecap="round" transform="translate(45, 30)">
+    <path d="M40 140 Q30 70 15 35" fill="none"/>
+    <ellipse cx="12" cy="32" rx="4" ry="2.5" transform="rotate(-30 12 32)" fill="#ffd166"/>
+    <ellipse cx="18" cy="42" rx="4" ry="2.5" transform="rotate(-40 18 42)" fill="#ffd166"/>
+    <ellipse cx="24" cy="54" rx="4" ry="2.5" transform="rotate(-35 24 54)" fill="#ffd166"/>
+    <ellipse cx="30" cy="68" rx="4" ry="2.5" transform="rotate(-40 30 68)" fill="#ffd166"/>
+    <ellipse cx="36" cy="85" rx="4" ry="2.5" transform="rotate(-35 36 85)" fill="#ffd166"/>
+
+    <path d="M50 140 Q55 60 75 25" fill="none"/>
+    <ellipse cx="78" cy="22" rx="4" ry="2.5" transform="rotate(30 78 22)" fill="#ffd166"/>
+    <ellipse cx="70" cy="35" rx="4" ry="2.5" transform="rotate(40 70 35)" fill="#ffd166"/>
+    <ellipse cx="64" cy="50" rx="4" ry="2.5" transform="rotate(35 64 50)" fill="#ffd166"/>
+    <ellipse cx="58" cy="65" rx="4" ry="2.5" transform="rotate(40 58 65)" fill="#ffd166"/>
+  </g>
+
+  <!-- Jute Sack of Brown Rice -->
+  <g id="riceSack">
+    <!-- Sack Body -->
+    <path d="M100 110 C90 145 95 185 105 188 C130 192 165 192 188 188 C198 185 204 145 194 110 Z" fill="url(#juteSack)" stroke="#6b4f2a" stroke-width="2"/>
+    
+    <!-- Jute Weave Texture Accents -->
+    <path d="M108 135 Q145 142 185 135 M106 155 Q145 162 188 155 M110 172 Q145 178 182 172" stroke="#6b4f2a" stroke-width="1.2" stroke-dasharray="3 3" fill="none" opacity="0.6"/>
+
+    <!-- Rolled Rim of the Sack -->
+    <ellipse cx="147" cy="110" rx="48" ry="14" fill="#a47c49" stroke="#6b4f2a" stroke-width="2"/>
+
+    <!-- Exposed Mound of Brown Rice Grains -->
+    <ellipse cx="147" cy="107" rx="42" ry="11" fill="url(#riceGrain)" stroke="#6b4f2a" stroke-width="1.5"/>
+    <!-- Individual Brown Rice Grains on top -->
+    <ellipse cx="130" cy="104" rx="4.5" ry="2" transform="rotate(15 130 104)" fill="#fffdf7" stroke="#6b4f2a" stroke-width="0.8"/>
+    <ellipse cx="144" cy="102" rx="4.5" ry="2" transform="rotate(-20 144 102)" fill="#fffdf7" stroke="#6b4f2a" stroke-width="0.8"/>
+    <ellipse cx="158" cy="105" rx="4.5" ry="2" transform="rotate(10 158 105)" fill="#fffdf7" stroke="#6b4f2a" stroke-width="0.8"/>
+    <ellipse cx="138" cy="109" rx="4.5" ry="2" transform="rotate(-5 138 109)" fill="#fffdf7" stroke="#6b4f2a" stroke-width="0.8"/>
+    <ellipse cx="152" cy="110" rx="4.5" ry="2" transform="rotate(25 152 110)" fill="#fffdf7" stroke="#6b4f2a" stroke-width="0.8"/>
+
+    <!-- Stamp on Jute Bag -->
+    <rect x="122" y="132" width="50" height="42" rx="4" fill="#fffdf7" stroke="#2f6b3a" stroke-width="1.5"/>
+    <text x="147" y="148" font-family="'Noto Sans Telugu', sans-serif" font-size="8" font-weight="700" fill="#1c4423" text-anchor="middle">బ్రౌన్ రైస్</text>
+    <text x="147" y="160" font-family="'Poppins', sans-serif" font-size="6" font-weight="600" fill="#6b4f2a" text-anchor="middle">NATURAL RICE</text>
+    <circle cx="147" cy="167" r="2" fill="#e8890c"/>
+  </g>
+</svg>

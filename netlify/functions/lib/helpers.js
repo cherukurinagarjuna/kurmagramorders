@@ -153,7 +153,19 @@ function verifyCookie(raw) {
  * @returns {boolean}
  */
 function requireAuth(event) {
-  const cookieHeader = (event.headers && event.headers.cookie) || '';
+  // Support direct API header authentication (x-admin-password or Authorization header)
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const reqHeaders = (event && event.headers) || {};
+  const headerPwd = reqHeaders['x-admin-password'] || reqHeaders['X-Admin-Password'] || reqHeaders['x-admin-token'];
+  if (adminPassword && headerPwd && headerPwd === adminPassword) {
+    return true;
+  }
+  const authHeader = reqHeaders['authorization'] || reqHeaders['Authorization'] || '';
+  if (adminPassword && authHeader.startsWith('Bearer ') && authHeader.slice(7).trim() === adminPassword) {
+    return true;
+  }
+
+  const cookieHeader = reqHeaders.cookie || reqHeaders.Cookie || '';
   if (!cookieHeader) return false;
 
   // Parse all cookies into a key→value map

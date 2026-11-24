@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Herbal Pain Relief Oil: Dropper Bottle + Healing Herbs -->
+  <defs>
+    <linearGradient id="amberGlass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d48222"/>
+      <stop offset="60%" stop-color="#a45610"/>
+      <stop offset="100%" stop-color="#693005"/>
+    </linearGradient>
+    <linearGradient id="oilDrop" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#e8890c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Shadow -->
+  <ellipse cx="150" cy="188" rx="42" ry="12" fill="#dfcfaf"/>
+
+  <!-- Herbal Pain Relief Oil Dropper Bottle -->
+  <g id="dropperBottle" transform="translate(10, 0)">
+    <!-- Amber Bottle Body -->
+    <path d="M120 100 C120 88 130 84 135 84 L135 68 L145 68 L145 84 C150 84 160 88 160 100 L160 174 C160 180 155 185 148 185 L132 185 C125 185 120 180 120 174 Z" fill="url(#amberGlass)" stroke="#6b4f2a" stroke-width="2"/>
+
+    <!-- Glass Highlights -->
+    <line x1="126" y1="102" x2="126" y2="175" stroke="#fffdf7" stroke-width="1.8" opacity="0.4" stroke-linecap="round"/>
+
+    <!-- Cap & Rubber Pipette Bulb -->
+    <rect x="133" y="56" width="14" height="12" rx="2" fill="#1c4423" stroke="#6b4f2a" stroke-width="1.8"/>
+    <path d="M136 56 C134 44 146 44 144 56 Z" fill="#6b4f2a" stroke="#1c4423" stroke-width="1.8"/>
+
+    <!-- Label -->
+    <rect x="124" y="112" width="32" height="48" rx="3" fill="#fffdf7" stroke="#6b4f2a" stroke-width="1.2"/>
+    <circle cx="140" cy="124" r="5" fill="#c0392b"/>
+    <!-- Plus symbol inside red circle (healing) -->
+    <line x1="140" y1="121" x2="140" y2="127" stroke="#fffdf7" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="137" y1="124" x2="143" y2="124" stroke="#fffdf7" stroke-width="1.2" stroke-linecap="round"/>
+    <text x="140" y="140" font-family="'Noto Sans Telugu', sans-serif" font-size="6.5" font-weight="700" fill="#1c4423" text-anchor="middle">పెయిన్</text>
+    <text x="140" y="150" font-family="'Poppins', sans-serif" font-size="5" font-weight="600" fill="#6b4f2a" text-anchor="middle">PAIN OIL</text>
+  </g>
+
+  <!-- Dropper Pipette Dispensing One Drop -->
+  <g transform="translate(62, 75)">
+    <path d="M25 0 L25 45 L30 52 L20 52 L25 45" stroke="#6b4f2a" stroke-width="1.5" fill="#fffdf7"/>
+    <!-- Golden Oil Droplet falling -->
+    <path d="M25 65 C25 65 30 73 30 77 C30 80 28 82 25 82 C22 82 20 80 20 77 C20 73 25 65 25 65 Z" fill="url(#oilDrop)" stroke="#6b4f2a" stroke-width="1.2"/>
+  </g>
+
+  <!-- Eucalyptus & Ayurvedic Leaves on the right -->
+  <g transform="translate(190, 110)" stroke="#6b4f2a" stroke-width="1.8">
+    <path d="M0 60 C15 35 45 35 40 10 C20 20 5 40 0 60 Z" fill="#2f6b3a"/>
+    <path d="M0 60 C18 38 40 10 40 10" stroke="#faf5e9" stroke-width="1.2"/>
+
+    <path d="M-10 65 C5 50 30 65 35 45 C15 45 -5 55 -10 65 Z" fill="#3d854c"/>
+  </g>
+</svg>

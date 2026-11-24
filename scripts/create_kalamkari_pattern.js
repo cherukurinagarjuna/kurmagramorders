@@ -1,0 +1,52 @@
+const fs = require('fs');
+const path = require('path');
+
+// Repeating seamless Kalamkari lotus / vine textile tile (120x120)
+const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <style>
+      .tile-line { fill: none; stroke: #231F1D; stroke-width: 1.2px; stroke-opacity: 0.12; }
+      .tile-petal { fill: #B5944B; fill-opacity: 0.08; stroke: #231F1D; stroke-width: 1px; stroke-opacity: 0.12; }
+      .tile-dot { fill: #A62B2B; fill-opacity: 0.15; }
+    </style>
+  </defs>
+  <!-- Center Lotus Blossom -->
+  <g transform="translate(60, 60)">
+    <!-- 8 Petals -->
+    <path d="M 0 0 C -8 -15, -6 -28, 0 -35 C 6 -28, 8 -15, 0 0" class="tile-petal" />
+    <path d="M 0 0 C -15 -8, -28 -6, -35 0 C -28 6, -15 8, 0 0" class="tile-petal" />
+    <path d="M 0 0 C -8 15, -6 28, 0 35 C 6 28, 8 15, 0 0" class="tile-petal" />
+    <path d="M 0 0 C 15 -8, 28 -6, 35 0 C 28 6, 15 8, 0 0" class="tile-petal" />
+    <!-- Diagonal micro petals -->
+    <path d="M 0 0 C -16 -16, -24 -24, -25 -25 C -18 -20, -10 -14, 0 0" class="tile-line" />
+    <path d="M 0 0 C 16 -16, 24 -24, 25 -25 C 18 -20, 10 -14, 0 0" class="tile-line" />
+    <path d="M 0 0 C -16 16, -24 24, -25 25 C -18 20, -10 14, 0 0" class="tile-line" />
+    <path d="M 0 0 C 16 16, 24 24, 25 25 C 18 20, 10 14, 0 0" class="tile-line" />
+    <!-- Center seed receptacle -->
+    <circle cx="0" cy="0" r="7" class="tile-line" />
+    <circle cx="0" cy="0" r="3.5" class="tile-dot" />
+  </g>
+  <!-- Corner quarter blossoms -->
+  <g transform="translate(0, 0)">
+    <circle cx="0" cy="0" r="14" class="tile-line" />
+    <circle cx="0" cy="0" r="6" class="tile-dot" />
+  </g>
+  <g transform="translate(120, 0)">
+    <circle cx="0" cy="0" r="14" class="tile-line" />
+    <circle cx="0" cy="0" r="6" class="tile-dot" />
+  </g>
+  <g transform="translate(0, 120)">
+    <circle cx="0" cy="0" r="14" class="tile-line" />
+    <circle cx="0" cy="0" r="6" class="tile-dot" />
+  </g>
+  <g transform="translate(120, 120)">
+    <circle cx="0" cy="0" r="14" class="tile-line" />
+    <circle cx="0" cy="0" r="6" class="tile-dot" />
+  </g>
+</svg>
+`;
+
+fs.writeFileSync(path.join(__dirname, '../public/assets/svg/kalamkari/kalamkari-pattern.svg'), svg, 'utf8');
+fs.writeFileSync(path.join(__dirname, '../assets/svg/kalamkari/kalamkari-pattern.svg'), svg, 'utf8');
+console.log('Kalamkari pattern SVG generated.');

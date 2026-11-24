@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 180" width="240" height="180" fill="none">
+  <!-- Nanda Gokulam Sacred Desi Cow & Calf: 2px Iron-Black Stroke, Kalamkari Linework -->
+  <g stroke="#231F1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Ground Pasture Baseline -->
+    <path d="M 10 160 Q 120 156 230 160" stroke="#2D6A4F" stroke-width="2.5"/>
+    <path d="M 20 160 L 25 152 M 28 160 L 32 150 M 210 160 L 205 152 M 218 160 L 214 150" stroke="#2D6A4F" stroke-width="1.8"/>
+
+    <!-- Mother Cow (Desi Cow with hump and dewlap) -->
+    <!-- Body -->
+    <path d="M 60 110 C 60 80 85 75 110 75 C 135 75 170 85 180 110 C 180 135 150 145 100 145 C 70 145 60 130 60 110 Z" fill="#FFFDF9"/>
+    
+    <!-- Distinctive Desi Sacred Hump (Kukudam) -->
+    <path d="M 95 75 C 95 55 115 52 118 75 Z" fill="#ECE2CE"/>
+
+    <!-- Gentle Dewlap (Galakambalam) -->
+    <path d="M 75 95 C 70 110 80 125 90 120" fill="none" stroke="#231F1D" stroke-width="1.8"/>
+
+    <!-- Neck & Head (Facing right, gently looking down at calf) -->
+    <path d="M 100 75 L 85 65 C 75 60 65 70 70 85 L 80 95 Z" fill="#FFFDF9"/>
+    <!-- Horns with Turmeric/Kumkum Tint -->
+    <path d="M 80 62 C 78 48 85 40 88 38 C 88 45 84 55 83 62 Z" fill="#D97706"/>
+    <path d="M 74 65 C 70 52 74 44 76 42 C 77 48 76 58 76 65 Z" fill="#D97706"/>
+    <!-- Ear -->
+    <ellipse cx="68" cy="72" rx="7" ry="3.5" transform="rotate(-30 68 72)" fill="#ECE2CE"/>
+    <!-- Calm Eye & Tilak -->
+    <circle cx="76" cy="74" r="1.8" fill="#231F1D"/>
+    <circle cx="80" cy="68" r="2" fill="#A62B2B"/>
+
+    <!-- Sacred Brass Bell Necklace -->
+    <path d="M 82 85 Q 88 100 95 90" stroke="#B5944B" stroke-width="2.5"/>
+    <circle cx="89" cy="98" r="4" fill="#B5944B"/>
+
+    <!-- Legs -->
+    <line x1="78" y1="140" x2="78" y2="160" stroke="#231F1D" stroke-width="2.2"/>
+    <line x1="92" y1="140" x2="92" y2="160" stroke="#231F1D" stroke-width="2.2"/>
+    <line x1="155" y1="135" x2="155" y2="160" stroke="#231F1D" stroke-width="2.2"/>
+    <line x1="170" y1="130" x2="170" y2="160" stroke="#231F1D" stroke-width="2.2"/>
+
+    <!-- Tail with soft tuft -->
+    <path d="M 180 110 Q 195 125 190 145" fill="none"/>
+    <path d="M 188 142 C 193 148 190 156 186 154 Z" fill="#231F1D"/>
+
+    <!-- Nursing Little Calf -->
+    <!-- Calf Body & Head -->
+    <ellipse cx="140" cy="135" rx="22" ry="14" fill="#ECE2CE"/>
+    <circle cx="120" cy="126" r="8" fill="#ECE2CE"/>
+    <circle cx="118" cy="125" r="1.2" fill="#231F1D"/>
+    <ellipse cx="114" cy="122" rx="4" ry="2" transform="rotate(-20 114 122)" fill="#FFFDF9"/>
+    <!-- Calf Legs -->
+    <line x1="126" y1="145" x2="126" y2="160" stroke="#231F1D" stroke-width="2"/>
+    <line x1="150" y1="145" x2="150" y2="160" stroke="#231F1D" stroke-width="2"/>
+  </g>
+</svg>

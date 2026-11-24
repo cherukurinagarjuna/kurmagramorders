@@ -1,0 +1,140 @@
+---
+import { CATEGORIES, PRODUCTS } from '../config';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = 'మా సహజ ఉత్పత్తుల భాండాగారం',
+  subtitle = 'గోశాల మరియు సహజ వ్యవసాయ క్షేత్రం నుండి నేరుగా మీ ఇంటికి',
+} = Astro.props;
+---
+
+<section id="catalog" class="catalog-ledger-section" aria-labelledby="shopTitle">
+  <div class="container">
+    <!-- Vintage Broadsheet Catalog Header -->
+    <div class="catalog-ledger-header">
+      <div class="ledger-header-meta">
+        <span class="ledger-eyebrow">శ్రీకాకుళం సహజ వ్యవసాయ క్షేత్ర నివేదిక 2026</span>
+        <span class="ledger-serial">COMMODITIES REGISTER &bull; FOLIO 108</span>
+      </div>
+      <h2 id="shopTitle" class="ledger-title" data-i18n="shopTitle">{title}</h2>
+      <p class="ledger-sub" data-i18n="shopSub">{subtitle}</p>
+      <div class="ledger-masthead-rule" aria-hidden="true"></div>
+    </div>
+
+    <!-- Shop Toolbar (Search & Natural-Dye Filter Chips) -->
+    <div class="shop-toolbar-ledger">
+      <div class="search-box-ledger">
+        <span class="search-icon-ledger" aria-hidden="true">
+          <svg class="ph-icon"><use href="#ph-magnifying-glass"/></svg>
+        </span>
+        <input 
+          type="search" 
+          id="productSearchInput" 
+          class="search-input-ledger" 
+          placeholder="ఉత్పత్తి పేరుతో వెతకండి... (ఉదా: సున్నిపిండి, బ్రౌన్ రైస్)" 
+          data-i18n-placeholder="searchPlaceholder"
+          aria-label="ఉత్పత్తులను వెతకండి"
+        />
+      </div>
+
+      <!-- Category Filter Chips -->
+      <div class="category-filters-wrap" id="categoryFilters" role="group" aria-label="వర్గాల వారీగా ఫిల్టర్ చేయండి">
+        {CATEGORIES.map((cat, idx) => (
+          <button 
+            type="button" 
+            class={`chip-btn ${idx === 0 ? 'active' : ''}`} 
+            data-category={cat.id}
+          >
+            <span class="dye-dot" style={`background-color: ${cat.dyeColor};`}></span>
+            <span>{cat.te}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Vintage Spice Market Ledger Column Header -->
+    <div class="ledger-columns-head" aria-hidden="true">
+      <span class="col-head-name">ఉత్పత్తి వివరాలు / COMMODITY & PROVENANCE</span>
+      <span class="col-head-units">పరిమాణం / SIZE</span>
+      <span class="col-head-price">ధర / RATE</span>
+      <span class="col-head-action">ఆర్డర్ / ORDER</span>
+    </div>
+
+    <!-- Ledger Table Rows Container (Replaces floating cards grid) -->
+    <div id="productsGrid" class="catalog-ledger-rows" role="region" aria-live="polite" aria-label="ఉత్పత్తుల జాబితా">
+      {PRODUCTS.map((prod, index) => {
+        const isRice = prod.id === 'rice';
+        return (
+          <article 
+            class={`product-card product-ledger-row ${isRice ? 'product-ledger-row--featured' : ''}`} 
+            id={`prod-card-${prod.id}`} 
+            data-category={prod.cat}
+            data-id={prod.id}
+          >
+            <!-- Left: Index + Product Line Art + Large Telugu & Small English Title -->
+            <div class="ledger-item-col-left">
+              <span class="ledger-row-num">{(index + 1).toString().padStart(2, '0')}</span>
+              <div class="ledger-row-art">
+                <img src={prod.svg} alt="" class="ledger-row-svg" width="56" height="56" loading="lazy" />
+              </div>
+              <div class="ledger-row-titles">
+                <div class="ledger-title-line">
+                  <h3 class="product-name-te ledger-name-te">
+                    <a href={`/product/${prod.id}`} class="ledger-title-link">{prod.te}</a>
+                  </h3>
+                  <span class="ledger-tag-stamp">{prod.tag}</span>
+                  {isRice && <span class="ledger-offer-stamp">25kg ఆఫర్</span>}
+                </div>
+                <span class="product-name-en ledger-name-en">{prod.en}</span>
+                <p class="product-desc ledger-row-desc">{prod.desc}</p>
+              </div>
+            </div>
+
+            <!-- Middle Left: Unit Selector (Sharp Rectangular Blocks) -->
+            <div class="ledger-item-col-units">
+              <div class="card-units-selector ledger-units-container">
+                {prod.units.map((unit, uIdx) => (
+                  <button 
+                    type="button" 
+                    class={`unit-pill ${uIdx === 0 ? 'selected' : ''}`} 
+                    data-unit-idx={uIdx}
+                    data-unit-index={uIdx}
+                  >
+                    {unit.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- Middle Right: Price in Distinct Brass-Colored Box -->
+            <div class="ledger-item-col-price">
+              <div class="ledger-brass-box price-display price-box">
+                <span class="price-val">₹{prod.units[0].price}</span>
+                <span class="unit-tag">/ {prod.units[0].label}</span>
+                {prod.units[0].mrp && <span class="mrp-val">₹{prod.units[0].mrp}</span>}
+                {prod.units[0].note && <span class="discount-badge ledger-savings-badge">{prod.units[0].note}</span>}
+              </div>
+            </div>
+
+            <!-- Right: Add to Cart as Simple Text Link with an Arrow (→), not a button -->
+            <div class="ledger-item-col-action">
+              <button 
+                type="button" 
+                class="btn-add-cart catalog-link-action" 
+                data-id={prod.id} 
+                data-i18n="addToCart"
+                aria-label={`Add ${prod.en} to cart`}
+              >
+                కార్ట్‌లోకి &rarr;
+              </button>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>

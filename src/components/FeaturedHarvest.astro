@@ -1,0 +1,61 @@
+---
+// Featured Harvest Component
+---
+
+<section class="featured-section" aria-labelledby="featuredSectionTitle">
+  <div class="container">
+    <div class="section-head">
+      <h2 id="featuredSectionTitle" class="section-title" data-i18n="featuredTitle">ఈ కాలపు ముఖ్య ఉత్పత్తులు</h2>
+      <p class="section-sub" data-i18n="featuredSub">ఆశ్రమ గోశాల మరియు ప్రకృతి క్షేత్రం నుండి తాజా పంట</p>
+    </div>
+
+    <div class="featured-grid">
+      <!-- Feature Item 1: Sunni Pindi -->
+      <div class="featured-card">
+        <div class="featured-thumb">
+          <img src="/assets/svg/products/sunni.svg" alt="సున్నిపిండి నమూనా" width="140" height="140" loading="lazy" />
+        </div>
+        <div class="featured-info">
+          <div>
+            <span class="badge-tag" style="background-color: var(--color-harita); color: white;">స్నాన చూర్ణం</span>
+            <h3 class="product-name-te">సున్నిపిండి</h3>
+            <p class="product-desc">సంప్రదాయ పద్ధతిలో సహజ ఔషధ ద్రవ్యాలతో చేసిన స్నాన చూర్ణం. చర్మానికి పూర్తి సహజ రక్షణ.</p>
+          </div>
+          <div class="card-price-unit-row">
+            <div>
+              <span class="price-val">₹120</span>
+              <span class="unit-tag">/ 250g</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="quickAddFeatured('sunni', '250g', 120)">
+              బుట్టలో చేర్చు
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Item 2: Brown Rice Special -->
+      <div class="featured-card">
+        <div class="featured-thumb">
+          <img src="/assets/svg/products/rice.svg" alt="దేశవాళీ బ్రౌన్ రైస్ నమూనా" width="140" height="140" loading="lazy" />
+        </div>
+        <div class="featured-info">
+          <div>
+            <span class="badge-tag" style="background-color: var(--color-manjistha); color: white;">ప్రత్యేక తగ్గింపు ఆఫర్</span>
+            <h3 class="product-name-te">దేశవాళీ బ్రౌన్ రైస్</h3>
+            <p class="product-desc">ఎలాంటి రసాయనాలు లేకుండా గో-ఆధారిత వ్యవసాయంలో పండించిన పోషకాల నిలయం.</p>
+          </div>
+          <div class="card-price-unit-row">
+            <div>
+              <span class="price-val">₹3000</span>
+              <span class="unit-tag">/ 25kg సంచి</span>
+              <span class="discount-badge">₹250 ఆదా!</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" onclick="quickAddFeatured('rice', '25kg', 3000)">
+              బుట్టలో చేర్చు
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

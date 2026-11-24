@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 48" width="800" height="48" fill="none">
+  <!-- Srikakulam Kalamkari Handloom Scroll Vine Divider: 2px Iron-Black Stroke -->
+  <g stroke="#231F1D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main undulating botanical vine stem -->
+    <path d="M 0 24 Q 50 10 100 24 T 200 24 T 300 24 T 400 24 T 500 24 T 600 24 T 700 24 T 800 24" fill="none" stroke="#231F1D" stroke-width="2.2"/>
+    
+    <!-- Antique Brass Underline Guide -->
+    <line x1="40" y1="24" x2="760" y2="24" stroke="#B5944B" stroke-width="0.8" stroke-dasharray="6 4" opacity="0.6"/>
+
+    <!-- Central Sacred Lotus Blossom Motif -->
+    <g transform="translate(400, 24)">
+      <circle cx="0" cy="0" r="14" fill="#FAF6EE" stroke="#231F1D" stroke-width="2"/>
+      <circle cx="0" cy="0" r="8" fill="#A62B2B" stroke="#231F1D" stroke-width="1.5"/>
+      <circle cx="0" cy="0" r="3" fill="#D97706"/>
+      <!-- Symmetrical Petals -->
+      <path d="M-8 -14 Q0 -22 8 -14 Q0 -6 -8 -14 Z" fill="#D97706" stroke="#231F1D" stroke-width="1.5"/>
+      <path d="M-8 14 Q0 22 8 14 Q0 6 -8 14 Z" fill="#D97706" stroke="#231F1D" stroke-width="1.5"/>
+    </g>
+
+    <!-- Periodic Kalamkari Leaves & Spiral Tendrils (Harita Green & Madder Red Fills) -->
+    <!-- Wave 1 (Left of Center) -->
+    <path d="M 120 18 C 110 4 135 6 140 18 C 135 22 125 22 120 18 Z" fill="#2D6A4F"/>
+    <path d="M 170 30 C 180 44 155 42 150 30 C 155 26 165 26 170 30 Z" fill="#2D6A4F"/>
+    <circle cx="100" cy="24" r="3" fill="#A62B2B" stroke="#231F1D" stroke-width="1.2"/>
+    <path d="M 100 21 Q 95 12 88 16" fill="none" stroke="#B5944B" stroke-width="1.5"/>
+
+    <!-- Wave 2 -->
+    <path d="M 270 18 C 260 4 285 6 290 18 C 285 22 275 22 270 18 Z" fill="#2D6A4F"/>
+    <path d="M 320 30 C 330 44 305 42 300 30 C 305 26 315 26 320 30 Z" fill="#A62B2B"/>
+    <circle cx="250" cy="24" r="3" fill="#D97706" stroke="#231F1D" stroke-width="1.2"/>
+    <path d="M 250 27 Q 245 36 238 32" fill="none" stroke="#B5944B" stroke-width="1.5"/>
+
+    <!-- Wave 3 (Right of Center) -->
+    <path d="M 470 18 C 460 4 485 6 490 18 C 485 22 475 22 470 18 Z" fill="#A62B2B"/>
+    <path d="M 520 30 C 530 44 505 42 500 30 C 505 26 515 26 520 30 Z" fill="#2D6A4F"/>
+    <circle cx="550" cy="24" r="3" fill="#D97706" stroke="#231F1D" stroke-width="1.2"/>
+    <path d="M 550 21 Q 555 12 562 16" fill="none" stroke="#B5944B" stroke-width="1.5"/>
+
+    <!-- Wave 4 -->
+    <path d="M 670 18 C 660 4 685 6 690 18 C 685 22 675 22 670 18 Z" fill="#2D6A4F"/>
+    <path d="M 720 30 C 730 44 705 42 700 30 C 705 26 715 26 720 30 Z" fill="#2D6A4F"/>
+    <circle cx="650" cy="24" r="3" fill="#A62B2B" stroke="#231F1D" stroke-width="1.2"/>
+  </g>
+</svg>

@@ -1,0 +1,90 @@
+---
+// Magazine Cover Editorial Hero Component (Phase 1.6: Radical Handcrafted Overhaul)
+---
+
+<section class="hero-editorial-section" aria-labelledby="heroTitle">
+  <!-- Broadsheet Masthead Header Strip -->
+  <div class="hero-broadsheet-bar">
+    <div class="container hero-broadsheet-inner">
+      <span class="masthead-left">శ్రీకాకుళం &bull; నంద గోకులం గోశాల ట్రస్ట్ (2018)</span>
+      <span class="masthead-center">ESTD. 2018 &bull; వైదిక సేద్య నివేదిక &bull; VOL. VII</span>
+      <span class="masthead-right">FSSAI రిజిస్ట్రేషన్ ప్రాసెస్ &bull; శ్రీముఖలింగం అంతకపల్లి</span>
+    </div>
+  </div>
+
+  <div class="container hero-editorial-container">
+    <div class="hero-editorial-grid">
+      <!-- 40% Editorial Typography Column -->
+      <div class="hero-text-spine">
+        <div class="hero-kicker-tag">
+          <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="కూర్మ చిహ్నం" class="hero-kurma-icon" width="22" height="22" />
+          <span>శ్రీకాకుళం ప్రకృతి వ్యవసాయ క్షేత్రం</span>
+        </div>
+
+        <h1 id="heroTitle" class="hero-brand-title" data-i18n="heroTitle">
+          కూర్మగ్రామ వేదిక్ విలేజ్
+        </h1>
+
+        <!-- Massive Telugu Headline ("సరళ జీవనం") overlapping the 60% image -->
+        <div class="hero-headline-overlap-box">
+          <p class="hero-tagline hero-tagline-giant" id="heroFluidHeadline" data-i18n="heroTagline" aria-label="సరళ జీవనం – ఉన్నత ఆశయం">
+            <span class="fluid-typing-content" data-target-text="సరళ జీవనం – ఉన్నత ఆశయం">సరళ జీవనం – ఉన్నత ఆశయం</span><span class="fluid-typing-cursor" aria-hidden="true"></span>
+          </p>
+        </div>
+
+        <div class="hero-newspaper-rule" aria-hidden="true"></div>
+
+        <div class="hero-lead-text">
+          <p data-i18n="heroDescription">
+            ఎలాంటి రసాయన ఎరువులు, క్రిమిసంహారకాలు లేకుండా, సకల ప్రాణులకు హాని తలపెట్టకుండా స్వచ్ఛంగా భక్తుల చేతులతో తయారైన ఉత్పత్తులు. దేశవాళీ ఆవుల సంరక్షణతో కూడిన పవిత్ర గ్రామీణ జీవనం.
+          </p>
+        </div>
+
+        <!-- Sharp Rectangular CTA Buttons (No Rounded Corners, Invert on Hover) -->
+        <div class="hero-cta-actions">
+          <a href="./shop" class="btn btn-sharp-primary btn-add-cart-sharp" data-i18n="heroCtaShop">
+            ఉత్పత్తుల భాండాగారం &rarr;
+          </a>
+          <a href="#our-story" class="btn btn-sharp-secondary" data-i18n="heroCtaStory">
+            మా జీవన విధానం
+          </a>
+        </div>
+      </div>
+
+      <!-- 60% Real Farm Photography Magazine Hero Vista -->
+      <div class="hero-photo-column">
+        <div class="hero-magazine-frame">
+          <!-- Stamped Vintage Ink Seal Graphic in the corner -->
+          <div class="hero-corner-seal" aria-hidden="true">
+            <img src="/assets/svg/kalamkari/vintage-seal.svg" alt="Certified Natural Seal" width="130" height="130" />
+          </div>
+
+          <picture>
+            <source type="image/avif" srcset="/assets/images/farm/optimized/goshala-cows-400w.avif 400w, /assets/images/farm/optimized/goshala-cows-800w.avif 800w, /assets/images/farm/optimized/goshala-cows-1200w.avif 1200w" sizes="(max-width: 600px) 400px, 800px" />
+            <source type="image/webp" srcset="/assets/images/farm/optimized/goshala-cows-400w.webp 400w, /assets/images/farm/optimized/goshala-cows-800w.webp 800w, /assets/images/farm/optimized/goshala-cows-1200w.webp 1200w" sizes="(max-width: 600px) 400px, 800px" />
+            <img 
+              src="/assets/images/farm/optimized/goshala-cows-400w.webp" 
+              alt="కూర్మగ్రామ నంద గోకులం గోశాల దేశవాళీ గోమాత" 
+              class="hero-magazine-img" 
+              width="800" 
+              height="600" 
+              loading="eager" 
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+
+          <div class="hero-magazine-caption">
+            <span class="caption-lead">నంద గోకులం గోశాల &bull; 60 ఎకరాల సహజ క్షేత్రం</span>
+            <span class="caption-sub">శ్రీముఖలింగం సమీపాన అంతకపల్లి గ్రామం &bull; అహింసా గో సంరక్షణ</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Handcrafted Kalamkari Textile Divider -->
+  <div class="kalamkari-divider-wrap" aria-hidden="true">
+    <img src="/assets/svg/kalamkari/vine-divider.svg" alt="" class="kalamkari-vine-svg" width="800" height="24" />
+  </div>
+</section>

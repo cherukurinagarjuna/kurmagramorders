@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <!-- Sacred Kurma (Tortoise) Kalamkari Seal: 2px Iron-Black Stroke, Natural Dyes -->
+  <defs>
+    <radialGradient id="kurmaGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FAF6EE"/>
+      <stop offset="80%" stop-color="#ECE2CE"/>
+      <stop offset="100%" stop-color="#B5944B" stop-opacity="0.4"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Outer Ring with Sacred Sun Rays / Petals -->
+  <circle cx="60" cy="60" r="54" fill="url(#kurmaGlow)" stroke="#231F1D" stroke-width="2"/>
+  <circle cx="60" cy="60" r="48" stroke="#B5944B" stroke-width="1.2" stroke-dasharray="3 3"/>
+
+  <!-- Kalamkari Lotus Petal Ring -->
+  <g stroke="#231F1D" stroke-width="1.5" fill="#D97706" opacity="0.9">
+    <path d="M60 6 Q64 12 60 16 Q56 12 60 6 Z"/>
+    <path d="M60 114 Q64 108 60 104 Q56 108 60 114 Z"/>
+    <path d="M6 60 Q12 64 16 60 Q12 56 6 60 Z"/>
+    <path d="M114 60 Q108 64 104 60 Q108 56 114 60 Z"/>
+    <path d="M22 22 Q29 27 26 31 Q22 28 22 22 Z"/>
+    <path d="M98 22 Q91 27 94 31 Q98 28 98 22 Z"/>
+    <path d="M22 98 Q29 93 26 89 Q22 92 22 98 Z"/>
+    <path d="M98 98 Q91 93 94 89 Q98 92 98 98 Z"/>
+  </g>
+
+  <!-- Tortoise Limbs & Head (Iron-Black linework, Harita Green fill) -->
+  <g stroke="#231F1D" stroke-width="2" fill="#2D6A4F" stroke-linejoin="round">
+    <!-- Head with Tilak -->
+    <path d="M90 60 C98 56 98 64 90 60 Z" fill="#2D6A4F"/>
+    <circle cx="94" cy="60" r="3" fill="#D97706" stroke="#231F1D" stroke-width="1.5"/>
+    <circle cx="95" cy="59" r="0.8" fill="#231F1D"/>
+    <!-- Four Paddles/Feet -->
+    <path d="M42 38 C32 30 26 36 34 46 C38 46 42 42 42 38 Z"/>
+    <path d="M78 38 C88 30 94 36 86 46 C82 46 78 42 78 38 Z"/>
+    <path d="M42 82 C32 90 26 84 34 74 C38 74 42 78 42 82 Z"/>
+    <path d="M78 82 C88 90 94 84 86 74 C82 74 78 78 78 82 Z"/>
+    <!-- Tail -->
+    <path d="M28 60 L20 60" stroke="#231F1D" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Main Tortoise Carapace (Shell) -->
+  <ellipse cx="60" cy="60" rx="30" ry="24" fill="#2D6A4F" stroke="#231F1D" stroke-width="2"/>
+
+  <!-- Shell Hexagonal Plates & Sacred Geometry -->
+  <g stroke="#FAF6EE" stroke-width="1.8" stroke-linejoin="round" opacity="0.95">
+    <!-- Center Hexagon -->
+    <polygon points="60,46 72,53 72,67 60,74 48,67 48,53" fill="#1E3F66"/>
+    <!-- Radiating Lines -->
+    <line x1="60" y1="46" x2="60" y2="36"/>
+    <line x1="72" y1="53" x2="84" y2="47"/>
+    <line x1="72" y1="67" x2="84" y2="73"/>
+    <line x1="60" y1="74" x2="60" y2="84"/>
+    <line x1="48" y1="67" x2="36" y2="73"/>
+    <line x1="48" y1="53" x2="36" y2="47"/>
+    <!-- Inner Saffron Bindu -->
+    <circle cx="60" cy="60" r="4.5" fill="#D97706" stroke="#231F1D" stroke-width="1.2"/>
+  </g>
+</svg>

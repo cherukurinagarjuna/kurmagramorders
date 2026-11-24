@@ -1,0 +1,667 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import OfferStrip from '../components/OfferStrip.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, CONFIG } from '../config';
+---
+
+<Base 
+  title={`ఆర్డర్ చెక్అవుట్ & డైరెక్ట్ UPI | ${SITE.name}`} 
+  description="కూర్మగ్రామ వేదిక్ విలేజ్ 100% పారదర్శక డైరెక్ట్ UPI చెల్లింపు మరియు WhatsApp ఆర్డర్ ధ్రువీకరణ." 
+  canonicalPath="/checkout"
+>
+  <Header activeNav="shop" />
+
+  <main id="mainContent" class="checkout-page-layout">
+    <!-- Broadsheet Masthead Header Strip -->
+    <div class="hero-broadsheet-bar">
+      <div class="container hero-broadsheet-inner">
+        <div class="detail-breadcrumbs">
+          <a href="/" class="crumb-link">హోమ్</a>
+          <span class="crumb-sep">&bull;</span>
+          <a href="/shop" class="crumb-link">ఉత్పత్తుల భాండాగారం</a>
+          <span class="crumb-sep">&bull;</span>
+          <a href="/cart" class="crumb-link">షాపింగ్ బుట్ట</a>
+          <span class="crumb-sep">&bull;</span>
+          <span class="crumb-current">డైరెక్ట్ UPI చెక్అవుట్</span>
+        </div>
+        <span class="masthead-center">DIRECT UPI &bull; 0% GATEWAY FEES</span>
+        <span class="masthead-right">నంద గోకులం గోశాల ట్రస్ట్ (ESTD. 2018)</span>
+      </div>
+    </div>
+
+    <section class="checkout-editorial-section" aria-labelledby="checkoutPageTitle">
+      <div class="container">
+        <!-- Broadsheet Ledger Header -->
+        <div class="catalog-ledger-header">
+          <div class="ledger-header-meta">
+            <span class="ledger-eyebrow">ధర్మబద్ధ పారదర్శక లావాదేవీల రికార్డు</span>
+            <span class="ledger-serial">ORDER LEDGER &bull; FOLIO 108</span>
+          </div>
+          <h1 id="checkoutPageTitle" class="ledger-title">ఆర్డర్ చెక్అవుట్ & చెల్లింపు</h1>
+          <p class="ledger-sub">మధ్యవర్తులు మరియు గేట్‌వే ఫీజులు లేకుండా నేరుగా ట్రస్ట్ ఖాతాకు peer-to-peer UPI చెల్లింపు</p>
+          <div class="ledger-masthead-rule" aria-hidden="true"></div>
+        </div>
+
+        <div id="checkoutPageRoot" class="checkout-editorial-grid">
+          <!-- Populated by JavaScript from window.store -->
+          <div style="text-align: center; padding: var(--space-8); grid-column: 1 / -1;">
+            <p>ఆర్డర్ వివరాలు లోడ్ అవుతున్నాయి...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kalamkari Handloom Vine Divider -->
+    <div class="kalamkari-divider-wrap" aria-hidden="true">
+      <img src="/assets/svg/kalamkari/vine-divider.svg" alt="" class="kalamkari-vine-svg" width="800" height="24" />
+    </div>
+
+    <OfferStrip />
+  </main>
+
+  <Footer />
+</Base>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    function generatePageOrderId() {
+      const now = new Date();
+      const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+      const random = Math.floor(1000 + Math.random() * 9000);
+      return `KG-${dateStr}-${random}`;
+    }
+
+    function renderDedicatedCheckoutPage() {
+      const root = document.getElementById('checkoutPageRoot');
+      if (!root || !window.store) return;
+
+      const cart = window.store.cart;
+      if (!cart || cart.length === 0) {
+        root.innerHTML = `
+          <div class="cart-empty-ledger-box" style="grid-column: 1 / -1;">
+            <div class="empty-icon-art">
+              <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="కూర్మ చిహ్నం" width="56" height="56" />
+            </div>
+            <h2 class="empty-title">మీ బుట్టలో ఎలాంటి వస్తువులు లేవు</h2>
+            <p class="empty-sub">చెక్అవుట్ పూర్తి చేయడానికి దయచేసి ముందుగా ఉత్పత్తుల భాండాగారం నుండి కావలసిన వాటిని ఎంచుకోండి.</p>
+            <div class="empty-actions">
+              <a href="/shop" class="btn btn-sharp-primary">
+                ఉత్పత్తుల భాండాగారం చూడండి &rarr;
+              </a>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Generate or retrieve current order ID
+      if (!window.store.currentOrderId) {
+        window.store.currentOrderId = generatePageOrderId();
+      }
+      const orderId = window.store.currentOrderId;
+
+      let subtotal = 0;
+      const orderItems = cart.map((item) => {
+        const prod = PRODUCTS.find((p) => p.id === item.productId);
+        if (!prod) return null;
+        const unit = prod.units[item.unitIndex] || prod.units[0];
+        const lineTotal = unit.price * item.qty;
+        subtotal += lineTotal;
+        return {
+          id: prod.id,
+          nameTe: prod.te,
+          nameEn: prod.en,
+          unitLabel: unit.label,
+          price: unit.price,
+          qty: item.qty,
+          lineTotal
+        };
+      }).filter(Boolean);
+
+      const itemsListHTML = orderItems.map((item, idx) => `
+        <li class="checkout-review-item">
+          <div class="review-item-main">
+            <span class="review-item-idx">${(idx + 1).toString().padStart(2, '0')}.</span>
+            <span class="review-item-title">${item.nameTe} (${item.unitLabel}) &times; ${item.qty}</span>
+          </div>
+          <span class="review-item-total">₹${item.lineTotal}</span>
+        </li>
+      `).join('');
+
+      // Build NPCI UPI Deep Link
+      const upiUrl = `upi://pay?pa=${CONFIG.upiId}&pn=${encodeURIComponent(CONFIG.payeeName)}&am=${subtotal.toFixed(2)}&cu=INR&tn=${orderId}`;
+
+      root.innerHTML = `
+        <!-- Left Column: Customer Form & Items Review -->
+        <div class="checkout-form-column">
+          <div class="checkout-order-stamp-bar">
+            <span class="order-id-label">ఆర్డర్ రిజిస్టర్ ID:</span>
+            <strong class="order-id-val" id="pageOrderIdDisplay">${orderId}</strong>
+            <span class="order-time-stamp">&bull; ${new Date().toLocaleDateString('te-IN')}</span>
+          </div>
+
+          <!-- Customer Details Form -->
+          <form id="dedicatedCheckoutForm" class="checkout-editorial-form" novalidate>
+            <h3 class="form-section-heading">1. డెలివరీ చిరునామా & వివరాలు / CUSTOMER PARTICULARS</h3>
+            
+            <div class="form-group">
+              <label for="pageCustName">పూర్తి పేరు (Full Name) *</label>
+              <input 
+                type="text" 
+                id="pageCustName" 
+                class="form-input" 
+                placeholder="మీ పూర్తి పేరు నమోదు చేయండి" 
+                required 
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="pageCustPhone">WhatsApp / మొబైల్ నంబర్ (Phone Number) *</label>
+              <input 
+                type="tel" 
+                id="pageCustPhone" 
+                class="form-input" 
+                placeholder="ఉదా: 9876543210 (10 అంకెలు)" 
+                pattern="[0-9]{10}"
+                required 
+              />
+              <span class="form-hint">ఈ నంబర్‌కు WhatsApp ద్వారా ఆర్డర్ రసీదు మరియు రవాణా ట్రాకింగ్ పంపబడుతుంది.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="pageCustAddress">ఇంటి నం., వీధి, గ్రామం/పట్టణం (Address) *</label>
+              <textarea 
+                id="pageCustAddress" 
+                class="form-textarea" 
+                placeholder="ఇంటి నంబర్, వీధి, గ్రామం/పట్టణం, మండలం, జిల్లా" 
+                rows="2" 
+                required
+              ></textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: var(--space-3);">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="pageCustLandmark">సమీప గుర్తింపు స్థలం / ల్యాండ్‌మార్క్ (Landmark)</label>
+                <input 
+                  type="text" 
+                  id="pageCustLandmark" 
+                  class="form-input" 
+                  placeholder="ఉదా: రామాలయం / బస్టాండ్ ఎదురుగా" 
+                />
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="pageCustPincode">పిన్‌కోడ్ (Pincode - 6 Digits) *</label>
+                <input 
+                  type="text" 
+                  id="pageCustPincode" 
+                  class="form-input" 
+                  placeholder="ఉదా: 532001" 
+                  maxlength="6"
+                  pattern="[0-9]{6}"
+                  required 
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="pageCustNotes">ప్రత్యేక సూచనలు / Special Notes (ఐచ్ఛికం)</label>
+              <input 
+                type="text" 
+                id="pageCustNotes" 
+                class="form-input" 
+                placeholder="డెలివరీ సమయం లేదా ప్రత్యేక సూచనలు ఉంటే ఇక్కడ రాయండి" 
+              />
+            </div>
+
+            <!-- 🚚 Navata Transport Notice & Freight Calculator -->
+            <div class="navata-shipping-notice-box" style="background: #FDFBF7; border: 1.5px solid #C9A84C; padding: 1rem 1.2rem; margin-top: 1rem; text-align: left;">
+              <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
+                <span style="font-size: 1.5rem; line-height: 1;">🚚</span>
+                <div>
+                  <strong style="color: var(--color-kasi); font-size: 0.95rem; display: block; margin-bottom: 0.25rem;">
+                    రవాణా ఛార్జీలు అదనం (Shipping Charges are Extra):
+                  </strong>
+                  <p style="font-size: 0.85rem; color: var(--color-text-muted); margin: 0; line-height: 1.5;">
+                    సరుకు రవాణా ఖర్చులు నవత రోడ్ ట్రాన్స్‌పోర్ట్ (Navata Road Transport) టారిఫ్ ప్రకారం ఉంటాయి. మీ ప్రాంతాన్ని మరియు సరుకు బరువును బట్టి డెలివరీ సమయంలో నేరుగా నవత ట్రాన్స్‌పోర్ట్ వారికి రవాణా ఛార్జీలు చెల్లించాలి.
+                  </p>
+                  <div style="margin-top: 0.6rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+                    <a href="https://www.navata.com/freight-cal" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; font-weight: 700; color: #1B8344; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.3rem;">
+                      <span>నవత ఫ్రైట్ కాలిక్యులేటర్ (Navata Freight Calculator) &nearr;</span>
+                    </a>
+                    <span style="font-size: 0.8rem; color: var(--color-manjistha); font-weight: 700;">మూలం: శ్రీకాకుళం ఆశ్రమం (Srikakulam)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!-- Order Items Summary Ledger -->
+          <div class="checkout-review-box">
+            <h4 class="review-box-title">ఆర్డర్ చేసిన ఉత్పత్తుల సమీక్ష / COMMODITIES ORDERED</h4>
+            <ul class="checkout-review-list">
+              ${itemsListHTML}
+            </ul>
+            <div class="checkout-review-total">
+              <span>మొత్తం చెల్లించవలసినది:</span>
+              <span class="review-total-val">₹${subtotal}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Direct UPI Payment Vault & UTR Capture -->
+        <div class="checkout-upi-column">
+          <div class="checkout-upi-vault">
+            <div class="vault-header">
+              <div class="vault-title-group">
+                <span class="vault-kicker">0% TRANSACTION FEE &bull; 100% DIRECT</span>
+                <h3 class="vault-title">2. డైరెక్ట్ UPI చెల్లింపు & ధ్రువీకరణ</h3>
+              </div>
+              <img src="/assets/svg/kalamkari/vintage-seal.svg" alt="" width="56" height="56" class="vault-seal-svg" />
+            </div>
+
+            <!-- Payee & Amount Box -->
+            <div class="vault-amount-box">
+              <span class="amount-label">చెల్లించవలసిన మొత్తం:</span>
+              <div class="ledger-brass-box vault-grand-brass">
+                <span class="price-val">₹${subtotal}</span>
+                <span class="unit-tag">/ మొత్తం ఆర్డర్</span>
+              </div>
+              <div class="payee-account-info">
+                <span>ఖాతా పేరు: <strong>${CONFIG.payeeName}</strong></span>
+                <span>ట్రస్ట్ UPI ID: <code class="upi-id-code" id="pageUpiIdCode">${CONFIG.upiId}</code></span>
+              </div>
+              <button type="button" id="pageCopyUpiBtn" class="btn btn-sharp-secondary btn-copy-upi" aria-label="UPI ID కాపీ చేయండి">
+                UPI ID కాపీ చేయండి
+              </button>
+            </div>
+
+            <!-- QR Mode Tabs Switcher -->
+            <div class="qr-mode-tabs" role="tablist" aria-label="QR Code రకం ఎంచుకోండి">
+              <button type="button" class="qr-mode-tab active" id="tabDynamicQr" role="tab" aria-selected="true">
+                డైనమిక్ NPCI QR (₹${subtotal})
+              </button>
+              <button type="button" class="qr-mode-tab" id="tabOfficialQr" role="tab" aria-selected="false">
+                ఆశ్రమ అధికారిక QR (SBI)
+              </button>
+            </div>
+
+            <!-- NPCI-Compliant Dynamic UPI QR Code View -->
+            <div class="vault-qr-wrapper" id="dynamicQrWrapper">
+              <span class="qr-step-label">ఫోన్‌పే, గూగుల్‌పే, పేటీఎం లేదా భీమ్ యాప్ ద్వారా స్కాన్ చేయండి:</span>
+              <div class="upi-qr-frame" id="pageUpiQrContainer" aria-label="UPI Payment QR Code">
+                <!-- SVG QR generated client-side -->
+              </div>
+              <span class="qr-sub-text">ఆర్డర్ రిఫరెన్స్: <strong>${orderId}</strong> &bull; అమౌంట్: <strong>₹${subtotal}</strong></span>
+            </div>
+
+            <!-- Official Ashram Trust QR View (Initially Hidden) -->
+            <div class="vault-qr-wrapper" id="officialQrWrapper" style="display: none;">
+              <span class="qr-step-label">కూర్మగ్రామ గోశాల ట్రస్ట్ అధికారిక SBI UPI QR కోడ్:</span>
+              <div class="official-qr-frame">
+                <img src="/assets/images/upi-qr.jpg" alt="కూర్మగ్రామము అధికారిక UPI QR కోడ్" class="official-qr-img" width="220" height="222" />
+              </div>
+              <span class="official-qr-caption">శ్రీకాకుళం ఆశ్రమంలో ప్రదర్శితమైన అధికారిక QR కోడ్ &bull; UPI: ${CONFIG.upiId}</span>
+            </div>
+
+            <!-- Instant Mobile Multi-App Deep Links -->
+            <div class="vault-deeplink-row">
+              <a href="${upiUrl}" id="pageUpiDeepLinkBtn" class="btn btn-sharp-primary btn-launch-upi" aria-label="UPI యాప్ ద్వారా చెల్లించండి">
+                <span>ఏ UPI యాప్ ద్వారానైనా చెల్లించండి (Pay ₹${subtotal}) &nearr;</span>
+              </a>
+            </div>
+
+            <!-- Step 3: UTR Reference Capture & Screenshot Option -->
+            <div class="vault-utr-group">
+              <label for="pageUtrInput" class="utr-input-label">
+                <strong>3. చెల్లింపు పూర్తయిన తర్వాత 12 అంకెల UTR నంబర్ నమోదు చేయండి:</strong>
+              </label>
+              <input 
+                type="text" 
+                id="pageUtrInput" 
+                class="form-input utr-input-field" 
+                placeholder="12 అంకెల UTR / Ref No (ఉదా: 4218XXXXXXXX)" 
+                maxlength="16" 
+              />
+              <div style="margin-top: 0.6rem; display: flex; align-items: center; gap: 0.5rem;">
+                <input type="checkbox" id="pageUtrScreenshotOpt" style="accent-color: var(--color-pasupu); width: 16px; height: 16px; cursor: pointer;" />
+                <label for="pageUtrScreenshotOpt" style="font-size: var(--text-caption); color: var(--color-kasi); cursor: pointer; user-select: none;">
+                  UTR లభించకపోతే: WhatsApp లో చెల్లింపు స్క్రీన్‌షాట్ జతచేస్తాను
+                </label>
+              </div>
+              <span class="utr-help-text">బ్యాంక్ చెల్లింపు రసీదు లేదా SMS నుండి 12 అంకెల నంబర్‌ను నమోదు చేయవచ్చు లేదా స్క్రీన్‌షాట్ పంపవచ్చు.</span>
+            </div>
+
+            <!-- Primary Action: WhatsApp Order Confirmation -->
+            <div class="vault-submit-action">
+              <button type="button" id="pageSubmitOrderWhatsAppBtn" class="btn btn-sharp-primary btn-whatsapp-confirm">
+                <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="" width="20" height="20" class="btn-kurma-icon" />
+                <span>ఆర్డర్ సమర్పించి WhatsApp (+91 7732075607) లో రసీదు పంపండి &rarr;</span>
+              </button>
+              <span class="submit-disclaimer">
+                మీ ఆర్డర్ డేటాబేస్‌లో రికార్డవుతుంది మరియు రసీదు వివరాలతో నేరుగా అధికారిక WhatsApp కి కనెక్ట్ అవుతుంది.
+              </span>
+            </div>
+
+            <!-- Support Hotline -->
+            <div class="vault-hotline-footer">
+              <span>సహాయం కావాలా? నేరుగా మాట్లాడండి: <strong>+${CONFIG.whatsapp}</strong></span>
+              <span class="fssai-notice-micro">${CONFIG.fssai}</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Render Dynamic QR Code using locally vendored qrcode library
+      setTimeout(() => {
+        const qrContainer = document.getElementById('pageUpiQrContainer');
+        if (qrContainer && typeof window.qrcode !== 'undefined') {
+          qrContainer.innerHTML = '';
+          const qr = window.qrcode(0, 'M');
+          qr.addData(upiUrl);
+          qr.make();
+          qrContainer.innerHTML = qr.createSvgTag(5, 0);
+        }
+      }, 50);
+
+      // QR Mode Tabs Switching Logic
+      const tabDynamic = document.getElementById('tabDynamicQr');
+      const tabOfficial = document.getElementById('tabOfficialQr');
+      const dynamicWrapper = document.getElementById('dynamicQrWrapper');
+      const officialWrapper = document.getElementById('officialQrWrapper');
+
+      tabDynamic?.addEventListener('click', () => {
+        tabDynamic.classList.add('active');
+        tabDynamic.setAttribute('aria-selected', 'true');
+        tabOfficial?.classList.remove('active');
+        tabOfficial?.setAttribute('aria-selected', 'false');
+        if (dynamicWrapper) dynamicWrapper.style.display = 'block';
+        if (officialWrapper) officialWrapper.style.display = 'none';
+      });
+
+      tabOfficial?.addEventListener('click', () => {
+        tabOfficial.classList.add('active');
+        tabOfficial.setAttribute('aria-selected', 'true');
+        tabDynamic?.classList.remove('active');
+        tabDynamic?.setAttribute('aria-selected', 'false');
+        if (dynamicWrapper) dynamicWrapper.style.display = 'none';
+        if (officialWrapper) officialWrapper.style.display = 'block';
+      });
+
+      // Copy UPI ID button
+      document.getElementById('pageCopyUpiBtn')?.addEventListener('click', (e) => {
+        navigator.clipboard?.writeText(CONFIG.upiId).then(() => {
+          const btn = e.currentTarget;
+          const orig = btn.innerHTML;
+          btn.innerHTML = 'UPI ID కాపీ చేయబడింది!';
+          setTimeout(() => { btn.innerHTML = orig; }, 2000);
+          window.store?.showToast('UPI ID కాపీ చేయబడింది: ' + CONFIG.upiId);
+        });
+      });
+
+      // Submit Order via Backend API + WhatsApp Handler
+      document.getElementById('pageSubmitOrderWhatsAppBtn')?.addEventListener('click', async () => {
+        const nameInput = document.getElementById('pageCustName');
+        const phoneInput = document.getElementById('pageCustPhone');
+        const addrInput = document.getElementById('pageCustAddress');
+        const landmarkInput = document.getElementById('pageCustLandmark');
+        const pincodeInput = document.getElementById('pageCustPincode');
+        const utrInput = document.getElementById('pageUtrInput');
+        const screenshotOpt = document.getElementById('pageUtrScreenshotOpt');
+        const notesInput = document.getElementById('pageCustNotes');
+        const submitBtn = document.getElementById('pageSubmitOrderWhatsAppBtn');
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const addr = addrInput ? addrInput.value.trim() : '';
+        const landmark = landmarkInput ? landmarkInput.value.trim() : '';
+        const pincode = pincodeInput ? pincodeInput.value.trim() : '';
+        const utr = utrInput ? utrInput.value.trim() : '';
+        const hasScreenshotOpt = screenshotOpt ? screenshotOpt.checked : false;
+        const notes = notesInput ? notesInput.value.trim() : '';
+
+        if (!name) {
+          alert('దయచేసి మీ పూర్తి పేరు నమోదు చేయండి.');
+          nameInput?.focus();
+          return;
+        }
+        if (!phone || phone.length < 10) {
+          alert('దయచేసి సరైన 10 అంకెల మొబైల్ నంబర్ నమోదు చేయండి.');
+          phoneInput?.focus();
+          return;
+        }
+        if (!addr) {
+          alert('దయచేసి పూర్తి డెలివరీ చిరునామా నమోదు చేయండి.');
+          addrInput?.focus();
+          return;
+        }
+        if (!pincode || pincode.length !== 6 || !/^\d{6}$/.test(pincode)) {
+          alert('దయచేసి సరైన 6 అంకెల పిన్‌కోడ్ (Pincode) నమోదు చేయండి.');
+          pincodeInput?.focus();
+          return;
+        }
+
+        // Disable submit button and show loading state
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span>ఆర్డర్ నమోదవుతోంది...</span>';
+        }
+
+        const effectiveRef = utr || (hasScreenshotOpt ? 'Screenshot on WhatsApp' : 'Direct UPI');
+        const fullFormattedAddress = `${addr}${landmark ? ` (ల్యాండ్‌మార్క్: ${landmark})` : ''}, PIN: ${pincode}`;
+
+        // Prepare backend payload
+        const payload = {
+          order_code: orderId,
+          order_no: orderId,
+          name,
+          phone,
+          address: fullFormattedAddress,
+          amount: subtotal,
+          payment_ref: effectiveRef,
+          items: orderItems.map(i => ({
+            name: `${i.nameTe} (${i.nameEn})`,
+            quantity: i.qty,
+            price: i.price,
+            unit: i.unitLabel,
+            subtotal: i.lineTotal
+          }))
+        };
+
+        // Save order to localStorage backup
+        try {
+          const storedOrders = JSON.parse(localStorage.getItem('kg_orders') || '[]');
+          storedOrders.unshift({
+            order_code: orderId,
+            order_no: orderId,
+            customer_name: name,
+            customer_phone: phone,
+            delivery_address: fullFormattedAddress,
+            amount: subtotal,
+            status: 'received',
+            transporter: 'నవత రోడ్ ట్రాన్స్‌పోర్ట్ (Navata Road Transport)',
+            created_at: new Date().toISOString(),
+            product_details: orderItems.map(it => `${it.nameTe} x ${it.qty}`).join(', ')
+          });
+          localStorage.setItem('kg_orders', JSON.stringify(storedOrders.slice(0, 30)));
+        } catch (e) {}
+
+        let officialOrderCode = orderId;
+        let finalWaLink = null;
+
+        try {
+          const apiRes = await fetch('/api/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (apiRes.ok) {
+            const apiData = await apiRes.json();
+            if (apiData.ok && apiData.order_code) {
+              officialOrderCode = apiData.order_code;
+              finalWaLink = apiData.customer_wa_link;
+            }
+          }
+        } catch (err) {
+          console.warn('Backend order submission fallback to client WhatsApp:', err);
+        }
+
+        // Ensure WhatsApp link is ALWAYS directed strictly to +91 7732075607
+        const targetBizPhone = '917732075607';
+        if (!finalWaLink || !finalWaLink.startsWith(`https://wa.me/${targetBizPhone}`)) {
+          const itemsList = orderItems.map((item, idx) => 
+            `${idx + 1}. ${item.nameTe} (${item.unitLabel}) x ${item.qty} = ₹${item.lineTotal}`
+          ).join('\n');
+
+          const msg = 
+`హరే కృష్ణ! 🙏
+ధన్యవాదాలు (Thank you) — నేను కూర్మగ్రామ వేదిక్ విలేజ్ సహజ ఉత్పత్తుల కోసం UPI చెల్లింపు పూర్తి చేశాను.
+
+✅ *ఆర్డర్ నమోదైంది (Order Created)*
+📦 *ఆర్డర్ No:* ${officialOrderCode}
+👤 *పేరు:* ${name}
+📱 *ఫోన్:* ${phone}
+🌾 *సరుకులు:*
+${itemsList}
+
+💰 *మొత్తం చెల్లింపు:* ₹${subtotal}
+🔢 *UPI UTR / Ref:* ${effectiveRef}
+📍 *డెలివరీ చిరునామా:* ${addr}
+${landmark ? `🏛️ *ల్యాండ్‌మార్క్:* ${landmark}\n` : ''}📮 *పిన్‌కోడ్:* ${pincode}
+${notes ? `📝 సూచనలు: ${notes}\n` : ''}🚚 *రవాణా వివరాలు:* నవత రోడ్ ట్రాన్స్‌పోర్ట్ (రవాణా ఛార్జీలు అదనం - డెలివరీ సమయంలో చెల్లించాలి, https://www.navata.com/freight-cal)
+
+చెల్లింపు స్క్రీన్‌షాట్ ఇక్కడ జతచేస్తున్నాను. దయచేసి ధ్రువీకరించి సరుకును నవత రోడ్ ట్రాన్స్‌పోర్ట్ ద్వారా పంపగలరు.
+ధన్యవాదాలు! (Thank you!) 🙏`;
+
+          finalWaLink = `https://wa.me/${targetBizPhone}?text=${encodeURIComponent(msg)}`;
+        }
+
+        // Record Order to Local History
+        if (window.store) {
+          window.store.orders.unshift({
+            orderId: officialOrderCode,
+            date: new Date().toISOString(),
+            name,
+            phone,
+            address: fullFormattedAddress,
+            items: orderItems,
+            total: subtotal,
+            utr: effectiveRef
+          });
+          window.store.saveOrders();
+          // Empty cart upon successful order creation
+          window.store.cart = [];
+          window.store.saveCart();
+          window.store.updateCartBadge();
+        }
+
+        // Open WhatsApp in new tab
+        window.open(finalWaLink, '_blank', 'noopener,noreferrer');
+
+        // Show Enhanced Success View with Official DB Code & Live Tracking (No Print Button)
+        root.innerHTML = `
+          <div class="checkout-success-vault" style="grid-column: 1 / -1;">
+            <div class="success-header">
+              <div class="success-badge-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 256 256" fill="currentColor">
+                  <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24zm45.66 85.66l-56 56a8 8 0 0 1-11.32 0l-24-24a8 8 0 0 1 11.32-11.32L112 148.69l50.34-50.35a8 8 0 0 1 11.32 11.32z"/>
+                </svg>
+              </div>
+              <h2 class="success-title">హరే కృష్ణ! మీ ఆర్డర్ విజయవంతంగా నమోదైంది!</h2>
+              <span class="success-order-id">అధికారిక ఆర్డర్ కోడ్: <strong style="font-family: monospace; font-size: 1.35rem; color: var(--color-manjistha);">${officialOrderCode}</strong></span>
+            </div>
+            
+            <div class="success-body">
+              <p class="success-lead">
+                ధన్యవాదాలు <strong>${name}</strong> గారు! మీ ఆర్డర్ సమాచారం మా డేటాబేస్ మరియు నంద గోకులం గోశాల బృందానికి చేరింది.
+              </p>
+              
+              <div class="success-details-card">
+                <div class="detail-line"><span>మొత్తం చెల్లింపు:</span> <strong style="color: var(--color-pasupu); font-size: 1.1rem;">₹${subtotal}</strong></div>
+                <div class="detail-line"><span>చెల్లింపు స్థితి:</span> <strong style="color: var(--color-harita);">నమోదైంది — పెండింగ్ వెరిఫికేషన్</strong></div>
+                <div class="detail-line"><span>UTR / పేమెంట్ రెఫరెన్స్:</span> <code>${effectiveRef}</code></div>
+                <div class="detail-line"><span>రవాణా భాగస్వామి:</span> <span>నవత రోడ్ ట్రాన్స్‌పోర్ట్ (రవాణా ఛార్జీలు అదనం — డెలివరీ సమయంలో చెల్లించాలి)</span></div>
+                <div class="detail-line"><span>డెలివరీ చిరునామా:</span> <span>${fullFormattedAddress}</span></div>
+              </div>
+
+              <!-- Next Steps Box -->
+              <div style="background: var(--color-tholu); border: 1.5px solid var(--color-border); padding: var(--space-4); margin-bottom: var(--space-5); text-align: left;">
+                <strong style="color: var(--color-kasi); display: block; margin-bottom: 0.25rem;">తదుపరి ముఖ్య దశ:</strong>
+                <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin: 0; line-height: 1.6;">
+                  మీరు చెల్లించిన UPI పేమెంట్ రసీదు లేదా స్క్రీన్‌షాట్‌ను WhatsApp లో పంపినట్లయితే, మా ఆశ్రమ కార్యాలయం వెంటనే UTR పరిశీలించి, నవత ట్రాన్స్‌పోర్ట్ ద్వారా సరుకును పంపిస్తుంది.
+                </p>
+              </div>
+            </div>
+
+            <!-- Action Buttons: WhatsApp, Live Track, Shop (Print button removed per request) -->
+            <div class="success-actions-row">
+              <a href="${finalWaLink}" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 class="btn btn-sharp-primary btn-wa-active-receipt" 
+                 style="background: #1B8344 !important; color: #FFFFFF !important; border: 2px solid #0D5C2C !important; font-weight: 800; font-size: 1.05rem; padding: 0.85rem 1.4rem; box-shadow: 3px 3px 0 #1A1412; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor">
+                  <path d="M187.58 144.84l-32-16a8 8 0 0 0-8 .5l-14.69 9.8a40.55 40.55 0 0 1-16-16l9.8-14.69a8 8 0 0 0 .5-8l-16-32A8 8 0 0 0 104 64a40 40 0 0 0-40 40 88.1 88.1 0 0 0 88 88 40 40 0 0 0 40-40 8 8 0 0 0-4.42-7.16zM152 176a72.08 72.08 0 0 1-72-72 24 24 0 0 1 19.29-23.51l11.4 22.8-8.1 12.16a8 8 0 0 0-.76 7.42 56.49 56.49 0 0 0 28.3 28.3 8 8 0 0 0 7.42-.76l12.16-8.1 22.8 11.4A24 24 0 0 1 152 176z"/>
+                </svg>
+                <span>WhatsApp (+91 7732075607) లో రసీదు పంపండి &rarr;</span>
+              </a>
+              <a href="/track?code=${encodeURIComponent(officialOrderCode)}" class="btn btn-sharp-primary">
+                <span>లైవ్ ఆర్డర్ ట్రాక్ చేయండి &rarr;</span>
+              </a>
+              <a href="/shop" class="btn btn-sharp-secondary">
+                <span>మరిన్ని ఉత్పత్తులు చూడండి</span>
+              </a>
+            </div>
+            <!-- Dynamic Live Confirmation Box when customer clicks WhatsApp & sends screenshot -->
+            <div id="receiptSentCelebration" class="thank-you-celebration-card" style="display: none; margin-top: 1.5rem; background: #ECFDF5; border: 2px solid #059669; padding: 1.35rem 1.6rem; box-shadow: 4px 4px 0 #064E3B; text-align: left;">
+              <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem;">
+                <span style="font-size: 1.6rem;">🙏</span>
+                <div>
+                  <h3 style="margin: 0; color: #065F46; font-size: 1.25rem; font-family: 'Ramabhadra', serif;">
+                    ధన్యవాదాలు ${name} గారు! మీ ఆర్డర్ విజయవంతంగా నమోదైంది!
+                  </h3>
+                  <span style="font-size: 0.75rem; color: #047857; font-weight: 800; letter-spacing: 0.06em;">THANK YOU! ORDER SUCCESSFULLY CREATED</span>
+                </div>
+              </div>
+              <p style="font-size: 0.92rem; color: #064E3B; line-height: 1.6; margin: 0.6rem 0 0.85rem;">
+                మీ ఆర్డర్ నంబర్ (No: <strong>${officialOrderCode}</strong>) మరియు చెల్లింపు స్క్రీన్‌షాట్ మా ఆశ్రమ WhatsApp (+91 7732075607) కి పంపబడింది. గో సంరక్షణ & ప్యాకింగ్ శాఖ మీ UTR పరిశీలించి, నవత రోడ్ ట్రాన్స్‌పోర్ట్ ద్వారా సరుకును త్వరగా పంపుతుంది.
+              </p>
+              <div style="display: flex; align-items: center; gap: 0.5rem; background: #D1FAE5; border: 1px solid #059669; padding: 0.4rem 0.85rem; font-size: 0.85rem; font-weight: 700; color: #065F46;">
+                <span style="width: 9px; height: 9px; background: #059669; border-radius: 50%; display: inline-block;"></span>
+                <span>ఆర్డర్ స్థితి: రికార్డయింది — నవత ట్రాన్స్‌పోర్ట్ ప్యాకింగ్ సిద్ధమవుతోంది</span>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Wire event listener on the WhatsApp receipt button for instant Thank You & Celebration
+        const waReceiptBtn = root.querySelector('.btn-wa-active-receipt');
+        waReceiptBtn?.addEventListener('click', () => {
+          const celebration = document.getElementById('receiptSentCelebration');
+          if (celebration) {
+            celebration.style.display = 'block';
+            celebration.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          waReceiptBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor">
+              <path d="M229.66 77.66l-128 128a8 8 0 0 1-11.32 0l-56-56a8 8 0 0 1 11.32-11.32L96 188.69 218.34 66.34a8 8 0 0 1 11.32 11.32z"/>
+            </svg>
+            <span>✅ స్క్రీన్‌షాట్ పంపబడింది &bull; ఆర్డర్ నమోదైంది!</span>
+          `;
+          waReceiptBtn.style.background = '#065F46';
+
+          if (typeof window.confetti !== 'undefined') {
+            window.confetti({ particleCount: 80, spread: 70, origin: { y: 0.65 } });
+          }
+          if (window.soundManager) {
+            window.soundManager.playBell('order');
+          }
+        });
+      });
+    }
+
+    setTimeout(renderDedicatedCheckoutPage, 100);
+  });
+</script>

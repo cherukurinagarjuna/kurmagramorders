@@ -1,0 +1,392 @@
+[
+  {
+    "original": "community-landscape.jpg",
+    "originalDimensions": "1600x1067",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "community-landscape-1200w.webp",
+          "sizeKb": "96.4"
+        },
+        "avif": {
+          "file": "community-landscape-1200w.avif",
+          "sizeKb": "113.8"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "community-landscape-800w.webp",
+          "sizeKb": "56.5"
+        },
+        "avif": {
+          "file": "community-landscape-800w.avif",
+          "sizeKb": "65.1"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "community-landscape-400w.webp",
+          "sizeKb": "21.4"
+        },
+        "avif": {
+          "file": "community-landscape-400w.avif",
+          "sizeKb": "23.5"
+        }
+      }
+    ]
+  },
+  {
+    "original": "desi-cow-portrait.jpg",
+    "originalDimensions": "1600x2400",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "desi-cow-portrait-1200w.webp",
+          "sizeKb": "197.3"
+        },
+        "avif": {
+          "file": "desi-cow-portrait-1200w.avif",
+          "sizeKb": "243.5"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "desi-cow-portrait-800w.webp",
+          "sizeKb": "115.5"
+        },
+        "avif": {
+          "file": "desi-cow-portrait-800w.avif",
+          "sizeKb": "142.3"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "desi-cow-portrait-400w.webp",
+          "sizeKb": "40.2"
+        },
+        "avif": {
+          "file": "desi-cow-portrait-400w.avif",
+          "sizeKb": "46.8"
+        }
+      }
+    ]
+  },
+  {
+    "original": "farm-work.jpg",
+    "originalDimensions": "1600x1067",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "farm-work-1200w.webp",
+          "sizeKb": "161.1"
+        },
+        "avif": {
+          "file": "farm-work-1200w.avif",
+          "sizeKb": "187.4"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "farm-work-800w.webp",
+          "sizeKb": "92.7"
+        },
+        "avif": {
+          "file": "farm-work-800w.avif",
+          "sizeKb": "109.9"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "farm-work-400w.webp",
+          "sizeKb": "30.5"
+        },
+        "avif": {
+          "file": "farm-work-400w.avif",
+          "sizeKb": "36.0"
+        }
+      }
+    ]
+  },
+  {
+    "original": "goshala-cows.jpg",
+    "originalDimensions": "1600x1067",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "goshala-cows-1200w.webp",
+          "sizeKb": "165.1"
+        },
+        "avif": {
+          "file": "goshala-cows-1200w.avif",
+          "sizeKb": "201.0"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "goshala-cows-800w.webp",
+          "sizeKb": "89.1"
+        },
+        "avif": {
+          "file": "goshala-cows-800w.avif",
+          "sizeKb": "104.4"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "goshala-cows-400w.webp",
+          "sizeKb": "26.6"
+        },
+        "avif": {
+          "file": "goshala-cows-400w.avif",
+          "sizeKb": "29.2"
+        }
+      }
+    ]
+  },
+  {
+    "original": "gurukulam-life.jpg",
+    "originalDimensions": "1600x1067",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "gurukulam-life-1200w.webp",
+          "sizeKb": "95.3"
+        },
+        "avif": {
+          "file": "gurukulam-life-1200w.avif",
+          "sizeKb": "111.0"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "gurukulam-life-800w.webp",
+          "sizeKb": "59.3"
+        },
+        "avif": {
+          "file": "gurukulam-life-800w.avif",
+          "sizeKb": "69.1"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "gurukulam-life-400w.webp",
+          "sizeKb": "23.2"
+        },
+        "avif": {
+          "file": "gurukulam-life-400w.avif",
+          "sizeKb": "26.3"
+        }
+      }
+    ]
+  },
+  {
+    "original": "hero-golden-hour.jpg",
+    "originalDimensions": "1600x1200",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "hero-golden-hour-1200w.webp",
+          "sizeKb": "114.4"
+        },
+        "avif": {
+          "file": "hero-golden-hour-1200w.avif",
+          "sizeKb": "141.6"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "hero-golden-hour-800w.webp",
+          "sizeKb": "71.6"
+        },
+        "avif": {
+          "file": "hero-golden-hour-800w.avif",
+          "sizeKb": "86.4"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "hero-golden-hour-400w.webp",
+          "sizeKb": "28.6"
+        },
+        "avif": {
+          "file": "hero-golden-hour-400w.avif",
+          "sizeKb": "32.3"
+        }
+      }
+    ]
+  },
+  {
+    "original": "natural-farming.jpg",
+    "originalDimensions": "1600x2131",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "natural-farming-1200w.webp",
+          "sizeKb": "194.0"
+        },
+        "avif": {
+          "file": "natural-farming-1200w.avif",
+          "sizeKb": "231.5"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "natural-farming-800w.webp",
+          "sizeKb": "99.4"
+        },
+        "avif": {
+          "file": "natural-farming-800w.avif",
+          "sizeKb": "116.9"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "natural-farming-400w.webp",
+          "sizeKb": "27.7"
+        },
+        "avif": {
+          "file": "natural-farming-400w.avif",
+          "sizeKb": "32.5"
+        }
+      }
+    ]
+  },
+  {
+    "original": "paddy-fields.jpg",
+    "originalDimensions": "1600x1069",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "paddy-fields-1200w.webp",
+          "sizeKb": "263.2"
+        },
+        "avif": {
+          "file": "paddy-fields-1200w.avif",
+          "sizeKb": "269.6"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "paddy-fields-800w.webp",
+          "sizeKb": "135.6"
+        },
+        "avif": {
+          "file": "paddy-fields-800w.avif",
+          "sizeKb": "141.3"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "paddy-fields-400w.webp",
+          "sizeKb": "36.9"
+        },
+        "avif": {
+          "file": "paddy-fields-400w.avif",
+          "sizeKb": "40.9"
+        }
+      }
+    ]
+  },
+  {
+    "original": "tradition-harvest.jpg",
+    "originalDimensions": "1600x1067",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "tradition-harvest-1200w.webp",
+          "sizeKb": "93.7"
+        },
+        "avif": {
+          "file": "tradition-harvest-1200w.avif",
+          "sizeKb": "117.5"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "tradition-harvest-800w.webp",
+          "sizeKb": "54.4"
+        },
+        "avif": {
+          "file": "tradition-harvest-800w.avif",
+          "sizeKb": "65.0"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "tradition-harvest-400w.webp",
+          "sizeKb": "20.1"
+        },
+        "avif": {
+          "file": "tradition-harvest-400w.avif",
+          "sizeKb": "22.0"
+        }
+      }
+    ]
+  },
+  {
+    "original": "village-life.jpg",
+    "originalDimensions": "1600x1067",
+    "variants": [
+      {
+        "width": 1200,
+        "webp": {
+          "file": "village-life-1200w.webp",
+          "sizeKb": "94.8"
+        },
+        "avif": {
+          "file": "village-life-1200w.avif",
+          "sizeKb": "130.0"
+        }
+      },
+      {
+        "width": 800,
+        "webp": {
+          "file": "village-life-800w.webp",
+          "sizeKb": "48.4"
+        },
+        "avif": {
+          "file": "village-life-800w.avif",
+          "sizeKb": "66.0"
+        }
+      },
+      {
+        "width": 400,
+        "webp": {
+          "file": "village-life-400w.webp",
+          "sizeKb": "14.8"
+        },
+        "avif": {
+          "file": "village-life-400w.avif",
+          "sizeKb": "18.9"
+        }
+      }
+    ]
+  }
+]

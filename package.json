@@ -4,8 +4,10 @@
   "description": "Rice order tracking website with WhatsApp click-to-chat notifications",
   "private": true,
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node scripts/serve-root.js",
+    "dev": "node scripts/serve-root.js",
     "dev:netlify": "netlify dev",
     "db:init": "node scripts/init-db.js"
   },
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
+    "astro": "^7.4.13",
     "canvas-confetti": "^1.9.4",
     "fuse.js": "^7.5.0",
     "gsap": "^3.15.1",

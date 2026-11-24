@@ -1,15 +1,13 @@
 'use strict';
 
-const { getPool }                   = require('./lib/db');
+const ordersDb                      = require('./lib/orders-db');
 const { json, requireAuth, waLink } = require('./lib/helpers');
 
-const ALLOWED_STATUSES = ['placed', 'shipped', 'out_for_delivery', 'delivered', 'cancelled'];
+const ALLOWED_STATUSES = ['received', 'processing', 'shipped', 'delivered', 'placed', 'out_for_delivery', 'cancelled'];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // POST /api/update-status
 // Updates an order status (admin only).
-// If status is out_for_delivery or delivered, optionally creates notification
-// and returns a pre-filled wa_link.
 // ─────────────────────────────────────────────────────────────────────────────
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
@@ -29,7 +27,7 @@ exports.handler = async (event) => {
     return json(400, { ok: false, error: 'Request body must be valid JSON' });
   }
 
-  const { order_id, status } = body;
+  const { order_id, status, lr_number, transporter } = body;
 
   const orderId = parseInt(order_id, 10);
   if (!Number.isInteger(orderId) || orderId <= 0) {
@@ -43,65 +41,33 @@ exports.handler = async (event) => {
     });
   }
 
-  // ── Database update ───────────────────────────────────────────
-  const pool = getPool();
-  let client;
-
   try {
-    client = await pool.connect();
-    await client.query('BEGIN');
+    const updated = await ordersDb.updateStatus({
+      order_id: orderId,
+      status,
+      lr_number,
+      transporter
+    });
 
-    const updateResult = await client.query(
-      `UPDATE orders
-       SET status = $1, updated_at = NOW()
-       WHERE id = $2
-       RETURNING id, order_code, customer_name, customer_phone`,
-      [status, orderId]
-    );
-
-    if (updateResult.rowCount === 0) {
-      await client.query('ROLLBACK');
+    if (!updated) {
       return json(404, { ok: false, error: 'Order not found' });
     }
 
-    const { order_code, customer_name, customer_phone } = updateResult.rows[0];
-    const businessName = process.env.BUSINESS_NAME || 'Your Rice Store';
-
-    let message = null;
-    let messageType = null;
-
-    if (status === 'out_for_delivery') {
-      message = `Hi ${customer_name}, your rice order ${order_code} is out for delivery today! Please keep your phone handy. — ${businessName}`;
-      messageType = 'out_for_delivery_notice';
-    } else if (status === 'delivered') {
-      message = `Hi ${customer_name}, your rice order ${order_code} has been delivered. Thank you for shopping with us! — ${businessName}`;
-      messageType = 'delivery_notice';
+    let customerWaLink = null;
+    if (status === 'shipped' || status === 'delivered') {
+      const msg = status === 'shipped'
+        ? `హరే కృష్ణ! మీ కూర్మగ్రామ ఆర్డర్ (${updated.order_no}) రవాణా చేయబడింది. Navata LR: ${updated.lr_number || 'త్వరలో లభిస్తుంది'}. వివరాలు: https://kurmagramorders.netlify.app/track.html?code=${updated.order_no}`
+        : `హరే కృష్ణ! మీ కూర్మగ్రామ ఆర్డర్ (${updated.order_no}) డెలివరీ చేయబడింది. ధన్యవాదాలు! 🙏`;
+      customerWaLink = waLink(updated.customer_phone, msg);
     }
-
-    let link = null;
-    if (message) {
-      link = waLink(customer_phone, message);
-
-      await client.query(
-        `INSERT INTO notification_log
-           (order_id, channel, message_type, phone, message_body, status)
-         VALUES ($1, 'whatsapp', $2, $3, $4, 'pending')`,
-        [orderId, messageType, customer_phone, message]
-      );
-    }
-
-    await client.query('COMMIT');
 
     return json(200, {
       ok: true,
-      status,
-      wa_link: link,
+      order: updated,
+      customer_wa_link: customerWaLink
     });
   } catch (err) {
-    if (client) await client.query('ROLLBACK').catch(() => {});
-    console.error('[update-status] DB error:', err.message);
-    return json(500, { ok: false, error: 'Could not update order status' });
-  } finally {
-    if (client) client.release();
+    console.error('[update-status] Error:', err.message);
+    return json(500, { ok: false, error: 'Could not update status' });
   }
 };

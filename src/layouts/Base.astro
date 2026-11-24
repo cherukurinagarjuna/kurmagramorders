@@ -1,0 +1,281 @@
+---
+import { SITE, CONFIG } from '../config';
+import '../styles/styles.css';
+import '../styles/orgaxi-theme.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = SITE.titleHome,
+  description = SITE.description,
+  canonicalPath = '',
+} = Astro.props;
+
+const canonicalUrl = `${SITE.url}${canonicalPath}`;
+---
+
+<!doctype html>
+<html lang="te" class="lenis-enabled">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Favicon suite -->
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-192.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content={SITE.themeColor} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:image" content={`${SITE.url}/assets/images/og-kurmagram.jpg`} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="te_IN" />
+  <meta property="og:site_name" content={SITE.name} />
+
+  <!-- Local Vendored Fonts & Design Tokens -->
+  <link rel="stylesheet" href="/vendor/fonts/fonts.css" />
+
+  <!-- Google Fonts: Orgaxi Theme Typography (Outfit & DM Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=Outfit:wght@400..800&family=Noto+Sans+Telugu:wght@400;600;700&family=Ramabhadra&display=swap" rel="stylesheet" />
+
+  <!-- Preload Critical LCP Assets -->
+  <link rel="preload" as="image" href="/assets/images/farm/optimized/goshala-cows-400w.avif" type="image/avif" media="(max-width: 600px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="/assets/images/farm/optimized/goshala-cows-800w.avif" type="image/avif" media="(min-width: 601px)" fetchpriority="high" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE.name,
+    alternateName: SITE.nameEn,
+    url: SITE.url,
+    logo: `${SITE.url}/assets/images/favicon-512.png`,
+    description: SITE.description,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Near Anthakapalli Village, Kittalapadu Post',
+      addressLocality: 'Srikakulam',
+      addressRegion: 'Andhra Pradesh',
+      postalCode: '532428',
+      addressCountry: 'IN',
+    },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: '+91-7732075607',
+        contactType: 'customer service',
+        availableLanguage: ['Telugu', 'English'],
+      },
+      {
+        '@type': 'ContactPoint',
+        telephone: '+91-8712011776',
+        contactType: 'customer support',
+        availableLanguage: ['Telugu', 'English'],
+      }
+    ],
+    sameAs: [
+      'https://kurmagram.com',
+      'https://www.youtube.com/c/Kurmagrama',
+      'https://www.facebook.com/Kurmagram/'
+    ]
+  })} />
+</head>
+<body>
+  <!-- Phosphor SVG Icons Sprite (Vendored locally) -->
+  <div style="display: none;" aria-hidden="true">
+    <object type="image/svg+xml" data="/vendor/icons/phosphor/phosphor-icons.svg" id="phosphorSpriteContainer"></object>
+  </div>
+
+  <slot />
+
+  <!-- Slide-out Cart Drawer -->
+  <div id="drawerBackdrop" class="drawer-backdrop" aria-hidden="true"></div>
+  <aside id="cartDrawer" class="cart-drawer" role="dialog" aria-modal="true" aria-label="మీ బుట్ట" inert>
+    <div class="drawer-header">
+      <h3 class="drawer-title" data-i18n="cartTitle">మీ బుట్ట</h3>
+      <button type="button" id="cartDrawerCloseBtn" class="drawer-close-btn" aria-label="బుట్టను మూసివేయి">&times;</button>
+    </div>
+
+    <div class="drawer-body" id="cartDrawerItems">
+      <!-- Items dynamically populated by js/app.js -->
+    </div>
+
+    <div class="drawer-footer">
+      <div class="drawer-subtotal-row">
+        <span data-i18n="cartSubtotal">మొత్తం వెల:</span>
+        <span id="cartSubtotalAmount">₹0</span>
+      </div>
+      <span class="free-shipping-pill" style="background: #FEF3C7; color: #92400E; border: 1px solid #D97706;" data-i18n="cartFreeDelivery">🚚 రవాణా ఛార్జీలు అదనం (నవత ట్రాన్స్‌పోర్ట్ ప్రకారం)</span>
+      <button type="button" id="cartCheckoutBtn" class="btn btn-primary" data-i18n="checkoutBtn">
+        ఆర్డర్ పూర్తి చేయండి (UPI ద్వారా) &rarr;
+      </button>
+    </div>
+  </aside>
+
+  <!-- Quick-View & Direct-UPI Checkout Modal Dialog -->
+  <div id="checkoutModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" inert>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="checkoutModalTitle" data-i18n="checkoutTitle">డైరెక్ట్ UPI ఆర్డర్ చెల్లింపు</h2>
+        <button type="button" class="modal-close-btn" aria-label="మూసివేయి">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="checkout-summary-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-weight: 700; color: var(--color-kasi);" data-i18n="orderIdLabel">ఆర్డర్ ID:</span>
+            <span id="checkoutOrderId" style="font-family: var(--font-latin); font-weight: 700; color: var(--color-manjistha); font-size: 0.95rem;"></span>
+          </div>
+          <ul id="checkoutItemsList" class="checkout-items-list"></ul>
+          <div class="checkout-total-row">
+            <span data-i18n="cartSubtotal">మొత్తం వెల:</span>
+            <span id="checkoutTotalAmount" style="font-size: 1.25rem; font-weight: 700; color: var(--color-kasi);">₹0</span>
+          </div>
+        </div>
+
+        <!-- 🚚 Navata Transport Freight & Shipping Notice -->
+        <div class="navata-shipping-notice" style="background: #FDFBF7; border: 1.5px solid #C9A84C; padding: 0.9rem 1rem; margin-bottom: 1.25rem; text-align: left;">
+          <div style="display: flex; align-items: flex-start; gap: 0.6rem;">
+            <span style="font-size: 1.35rem; line-height: 1;">🚚</span>
+            <div>
+              <strong style="color: var(--color-kasi); font-size: 0.92rem; display: block; margin-bottom: 0.25rem;" data-i18n="shippingNoticeTitle">
+                రవాణా ఛార్జీలు అదనం (Shipping Charges Extra):
+              </strong>
+              <p style="font-size: 0.82rem; color: var(--color-text-muted); margin: 0; line-height: 1.5;" data-i18n="shippingNoticeBody">
+                సరుకు రవాణా ఖర్చులు నవత రోడ్ ట్రాన్స్‌పోర్ట్ (Navata Road Transport) టారిఫ్ ప్రకారం ఉంటాయి. సరుకు డెలివరీ/తీసుకునే సమయంలో నేరుగా నవత ట్రాన్స్‌పోర్ట్ వారికి చెల్లించాలి.
+              </p>
+              <div style="margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+                <a href="https://www.navata.com/freight-cal" target="_blank" rel="noopener noreferrer" style="font-size: 0.82rem; font-weight: 700; color: #1B8344; text-decoration: underline; display: inline-flex; align-items: center; gap: 0.3rem;">
+                  <span>నవత ఫ్రైట్ కాలిక్యులేటర్ (Navata Freight Calculator) &nearr;</span>
+                </a>
+                <span style="font-size: 0.78rem; color: var(--color-manjistha); font-weight: 700;">మూలం: శ్రీకాకుళం ఆశ్రమం (Srikakulam)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form id="checkoutDetailsForm" style="display: flex; flex-direction: column; gap: 0.85rem; margin-bottom: 1.25rem;" onsubmit="return false;">
+          <div>
+            <label for="custName" class="form-label" data-i18n="formName">మీ పూర్తి పేరు *</label>
+            <input type="text" id="custName" class="form-input" required placeholder="ఉదా: రామారావు" />
+          </div>
+          <div>
+            <label for="custPhone" class="form-label" data-i18n="formPhone">ఫోన్ నంబర్ (WhatsApp) *</label>
+            <input type="tel" id="custPhone" class="form-input" required placeholder="ఉదా: 9876543210 (10 అంకెలు)" pattern="[0-9]{10}" />
+          </div>
+          <div>
+            <label for="custAddress" class="form-label" data-i18n="formAddress">ఇంటి నం., వీధి, గ్రామం/పట్టణం (Address) *</label>
+            <textarea id="custAddress" class="form-textarea" required placeholder="ఇంటి నం., వీధి, గ్రామం/పట్టణం, మండలం, జిల్లా" rows="2"></textarea>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+            <div>
+              <label for="custLandmark" class="form-label" data-i18n="formLandmark">ల్యాండ్‌మార్క్ (Landmark)</label>
+              <input type="text" id="custLandmark" class="form-input" placeholder="ఉదా: రామాలయం వద్ద" />
+            </div>
+            <div>
+              <label for="custPincode" class="form-label" data-i18n="formPincode">పిన్‌కోడ్ (Pincode) *</label>
+              <input type="text" id="custPincode" class="form-input" required placeholder="ఉదా: 532001" maxlength="6" pattern="[0-9]{6}" />
+            </div>
+          </div>
+        </form>
+
+        <div class="upi-payment-box">
+          <p class="upi-step-text" data-i18n="payStep1">
+            1. క్రింది QR కోడ్‌ను మీ UPI యాప్ (GPay, PhonePe, Paytm, BHIM) తో స్కాన్ చేసి చెల్లించండి:
+          </p>
+
+          <!-- QR Mode Tabs Switcher -->
+          <div class="qr-mode-tabs" role="tablist" aria-label="QR Code రకం ఎంచుకోండి">
+            <button type="button" class="qr-mode-tab active" id="modalTabDynamicQr" role="tab" aria-selected="true">
+              డైనమిక్ NPCI QR
+            </button>
+            <button type="button" class="qr-mode-tab" id="modalTabOfficialQr" role="tab" aria-selected="false">
+              ఆశ్రమ అధికారిక QR
+            </button>
+          </div>
+
+          <div class="upi-qr-frame" id="upiQrContainer">
+            <!-- QR code rendered dynamically by qrcode-generator -->
+          </div>
+
+          <div class="official-qr-frame" id="modalOfficialQrContainer" style="display: none;">
+            <img src="/assets/images/upi-qr.jpg" alt="కూర్మగ్రామము అధికారిక UPI QR కోడ్" class="official-qr-img" width="200" height="202" />
+            <span class="official-qr-caption">శ్రీకాకుళం ఆశ్రమం SBI QR &bull; kurmagramvv@upi</span>
+          </div>
+
+          <div class="upi-actions-row">
+            <a id="upiPayDeepLink" href="#" class="btn btn-primary btn-sm" data-i18n="payViaApp">
+              UPI యాప్‌తో చెల్లించండి &rarr;
+            </a>
+            <button type="button" id="copyUpiIdBtn" class="btn btn-secondary btn-sm" data-i18n="copyUpi">
+              UPI ID కాపీ చేయండి
+            </button>
+          </div>
+        </div>
+
+        <div style="background-color: var(--color-tholu); border: 1.5px solid var(--color-kasi); border-radius: 0; padding: 1rem; margin-bottom: 1.25rem;">
+          <label for="custUtr" class="form-label" style="font-weight: 700; color: var(--color-kasi); margin-bottom: 0.35rem;" data-i18n="utrLabel">
+            2. చెల్లింపు పూర్తయిన తర్వాత UPI 12-అంకెల UTR / Ref నంబర్ నమోదు చేయండి:
+          </label>
+          <input type="text" id="custUtr" class="form-input" placeholder="ఉదా: 4123XXXXXXXX (12 అంకెల నంబర్)" maxlength="16" />
+          <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <input type="checkbox" id="modalUtrScreenshotOpt" style="accent-color: var(--color-pasupu); width: 16px; height: 16px; cursor: pointer;" />
+            <label for="modalUtrScreenshotOpt" style="font-size: var(--text-caption); color: var(--color-kasi); cursor: pointer; user-select: none;">
+              UTR లభించకపోతే: WhatsApp లో చెల్లింపు స్క్రీన్‌షాట్ జతచేస్తాను
+            </label>
+          </div>
+          <p style="font-size: var(--text-caption); color: var(--color-text-muted); margin-top: 0.25rem;" data-i18n="utrHelp">
+            ఇది మీ ఆర్డర్ డేటాబేస్‌లో రికార్డ్ అయి త్వరగా ధృవీకరించడానికి ఉపకరిస్తుంది.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <!-- Validation Error Box -->
+          <div id="modalValidationError" style="display: none; background: #FEF2F2; border: 2px solid #DC2626; color: #991B1B; padding: 0.75rem 1rem; font-weight: 700; font-size: 0.9rem; line-height: 1.5; text-align: left;">
+            <span id="modalValidationMsg">⚠️ దయచేసి పైన మీ పూర్తి పేరు, 10 అంకెల ఫోన్ నంబర్ మరియు చిరునామా నమోదు చేయండి.</span>
+          </div>
+
+          <button type="button" id="submitOrderWhatsAppBtn" class="btn btn-whatsapp" style="width: 100%; font-weight: 800; font-size: 1.05rem; padding: 0.85rem 1.2rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #1B8344; color: #fff; border: 2px solid #0D5C2C;" data-i18n="sendWhatsApp">
+            <svg class="ph-icon" style="width: 20px; height: 20px;"><use href="#ph-whatsapp-logo"/></svg>
+            <span>WhatsApp (+91 7732075607) లో రసీదు పంపండి &rarr;</span>
+          </button>
+          <p id="modalSubmitDisclaimer" style="font-size: var(--text-caption); text-align: center; color: var(--color-text-muted); margin: 0;">
+            ఆర్డర్ ధృవీకరించిన వెంటనే మా ఆశ్రమ కార్యాలయం నుండి డిస్పాచ్ వివరాలు పంపబడతాయి.
+          </p>
+
+          <!-- Order Placed Success Confirmation Card -->
+          <div id="modalOrderSuccessCard" style="display: none; margin-top: 0.5rem;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Island -->
+  <div id="toastNotification" class="toast-notice" role="status" aria-live="polite"></div>
+
+  <!-- Local Vendored Libraries (Zero CDN) -->
+  <script is:inline src="/vendor/qrcode.min.js" defer></script>
+  <script is:inline src="/vendor/fuse.min.js" defer></script>
+  <script is:inline src="/vendor/lenis.min.js" defer></script>
+  <script is:inline src="/vendor/gsap.min.js" defer></script>
+  <script is:inline src="/vendor/ScrollTrigger.min.js" defer></script>
+  <script is:inline src="/js/config.js" defer></script>
+  <script is:inline src="/js/app.js" defer></script>
+  <script is:inline src="/js/motion.js" defer></script>
+</body>
+</html>

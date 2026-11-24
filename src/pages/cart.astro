@@ -1,0 +1,244 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import OfferStrip from '../components/OfferStrip.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, CONFIG } from '../config';
+---
+
+<Base 
+  title={`షాపింగ్ బుట్ట | ${SITE.name}`} 
+  description="కూర్మగ్రామ వేదిక్ విలేజ్ షాపింగ్ బుట్ట. ఎంచుకున్న సహజ ఉత్పత్తుల సమీక్ష మరియు ఆర్డర్ చెక్అవుట్." 
+  canonicalPath="/cart"
+>
+  <Header activeNav="shop" />
+
+  <main id="mainContent" class="cart-page-layout">
+    <!-- Broadsheet Masthead Header Strip -->
+    <div class="hero-broadsheet-bar">
+      <div class="container hero-broadsheet-inner">
+        <div class="detail-breadcrumbs">
+          <a href="/" class="crumb-link">హోమ్</a>
+          <span class="crumb-sep">&bull;</span>
+          <a href="/shop" class="crumb-link">ఉత్పత్తుల భాండాగారం</a>
+          <span class="crumb-sep">&bull;</span>
+          <span class="crumb-current">షాపింగ్ బుట్ట</span>
+        </div>
+        <span class="masthead-center">CART REGISTER &bull; FOLIO 108</span>
+        <span class="masthead-right">0% ప్లాట్‌ఫారమ్ రుసుము &bull; డైరెక్ట్ UPI</span>
+      </div>
+    </div>
+
+    <section class="cart-editorial-section" aria-labelledby="cartPageTitle">
+      <div class="container">
+        <!-- Cart Broadsheet Title -->
+        <div class="catalog-ledger-header">
+          <div class="ledger-header-meta">
+            <span class="ledger-eyebrow">సహజ ఉత్పత్తుల జాబితా</span>
+            <span class="ledger-serial">FOLIO-CRT-2026</span>
+          </div>
+          <h1 id="cartPageTitle" class="ledger-title">మీ షాపింగ్ బుట్ట</h1>
+          <p class="ledger-sub">గోశాల మరియు ప్రకృతి క్షేత్రం నుండి మీ ఇంటికి చేరే ఉత్పత్తుల వివరాలు</p>
+          <div class="ledger-masthead-rule" aria-hidden="true"></div>
+        </div>
+
+        <!-- Dynamic Cart Root Container -->
+        <div id="cartPageRoot" class="cart-page-content">
+          <!-- Populated by JavaScript from localStorage (kg_cart_v1) -->
+          <div class="cart-page-loading" style="text-align: center; padding: var(--space-8);">
+            <p>బుట్ట వివరాలు లోడ్ అవుతున్నాయి...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kalamkari Handloom Vine Divider -->
+    <div class="kalamkari-divider-wrap" aria-hidden="true">
+      <img src="/assets/svg/kalamkari/vine-divider.svg" alt="" class="kalamkari-vine-svg" width="800" height="24" />
+    </div>
+
+    <OfferStrip />
+  </main>
+
+  <Footer />
+</Base>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    function renderDedicatedCartPage() {
+      const root = document.getElementById('cartPageRoot');
+      if (!root || !window.store) return;
+
+      const cart = window.store.cart;
+      if (!cart || cart.length === 0) {
+        root.innerHTML = `
+          <div class="cart-empty-ledger-box">
+            <div class="empty-icon-art">
+              <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="కూర్మ చిహ్నం" width="56" height="56" />
+            </div>
+            <h2 class="empty-title">మీ షాపింగ్ బుట్ట ప్రస్తుతం ఖాళీగా ఉంది</h2>
+            <p class="empty-sub">మా సహజ ఉత్పత్తుల భాండాగారం నుండి గో ఆధారిత మరియు సహజ వ్యవసాయ ఉత్పత్తులను ఎంచుకోండి.</p>
+            <div class="empty-actions">
+              <a href="/shop" class="btn btn-sharp-primary">
+                ఉత్పత్తుల భాండాగారం చూడండి &rarr;
+              </a>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      // Grouped Items Ledger
+      let subtotal = 0;
+      const rowsHTML = cart.map((item, index) => {
+        const prod = PRODUCTS.find((p) => p.id === item.productId);
+        if (!prod) return '';
+        const unit = prod.units[item.unitIndex] || prod.units[0];
+        const lineTotal = unit.price * item.qty;
+        subtotal += lineTotal;
+
+        return `
+          <article class="cart-page-row" data-id="${prod.id}" data-unit-idx="${item.unitIndex}">
+            <div class="cart-row-left">
+              <span class="cart-row-num">${(index + 1).toString().padStart(2, '0')}</span>
+              <a href="/product/${prod.id}" class="cart-row-art">
+                <img src="${prod.svg}" alt="${prod.te}" width="54" height="54" loading="lazy" />
+              </a>
+              <div class="cart-row-details">
+                <a href="/product/${prod.id}" class="cart-item-title-link">
+                  <h3 class="cart-item-name-te">${prod.te}</h3>
+                </a>
+                <span class="cart-item-name-en">${prod.en}</span>
+                <span class="cart-item-unit-tag">పరిమాణం: <strong>${unit.label}</strong></span>
+              </div>
+            </div>
+
+            <div class="cart-row-price-col">
+              <div class="ledger-brass-box">
+                <span class="price-val">₹${unit.price}</span>
+                <span class="unit-tag">/ ${unit.label}</span>
+              </div>
+            </div>
+
+            <div class="cart-row-qty-col">
+              <div class="qty-stepper-box">
+                <button type="button" class="stepper-btn cart-dec-btn" data-id="${prod.id}" data-unit="${item.unitIndex}" aria-label="Decrease quantity">-</button>
+                <span class="stepper-count">${item.qty}</span>
+                <button type="button" class="stepper-btn cart-inc-btn" data-id="${prod.id}" data-unit="${item.unitIndex}" aria-label="Increase quantity">+</button>
+              </div>
+            </div>
+
+            <div class="cart-row-total-col">
+              <span class="cart-line-total-label">మొత్తం:</span>
+              <span class="cart-line-total-val">₹${lineTotal}</span>
+            </div>
+
+            <div class="cart-row-remove-col">
+              <button type="button" class="cart-row-remove-btn" data-id="${prod.id}" data-unit="${item.unitIndex}" aria-label="Remove item">
+                &times; తీసివేయి
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      root.innerHTML = `
+        <div class="cart-page-grid">
+          <!-- Items List Column -->
+          <div class="cart-items-column">
+            <div class="ledger-columns-head" aria-hidden="true">
+              <span>ఉత్పత్తి / COMMODITY</span>
+              <span>ధర / RATE</span>
+              <span>పరిమాణం / QTY</span>
+              <span>మొత్తం / TOTAL</span>
+              <span>రద్దు / ACTION</span>
+            </div>
+            <div class="cart-items-ledger">
+              ${rowsHTML}
+            </div>
+            <div class="cart-items-footer-actions">
+              <a href="/shop" class="btn btn-sharp-secondary">&larr; మరిన్ని ఉత్పత్తులు జోడించండి</a>
+              <button type="button" id="cartClearAllBtn" class="btn-clear-link">బుట్టను పూర్తిగా ఖాళీ చేయండి</button>
+            </div>
+          </div>
+
+          <!-- Order Summary Column -->
+          <div class="cart-summary-column">
+            <div class="cart-summary-vault">
+              <div class="vault-header">
+                <h3 class="vault-title">ఆర్డర్ సారాంశం / ORDER SUMMARY</h3>
+                <span class="vault-badge">FOLIO 108</span>
+              </div>
+
+              <div class="vault-ledger-rows">
+                <div class="vault-row">
+                  <span>ఉప మొత్తం (Subtotal)</span>
+                  <span class="vault-price">₹${subtotal}</span>
+                </div>
+                <div class="vault-row">
+                  <span>రవాణా ఛార్జీలు (Delivery)</span>
+                  <span class="vault-free">గ్రామీణ సేవ (0% అదనపు ఫీజు)</span>
+                </div>
+                <div class="vault-row vault-row--grand">
+                  <span>మొత్తం చెల్లించవలసినది</span>
+                  <span class="vault-grand-price">₹${subtotal}</span>
+                </div>
+              </div>
+
+              <div class="vault-upi-callout">
+                <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="" width="20" height="20" />
+                <span>100% పారదర్శక Peer-to-Peer UPI &bull; 0% గేట్‌వే ఫీజు</span>
+              </div>
+
+              <div class="vault-actions">
+                <a href="/checkout" class="btn btn-sharp-primary btn-checkout-trigger">
+                  చెక్అవుట్‌కి కొనసాగండి &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Wire event listeners on stepper and delete buttons
+      root.querySelectorAll('.cart-inc-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const uIdx = parseInt(btn.dataset.unit, 10);
+          window.store.updateCartQty(id, uIdx, 1);
+          renderDedicatedCartPage();
+        });
+      });
+
+      root.querySelectorAll('.cart-dec-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const uIdx = parseInt(btn.dataset.unit, 10);
+          window.store.updateCartQty(id, uIdx, -1);
+          renderDedicatedCartPage();
+        });
+      });
+
+      root.querySelectorAll('.cart-row-remove-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.id;
+          const uIdx = parseInt(btn.dataset.unit, 10);
+          window.store.removeFromCart(id, uIdx);
+          renderDedicatedCartPage();
+        });
+      });
+
+      root.querySelector('#cartClearAllBtn')?.addEventListener('click', () => {
+        if (confirm('మీ షాపింగ్ బుట్టలోని అన్ని వస్తువులను తీసివేయాలనుకుంటున్నారా?')) {
+          window.store.cart = [];
+          window.store.saveCart();
+          window.store.updateCartBadge();
+          renderDedicatedCartPage();
+        }
+      });
+    }
+
+    // Initial render
+    setTimeout(renderDedicatedCartPage, 100);
+  });
+</script>

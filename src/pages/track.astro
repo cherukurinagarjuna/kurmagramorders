@@ -1,0 +1,545 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, CONFIG } from '../config';
+---
+
+<Base 
+  title="ఆర్డర్ ట్రాకింగ్ | Order Tracking — కూర్మగ్రామ వేదిక్ విలేజ్" 
+  description="కూర్మగ్రామ సహజ ఉత్పత్తుల ఆర్డర్ లైవ్ స్థితిని ట్రాక్ చేయండి. నవత రోడ్ ట్రాన్స్‌పోర్ట్ రవాణా మరియు డెలివరీ వివరాలు."
+  canonicalPath="/track"
+>
+  <Header activeNav="" />
+
+  <main id="mainContent" class="track-order-page">
+    <!-- Broadsheet Masthead Breadcrumbs -->
+    <div class="hero-broadsheet-bar">
+      <div class="container hero-broadsheet-inner">
+        <div class="detail-breadcrumbs">
+          <a href="/" class="crumb-link">హోమ్</a>
+          <span class="crumb-sep">&bull;</span>
+          <span class="crumb-current">ఆర్డర్ ట్రాకింగ్</span>
+        </div>
+        <span class="masthead-center">LOGISTICS & DISPATCH REGISTER &bull; FOLIO 72</span>
+        <span class="masthead-right">నంద గోకులం రవాణా విభాగం (SRIKAKULAM)</span>
+      </div>
+    </div>
+
+    <!-- Editorial Track Section -->
+    <section class="track-editorial-section" aria-labelledby="trackHeading">
+      <div class="container" style="max-width: 840px;">
+        
+        <!-- Section Header -->
+        <div class="track-header-block">
+          <div class="track-kicker-tag">
+            <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="" width="20" height="20" class="track-kurma-icon" />
+            <span>రవాణా & ట్రాకింగ్ సమాచార వేదిక</span>
+          </div>
+          <h1 id="trackHeading" class="track-title-te">మీ ఆర్డర్ స్థితిని తనిఖీ చేయండి</h1>
+          <p class="track-sub-te">
+            మీ ఆర్డర్ కోడ్ (ఉదా: <code>RICE-2026-0007</code>) లేదా కొనుగోలు చేసినప్పుడు నమోదు చేసిన 10 అంకెల WhatsApp మొబైల్ నంబర్ ద్వారా ప్రత్యక్ష రవాణా వివరాలు తెలుసుకోండి.
+          </p>
+        </div>
+
+        <!-- Search Form Card (Editorial Vintage Ledger Style) -->
+        <div class="track-search-card">
+          <form id="trackOrderForm" novalidate>
+            <div class="track-form-grid">
+              <!-- Field 1: Order Code -->
+              <div class="track-input-group">
+                <label for="trackCodeInput" class="track-label">
+                  <strong>ఆర్డర్ కోడ్ (Order Code)</strong>
+                  <span class="track-hint">రసీదులో ఇచ్చిన కోడ్</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="trackCodeInput" 
+                  class="form-input track-input" 
+                  placeholder="ఉదా: RICE-2026-0007" 
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Center Divider -->
+              <div class="track-divider-col" aria-hidden="true">
+                <span class="track-divider-line"></span>
+                <span class="track-divider-badge">లేదా / OR</span>
+                <span class="track-divider-line"></span>
+              </div>
+
+              <!-- Field 2: Phone -->
+              <div class="track-input-group">
+                <label for="trackPhoneInput" class="track-label">
+                  <strong>WhatsApp మొబైల్ నంబర్</strong>
+                  <span class="track-hint">10 అంకెల సంఖ్య</span>
+                </label>
+                <div class="track-phone-wrap">
+                  <span class="track-phone-prefix">+91</span>
+                  <input 
+                    type="tel" 
+                    id="trackPhoneInput" 
+                    class="form-input track-input track-input-phone" 
+                    placeholder="9876543210" 
+                    maxlength="10"
+                    pattern="[0-9]{10}"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit Action Button -->
+            <div class="track-submit-row">
+              <button type="submit" id="trackSubmitBtn" class="btn btn-sharp-primary track-search-btn">
+                <img src="/assets/svg/kalamkari/paddy-stalk.svg" alt="" width="20" height="20" />
+                <span>ఆర్డర్ వివరాలు వెతకండి &rarr;</span>
+              </button>
+            </div>
+          </form>
+
+          <!-- Error / Info Notice -->
+          <div id="trackAlertNotice" class="track-alert-notice" role="alert" style="display: none;"></div>
+        </div>
+
+        <!-- Results Injection Container -->
+        <div id="trackResultsContainer" class="track-results-wrap" aria-live="polite"></div>
+
+        <!-- Quick Help Bar -->
+        <div class="track-help-banner">
+          <div class="track-help-content">
+            <span class="help-lead">రవాణా వివరాలపై సందేహాలు ఉన్నాయా?</span>
+            <p class="help-desc">
+              నవత ట్రాన్స్‌పోర్ట్ బిల్టీ నంబర్ లేదా రవాణా సమయానికి సంబంధించిన సహాయం కోసం నేరుగా ఆశ్రమ కార్యాలయాన్ని సంప్రదించండి.
+            </p>
+          </div>
+          <a 
+            href={`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('హరే కృష్ణ! నా ఆర్డర్ రవాణా స్థితి గురించి తెలుసుకోవాలనుకుంటున్నాను.')}`} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="btn btn-sharp-secondary track-wa-help-btn"
+          >
+            <span>WhatsApp లో మాట్లాడండి &rarr;</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Kalamkari Textile Divider -->
+    <div class="kalamkari-divider-wrap" aria-hidden="true">
+      <img src="/assets/svg/kalamkari/vine-divider.svg" alt="" class="kalamkari-vine-svg" width="800" height="24" />
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .track-order-page {
+    background-color: var(--color-khadi);
+    min-height: 80vh;
+  }
+  .track-editorial-section {
+    padding: var(--space-8) var(--space-4) var(--space-12);
+  }
+  .track-header-block {
+    text-align: center;
+    margin-bottom: var(--space-8);
+  }
+  .track-kicker-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-tholu);
+    border: 1.5px solid var(--color-kasi);
+    padding: 0.35rem 0.85rem;
+    font-size: var(--text-caption);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-kasi);
+    margin-bottom: 0.75rem;
+  }
+  .track-title-te {
+    font-family: 'Ramabhadra', 'Noto Serif Telugu', serif;
+    font-size: clamp(2rem, 3.8vw, 2.8rem);
+    color: var(--color-kasi);
+    line-height: 1.75;
+    margin: 0 0 0.5rem;
+  }
+  .track-sub-te {
+    font-size: var(--text-body);
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    max-width: 660px;
+    margin: 0 auto;
+  }
+  .track-search-card {
+    background: var(--color-biyyam);
+    border: 2px solid var(--color-kasi);
+    box-shadow: 4px 4px 0 var(--color-kasi);
+    padding: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+  .track-form-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-4);
+    align-items: center;
+  }
+  @media (max-width: 680px) {
+    .track-form-grid {
+      grid-template-columns: 1fr;
+    }
+    .track-divider-col {
+      flex-direction: row !important;
+      padding: 0.5rem 0 !important;
+    }
+    .track-divider-line {
+      height: 1px !important;
+      width: 100% !important;
+    }
+  }
+  .track-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .track-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-sm);
+    color: var(--color-kasi);
+  }
+  .track-hint {
+    font-size: var(--text-caption);
+    color: var(--color-text-muted);
+  }
+  .track-input {
+    background: var(--color-khadi);
+    border: 1.5px solid var(--color-kasi);
+    border-radius: 0;
+    padding: 0.75rem 0.9rem;
+    font-size: 1rem;
+    color: var(--color-kasi);
+  }
+  .track-phone-wrap {
+    display: flex;
+  }
+  .track-phone-prefix {
+    background: var(--color-tholu);
+    border: 1.5px solid var(--color-kasi);
+    border-right: none;
+    padding: 0.75rem 0.85rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-kasi);
+    display: flex;
+    align-items: center;
+  }
+  .track-input-phone {
+    flex: 1;
+  }
+  .track-divider-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .track-divider-line {
+    width: 1px;
+    height: 30px;
+    background: var(--color-border);
+  }
+  .track-divider-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-ittadi-text);
+    background: var(--color-tholu);
+    padding: 2px 8px;
+    border: 1px solid var(--color-border);
+    letter-spacing: 0.05em;
+  }
+  .track-submit-row {
+    margin-top: var(--space-5);
+    text-align: center;
+  }
+  .track-search-btn {
+    width: 100%;
+    max-width: 380px;
+    padding: 0.85rem 1.6rem;
+    gap: 0.5rem;
+  }
+  .track-alert-notice {
+    margin-top: var(--space-4);
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--color-manjistha);
+    background: #fdf2f2;
+    color: var(--color-manjistha);
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+  .track-results-wrap {
+    margin-bottom: var(--space-8);
+  }
+  .track-help-banner {
+    background: var(--color-tholu);
+    border: 1.5px solid var(--color-kasi);
+    padding: var(--space-5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .track-help-content {
+    flex: 1;
+    min-width: 260px;
+  }
+  .help-lead {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--color-kasi);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  .help-desc {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .track-wa-help-btn {
+    background: var(--color-khadi);
+    color: var(--color-kasi);
+    padding: 0.65rem 1.2rem;
+    text-decoration: none;
+    font-size: var(--text-sm);
+    border: 1.5px solid var(--color-kasi);
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('trackOrderForm');
+    const codeInput = document.getElementById('trackCodeInput');
+    const phoneInput = document.getElementById('trackPhoneInput');
+    const alertBox = document.getElementById('trackAlertNotice');
+    const resultsContainer = document.getElementById('trackResultsContainer');
+    const submitBtn = document.getElementById('trackSubmitBtn');
+
+    function showAlert(msg) {
+      if (!alertBox) return;
+      alertBox.textContent = msg;
+      alertBox.style.display = 'block';
+    }
+
+    function hideAlert() {
+      if (!alertBox) return;
+      alertBox.style.display = 'none';
+      alertBox.textContent = '';
+    }
+
+    function renderOrderResult(order) {
+      const isShipped = order.status === 'shipped' || order.status === 'delivered';
+      const isDelivered = order.status === 'delivered';
+      const isPlaced = true;
+
+      const dateStr = order.created_at ? new Date(order.created_at).toLocaleDateString('te-IN') : 'సమీప తేదీ';
+
+      let statusLabelTe = 'ఆర్డర్ నమోదైంది (ధ్రువీకరణ పెండింగ్)';
+      let statusColor = 'var(--color-pasupu)';
+      if (order.status === 'confirmed' || order.status === 'processing') {
+        statusLabelTe = 'చెల్లింపు ధ్రువీకరించబడింది (ప్యాకింగ్ జరుగుతోంది)';
+        statusColor = 'var(--color-ittadi-text)';
+      } else if (order.status === 'shipped') {
+        statusLabelTe = 'రవాణాలో ఉంది (Navata Transport ద్వారా బయలుదేరింది)';
+        statusColor = 'var(--color-manjistha)';
+      } else if (order.status === 'delivered') {
+        statusLabelTe = 'చేరింది (విజయవంతంగా డెలివరీ అయింది)';
+        statusColor = 'var(--color-harita)';
+      }
+
+      return `
+        <article class="track-order-card" style="background: var(--color-khadi); border: 2px solid var(--color-kasi); box-shadow: 4px 4px 0 var(--color-kasi); padding: var(--space-6); margin-bottom: var(--space-4);">
+          <!-- Order Header Bar -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; border-bottom: 1.5px solid var(--color-kasi); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+            <div>
+              <span style="font-size: var(--text-caption); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">అధికారిక ఆర్డర్ కోడ్:</span>
+              <h2 style="font-family: monospace; font-size: 1.5rem; font-weight: 800; color: var(--color-manjistha); margin: 0.15rem 0 0;">${order.order_code}</h2>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: var(--text-caption); color: var(--color-text-muted); display: block;">నమోదైన తేదీ:</span>
+              <strong style="font-size: 0.95rem; color: var(--color-kasi);">${dateStr}</strong>
+            </div>
+          </div>
+
+          <!-- Status Indicator Pill -->
+          <div style="background: var(--color-biyyam); border: 1.5px solid var(--color-border); padding: 0.75rem 1rem; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+            <div>
+              <span style="font-size: var(--text-caption); color: var(--color-text-muted); display: block; text-transform: uppercase;">ప్రస్తుత స్థితి:</span>
+              <strong style="color: ${statusColor}; font-size: 1.1rem; font-family: 'Ramabhadra', serif;">${statusLabelTe}</strong>
+            </div>
+            <div style="font-size: 0.95rem; font-weight: 700; color: var(--color-kasi);">
+              మొత్తం: ₹${Number(order.amount).toLocaleString('en-IN')}
+            </div>
+          </div>
+
+          <!-- Stepper Timeline -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 1.5rem; text-align: center;">
+            <div style="padding: 0.5rem; border-top: 3px solid var(--color-harita); background: #f2f7f3;">
+              <strong style="font-size: 0.75rem; color: var(--color-harita); display: block;">1. నమోదైంది</strong>
+              <span style="font-size: 0.68rem; color: var(--color-text-muted);">పూర్తయింది</span>
+            </div>
+            <div style="padding: 0.5rem; border-top: 3px solid ${order.status !== 'placed' ? 'var(--color-harita)' : 'var(--color-border)'}; background: ${order.status !== 'placed' ? '#f2f7f3' : 'var(--color-tholu)'};">
+              <strong style="font-size: 0.75rem; color: ${order.status !== 'placed' ? 'var(--color-harita)' : 'var(--color-text-muted)'}; display: block;">2. ధ్రువీకరణ</strong>
+              <span style="font-size: 0.68rem; color: var(--color-text-muted);">${order.status !== 'placed' ? 'పూర్తయింది' : 'పరిశీలనలో'}</span>
+            </div>
+            <div style="padding: 0.5rem; border-top: 3px solid ${isShipped ? 'var(--color-harita)' : 'var(--color-border)'}; background: ${isShipped ? '#f2f7f3' : 'var(--color-tholu)'};">
+              <strong style="font-size: 0.75rem; color: ${isShipped ? 'var(--color-harita)' : 'var(--color-text-muted)'}; display: block;">3. రవాణా (నవత)</strong>
+              <span style="font-size: 0.68rem; color: var(--color-text-muted);">${isShipped ? 'డిస్పాచ్ అయింది' : 'పెండింగ్'}</span>
+            </div>
+            <div style="padding: 0.5rem; border-top: 3px solid ${isDelivered ? 'var(--color-harita)' : 'var(--color-border)'}; background: ${isDelivered ? '#f2f7f3' : 'var(--color-tholu)'};">
+              <strong style="font-size: 0.75rem; color: ${isDelivered ? 'var(--color-harita)' : 'var(--color-text-muted)'}; display: block;">4. చేరింది</strong>
+              <span style="font-size: 0.68rem; color: var(--color-text-muted);">${isDelivered ? 'పూర్తయింది' : 'వేచియున్నది'}</span>
+            </div>
+          </div>
+
+          <!-- Dispatch / Navata LR Details (if available) -->
+          ${order.lr_number ? `
+            <div style="background: #fff8e1; border: 1.5px solid var(--color-ittadi); padding: 0.9rem; margin-bottom: 1.25rem;">
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--color-kasi); margin-bottom: 0.35rem;">
+                రవాణా వివరాలు / Lorry Receipt (LR) Details:
+              </div>
+              <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.9rem;">
+                <span>ట్రాన్స్‌పోర్ట్: <strong>${order.transporter || 'నవత రోడ్ ట్రాన్స్‌పోర్ట్ (Navata)'}</strong></span>
+                <span>LR / బిల్టీ నంబర్: <code style="background: var(--color-khadi); padding: 2px 6px; border: 1px solid var(--color-border); font-size: 1rem; font-weight: 800; color: var(--color-manjistha);">${order.lr_number}</code></span>
+              </div>
+            </div>
+          ` : `
+            <div style="background: var(--color-tholu); border: 1px dashed var(--color-border); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: var(--text-sm); color: var(--color-text-muted);">
+              రవాణా సమాచారం: ఆర్డర్ ప్యాకింగ్ పూర్తయిన వెంటనే నవత ట్రాన్స్‌పోర్ట్ LR నంబర్ ఇక్కడ అప్‌డేట్ చేయబడుతుంది మరియు మీ WhatsApp కు పంపబడుతుంది.
+            </div>
+          `}
+
+          <!-- Commodities Ledger -->
+          <div style="border-top: 1px solid var(--color-border); padding-top: 0.75rem;">
+            <span style="font-size: var(--text-caption); font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">ఆర్డర్ చేసిన సరుకులు:</span>
+            <p style="font-size: 0.95rem; color: var(--color-kasi); line-height: 1.6; margin: 0.25rem 0 0;">
+              ${order.product_details || 'సహజ సేద్య ఉత్పత్తులు'}
+            </p>
+          </div>
+        </article>
+      `;
+    }
+
+    async function queryOrder(code, phone) {
+      hideAlert();
+      resultsContainer.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--color-text-muted);">ఆర్డర్ వివరాలు శోధిస్తున్నాము...</div>';
+      submitBtn.disabled = true;
+
+      try {
+        let url = '/api/track-order?';
+        if (code) {
+          url += 'code=' + encodeURIComponent(code);
+        } else if (phone) {
+          url += 'phone=' + encodeURIComponent(phone);
+        }
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        submitBtn.disabled = false;
+
+        let foundOrders = [];
+
+        if (res.ok && data && data.ok && Array.isArray(data.orders) && data.orders.length > 0) {
+          foundOrders = data.orders;
+        } else if (typeof localStorage !== 'undefined') {
+          // Check local client storage backup
+          try {
+            const localList = JSON.parse(localStorage.getItem('kg_orders') || '[]');
+            const searchCode = (code || '').trim().toUpperCase();
+            const phoneDigits = (phone || '').replace(/\D/g, '');
+            const last10 = phoneDigits.length >= 10 ? phoneDigits.slice(-10) : phoneDigits;
+
+            foundOrders = localList.filter(o => {
+              if (searchCode && ((o.order_code && o.order_code.toUpperCase() === searchCode) || (o.order_no && o.order_no.toUpperCase() === searchCode))) return true;
+              if (last10) {
+                const oDigits = String(o.customer_phone || '').replace(/\D/g, '');
+                return oDigits.endsWith(last10);
+              }
+              return false;
+            });
+          } catch (e) {}
+        }
+
+        if (foundOrders.length === 0) {
+          resultsContainer.innerHTML = '';
+          showAlert(data.error || 'ఆర్డర్ కనుగొనబడలేదు. దయచేసి సరైన ఆర్డర్ కోడ్ లేదా ఫోన్ నంబర్ నమోదు చేయండి.');
+          return;
+        }
+
+        resultsContainer.innerHTML = foundOrders.map(renderOrderResult).join('');
+      } catch (err) {
+        submitBtn.disabled = false;
+        // Fallback to localStorage on network error
+        let foundOrders = [];
+        if (typeof localStorage !== 'undefined') {
+          try {
+            const localList = JSON.parse(localStorage.getItem('kg_orders') || '[]');
+            const searchCode = (code || '').trim().toUpperCase();
+            const phoneDigits = (phone || '').replace(/\D/g, '');
+            const last10 = phoneDigits.length >= 10 ? phoneDigits.slice(-10) : phoneDigits;
+
+            foundOrders = localList.filter(o => {
+              if (searchCode && ((o.order_code && o.order_code.toUpperCase() === searchCode) || (o.order_no && o.order_no.toUpperCase() === searchCode))) return true;
+              if (last10) {
+                const oDigits = String(o.customer_phone || '').replace(/\D/g, '');
+                return oDigits.endsWith(last10);
+              }
+              return false;
+            });
+          } catch (e) {}
+        }
+
+        if (foundOrders.length > 0) {
+          resultsContainer.innerHTML = foundOrders.map(renderOrderResult).join('');
+        } else {
+          resultsContainer.innerHTML = '';
+          showAlert('సర్వర్‌ను సంప్రదించడంలో సమస్య ఏర్పడింది. దయచేసి కొద్దిసేపటి తర్వాత మళ్లీ ప్రయత్నించండి.');
+        }
+      }
+    }
+
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const code = codeInput ? codeInput.value.trim().toUpperCase() : '';
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+
+      if (!code && !phone) {
+        showAlert('దయచేసి ఆర్డర్ కోడ్ లేదా 10 అంకెల WhatsApp మొబైల్ నంబర్ నమోదు చేయండి.');
+        return;
+      }
+      if (phone && phone.length < 10) {
+        showAlert('దయచేసి సరైన 10 అంకెల మొబైల్ నంబర్ నమోదు చేయండి.');
+        return;
+      }
+
+      queryOrder(code, phone);
+    });
+
+    // Check if URL has ?code= parameter on initial load
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialCode = urlParams.get('code');
+    const initialPhone = urlParams.get('phone');
+    if (initialCode) {
+      if (codeInput) codeInput.value = initialCode;
+      queryOrder(initialCode, '');
+    } else if (initialPhone) {
+      if (phoneInput) phoneInput.value = initialPhone;
+      queryOrder('', initialPhone);
+    }
+  });
+</script>

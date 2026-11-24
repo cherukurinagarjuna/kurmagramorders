@@ -1,0 +1,256 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, CONFIG } from '../config';
+---
+
+<Base 
+  title="ఆర్డర్ విధానం & UPI చెల్లింపు మార్గదర్శి | కూర్మగ్రామ వేదిక్ విలేజ్" 
+  description="సులభమైన 3 దశల్లో నేరుగా ఆశ్రమానికి ఆర్డర్ చేయండి. 100% ఉచిత పీర్-టు-పీర్ UPI చెల్లింపు మరియు WhatsApp నిర్ధారణ విధానం."
+  canonicalPath="/how-to-order"
+>
+  <Header activeNav="how-to-order" />
+
+  <main id="mainContent" class="editorial-page-main">
+    <!-- Editorial Broadsheet Masthead -->
+    <header class="broadsheet-masthead">
+      <div class="container">
+        <!-- Breadcrumbs -->
+        <nav class="editorial-breadcrumbs" aria-label="మార్గం">
+          <a href="/">హోమ్</a>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-current">ఆర్డర్ మరియు చెల్లింపు విధానం</span>
+        </nav>
+
+        <div class="masthead-crest-row">
+          <img src="/assets/svg/kalamkari/vintage-seal.svg" alt="" width="54" height="54" class="kalamkari-crest-svg" />
+          <span class="masthead-vintage-tag">సున్నా గేట్‌వే రుసుము &bull; 100% పారదర్శక చెల్లింపులు</span>
+        </div>
+
+        <h1 class="broadsheet-main-title">
+          ఆర్డర్ చేసే విధానం &bull; UPI మార్గదర్శి
+        </h1>
+        <p class="broadsheet-main-sub">
+          ఎలాంటి కార్పొరేట్ మధ్యవర్తులు లేదా పేమెంట్ గేట్‌వే ఛార్జీలు లేకుండా నేరుగా ఆశ్రమానికి చెల్లించండి
+        </p>
+
+        <!-- Metric Ledger Bar -->
+        <div class="editorial-metric-ledger">
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౦%</span>
+            <span class="metric-ledger-label">గేట్‌వే రుసుములు (Zero Fee)</span>
+          </div>
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౧౨</span>
+            <span class="metric-ledger-label">అంకెల బ్యాంక్ UTR రికార్డు</span>
+          </div>
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౨-౩</span>
+            <span class="metric-ledger-label">రోజుల్లో AP & TS డెలివరీ</span>
+          </div>
+          <div class="metric-ledger-item">
+            <span class="ramabhadra-metric">౧౦౦%</span>
+            <span class="metric-ledger-label">గోసేవ & రైతులకు చేరే సొమ్ము</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <div class="container editorial-body-wrap">
+
+      <!-- Section 1: The 3 Simple Steps -->
+      <section class="editorial-feature-section">
+        <div class="section-kicker">
+          <span>01 &bull; సులభమైన 3 దశలు</span>
+        </div>
+        <h2 class="editorial-section-title">కేవలం మూడు నిమిషాల్లో మీ ఆర్డర్ పూర్తి చేయండి</h2>
+
+        <div class="steps-broadsheet-grid">
+          <!-- Step 1 -->
+          <article class="broadsheet-step-box">
+            <div class="step-badge-num">౧</div>
+            <div class="step-head-wrap">
+              <span class="step-eng-tag">STEP 01 &bull; SELECTION</span>
+              <h3 class="step-card-title">ఉత్పత్తులను ఎంచుకోండి</h3>
+            </div>
+            <p class="step-card-desc">
+              మా <a href="/shop" style="color: var(--color-manjistha); font-weight: 600; text-decoration: underline;">షాప్ పేజీలో</a> కావలసిన సహజ ఉత్పత్తులు, ప్యాకింగ్ పరిమాణం (ఉదా: 25kg బియ్యం, 1 లీటర్ నూనె) ఎంపిక చేసుకుని "సంచిలో వేయి" లేదా "నేరుగా కొనండి" క్లిక్ చేయండి.
+            </p>
+            <div class="step-card-footer">
+              సంచిలో మీరు ఎంచుకున్న అన్ని వస్తువుల మొత్తం విలువ స్వయంచాలకంగా లెక్కించబడుతుంది.
+            </div>
+          </article>
+
+          <!-- Step 2 -->
+          <article class="broadsheet-step-box">
+            <div class="step-badge-num">౨</div>
+            <div class="step-head-wrap">
+              <span class="step-eng-tag">STEP 02 &bull; ZERO-FEE UPI</span>
+              <h3 class="step-card-title">UPI ద్వారా చెల్లించండి</h3>
+            </div>
+            <p class="step-card-desc">
+              చెక్అవుట్ పేజీలో కనిపించే అధికారిక NPCI క్యూఆర్ కోడ్ స్కాన్ చేసి లేదా <code>{CONFIG.upiId}</code> కు మీ PhonePe, Google Pay, Paytm, BHIM యాప్ ద్వారా సొమ్ము పంపండి. అనంతరం లభించే <strong>12-అంకెల UTR నంబరును</strong> నమోదు చేయండి.
+            </p>
+            <div class="step-card-footer">
+              సురక్షితమైన పీర్-టు-పీర్ చెల్లింపు; మీ ఖాతా నుండి ఒక్క పైసా అదనపు ఛార్జీ తగ్గదు.
+            </div>
+          </article>
+
+          <!-- Step 3 -->
+          <article class="broadsheet-step-box">
+            <div class="step-badge-num">౩</div>
+            <div class="step-head-wrap">
+              <span class="step-eng-tag">STEP 03 &bull; WHATSAPP CONFIRM</span>
+              <h3 class="step-card-title">WhatsApp లో రసీదు పంపండి</h3>
+            </div>
+            <p class="step-card-desc">
+              "WhatsApp ద్వారా ఆర్డర్ సమర్పించండి" బటన్ నొక్కగానే మీ ఆర్డర్ ఐడీ, కొనుగోలు చేసిన వస్తువులు, చిరునామా మరియు UTR తో కూడిన సందేశం సిద్ధమవుతుంది. దానిని మా హెల్ప్‌లైన్ నంబర్ (+{CONFIG.whatsapp}) కు పంపితే మా సాధకులు వెంటనే ధృవీకరించి ప్యాకింగ్ ప్రారంభిస్తారు.
+            </p>
+            <div class="step-card-footer">
+              స్పీడ్ పోస్ట్ లేదా కొరియర్ ట్రాకింగ్ నంబర్ నేరుగా మీ WhatsApp కే అందుతుంది.
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Handloom Divider -->
+      <div class="editorial-vine-break" aria-hidden="true">
+        <svg viewBox="0 0 1200 24" width="100%" height="24" fill="none" stroke="currentColor">
+          <path d="M0 12 Q 300 0, 600 12 T 1200 12" stroke="var(--color-ittadi)" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <circle cx="600" cy="12" r="5" fill="#A62B2B"/>
+        </svg>
+      </div>
+
+      <!-- Section 2: Comprehensive Visual UPI & UTR Guide -->
+      <section class="editorial-feature-section">
+        <div class="section-kicker">
+          <span>02 &bull; UTR గైడ్ & పారదర్శకత</span>
+        </div>
+        <h2 class="editorial-section-title">12-అంకెల UTR / Reference ID అంటే ఏమిటి? ఎక్కడ ఉంటుంది?</h2>
+        <p class="editorial-body-para">
+          మీరు ఏ UPI యాప్ (PhonePe, Google Pay, Paytm, BHIM) ద్వారా డబ్బులు పంపినా, భారతీయ రిజర్వ్ బ్యాంక్ (RBI / NPCI) ప్రతి లావాదేవీకి ఒక విశిష్టమైన 12-అంకెల రికార్డు నంబర్‌ను కేటాయిస్తుంది. దీనినే UTR (Unique Transaction Reference) అంటారు.
+        </p>
+
+        <div class="utr-guide-grid">
+          <div class="utr-guide-card">
+            <h4 class="utr-app-title">Google Pay (GPay)</h4>
+            <p class="utr-app-desc">
+              చెల్లింపు పూర్తయిన తర్వాత ఆ లావాదేవీని తెరవండి. కింద <strong>"UPI transaction ID"</strong> అని 12 అంకెలు కనిపిస్తాయి (ఉదా: <code>432109876543</code>).
+            </p>
+          </div>
+          <div class="utr-guide-card">
+            <h4 class="utr-app-title">PhonePe</h4>
+            <p class="utr-app-desc">
+              లావాదేవీ వివరాల్లో (Transaction Details) <strong>"UTR"</strong> అని 12 అంకెల సంఖ్య స్పష్టంగా ముద్రించబడి ఉంటుంది. దాని పక్కనే కాపీ బటన్ కూడా ఉంటుంది.
+            </p>
+          </div>
+          <div class="utr-guide-card">
+            <h4 class="utr-app-title">Paytm</h4>
+            <p class="utr-app-desc">
+              చెల్లింపు రసీదులో <strong>"UPI Ref No"</strong> లేదా <strong>"Reference ID"</strong> అని 12 అంకెలు ఉంటాయి.
+            </p>
+          </div>
+          <div class="utr-guide-card">
+            <h4 class="utr-app-title">BHIM / ఇతర బ్యాంక్ యాప్‌లు</h4>
+            <p class="utr-app-desc">
+              <strong>"Approval Ref No"</strong> లేదా <strong>"UTR Number"</strong> పేరుతో 12 సంఖ్యల కోడ్ రసీదులో కనిపిస్తుంది.
+            </p>
+          </div>
+        </div>
+
+        <div class="editorial-callout-box">
+          <h4 class="callout-heading">ఎందుకు గేట్‌వేలు లేవు? మేము ఎందుకు డైరెక్ట్ UPI ఉపయోగిస్తున్నాము?</h4>
+          <p class="callout-para">
+            వాణిజ్య పేమెంట్ గేట్‌వేలు (Razorpay, Stripe వంటివి) ప్రతి లావాదేవీపై 2% నుండి 3% వరకు కమీషన్ వసూలు చేస్తాయి. ఒక ఆశ్రమం లేదా రైతు క్షేత్రం నుండి ఆ మొత్తం కమీషన్‌గా కార్పొరేట్ కంపెనీలకు వెళ్ళడం కంటే, ఆ ధనం 100% ఆవుల సంరక్షణకు, సహజ సేద్యం చేస్తున్న గ్రామీణ రైతులకు మాత్రమే ఉపయోగపడాలన్నదే మా లక్ష్యం.
+          </p>
+        </div>
+      </section>
+
+      <!-- Handloom Divider -->
+      <div class="editorial-vine-break" aria-hidden="true">
+        <svg viewBox="0 0 1200 24" width="100%" height="24" fill="none" stroke="currentColor">
+          <path d="M0 12 Q 300 0, 600 12 T 1200 12" stroke="var(--color-ittadi)" stroke-width="1.5" stroke-dasharray="6 4"/>
+          <circle cx="600" cy="12" r="5" fill="#A62B2B"/>
+        </svg>
+      </div>
+
+      <!-- Section 3: Frequently Asked Questions (FAQ) -->
+      <section class="editorial-feature-section">
+        <div class="section-kicker">
+          <span>03 &bull; సందేహాలు & సమాధానాలు</span>
+        </div>
+        <h2 class="editorial-section-title">తరచుగా అడిగే ప్రశ్నలు (FAQ)</h2>
+
+        <div class="editorial-faq-accordion">
+          <details class="faq-accordion-item" open>
+            <summary class="faq-question">ఆర్డర్ చేసిన ఎన్ని రోజుల్లో పార్శిల్ నా ఇంటికి చేరుతుంది?</summary>
+            <div class="faq-answer">
+              <p>
+                ఆంధ్రప్రదేశ్ మరియు తెలంగాణ నగరాలకు ఆర్డర్ పంపిన <strong>2 నుండి 3 పనిదినాల్లో</strong> డెలివరీ పూర్తవుతుంది. ఇతర భారతీయ రాష్ట్రాలకు ఇండియా పోస్ట్ స్పీడ్ పోస్ట్ లేదా DTDC ఎక్స్‌ప్రెస్ ద్వారా <strong>4 నుండి 6 రోజులు</strong> పడుతుంది. డిస్పాచ్ చేయగానే ట్రాకింగ్ వివరాలు మీకు WhatsApp లో పంపబడతాయి.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-accordion-item">
+            <summary class="faq-question">డెలివరీ ఛార్జీలు ఎలా లెక్కిస్తారు?</summary>
+            <div class="faq-answer">
+              <p>
+                పార్శిల్ బరువు మరియు గమ్యస్థానాన్ని బట్టి పోస్టల్ / కొరియర్ అధికారిక ఛార్జీల ప్రకారం మాత్రమే లెక్కించబడుతుంది. చిన్న వస్తువులకు ₹50–₹80, 25kg బియ్యం బస్తాలకు స్థానిక లారీ సర్వీస్ లేదా పార్శిల్ రేట్ల ప్రకారం తక్కువ ఖర్చుతో పంపే ఏర్పాట్లు చేస్తాము.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-accordion-item">
+            <summary class="faq-question">కనీస ఆర్డర్ పరిమితి (Minimum Order Value) ఉందా?</summary>
+            <div class="faq-answer">
+              <p>
+                ఎలాంటి కనీస పరిమితి లేదు! మీరు కేవలం ₹90 విలువైన ఒక బాటిల్ వార్మ్ ఆర్క్ లేదా ₹120 విలువైన సున్నిపిండి ప్యాకెట్ కూడా నిస్సంకోచంగా ఆర్డర్ చేయవచ్చు.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-accordion-item">
+            <summary class="faq-question">నూనె సీసాలు లేదా గాజు సీసాలు ప్రయాణంలో పగిలిపోకుండా ఎలా ప్యాక్ చేస్తారు?</summary>
+            <div class="faq-answer">
+              <p>
+                మేము పర్యావరణ అనుకూల మందపాటి ముడతల కాటన్ బాక్సులు, సీల్డ్ లీక్-ప్రూఫ్ క్యాప్‌లు మరియు సంప్రదాయ కాటన్ లేదా జనపనార కుషనింగ్ ఉపయోగిస్తాము. ఇప్పటివరకు మా పార్శిళ్లలో 99.8% సురక్షితంగా చేరాయి.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-accordion-item">
+            <summary class="faq-question">ఒకవేళ వస్తువు దెబ్బతిని చేరితే ఏమి చేయాలి?</summary>
+            <div class="faq-answer">
+              <p>
+                ఏమాత్రం ఆందోళన చెందవద్దు! పార్శిల్ బాక్స్ ఫోటో లేదా వీడియోను మా WhatsApp నంబర్ (+{CONFIG.whatsapp}) కు పంపితే ఎలాంటి వాదనలు లేకుండా వెంటనే ఉచితంగా కొత్త వస్తువును రీప్లేస్ చేస్తాము లేదా మీ నగదును తక్షణమే వాపసు చేస్తాము.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Section 4: Direct Inquiry & CTA -->
+      <section class="editorial-visit-section">
+        <div class="visit-vault-box">
+          <h3 class="visit-title">ఆర్డర్ చేయడంలో ఏదైనా సహాయం కావాలా?</h3>
+          <p class="visit-desc">
+            మా ఆశ్రమ ప్రతినిధి మీతో మాట్లాడి ఫోన్ ద్వారా లేదా WhatsApp ద్వారా కూడా ఆర్డర్ నమోదు చేసుకుంటారు.
+          </p>
+          <div class="visit-actions">
+            <a href={`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent('నమస్తే, నాకు ఆర్డర్ చేయడంలో సహాయం కావాలి.')}`} target="_blank" rel="noopener noreferrer" class="btn-editorial-primary">
+              WhatsApp లో మాట్లాడండి (+{CONFIG.whatsapp}) &rarr;
+            </a>
+            <a href={`tel:${CONFIG.phone1}`} class="btn-editorial-secondary">
+              ఫోన్ కాల్ చేయండి: {CONFIG.phone1}
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</Base>

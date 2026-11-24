@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" width="300" height="240" fill="none">
+  <!-- Cold-Pressed Groundnut Oil: Wooden Ghani + Fresh Peanuts / Groundnuts -->
+  <defs>
+    <linearGradient id="groundnutShell" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dfcfaf"/>
+      <stop offset="60%" stop-color="#caa97d"/>
+      <stop offset="100%" stop-color="#a47c49"/>
+    </linearGradient>
+    <linearGradient id="peanutOil" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe169"/>
+      <stop offset="50%" stop-color="#fad02c"/>
+      <stop offset="100%" stop-color="#d49a15"/>
+    </linearGradient>
+    <linearGradient id="woodPress" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9d6732"/>
+      <stop offset="60%" stop-color="#73451a"/>
+      <stop offset="100%" stop-color="#4d2b0e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Halo -->
+  <circle cx="150" cy="120" r="95" fill="#faf5e9" stroke="#6b4f2a" stroke-width="2" stroke-dasharray="4 3"/>
+
+  <!-- Shadow -->
+  <ellipse cx="150" cy="190" rx="55" ry="12" fill="#dfcfaf"/>
+
+  <!-- Wooden Ghani in background -->
+  <g transform="translate(30, 15) scale(0.9)">
+    <path d="M105 50 L120 50 L115 140 L100 140 Z" transform="rotate(-15 110 95)" fill="#b87a3e" stroke="#6b4f2a" stroke-width="2"/>
+    <path d="M70 120 C70 160 80 185 115 185 C150 185 160 160 160 120 Z" fill="url(#woodPress)" stroke="#6b4f2a" stroke-width="2"/>
+    <ellipse cx="115" cy="120" rx="45" ry="14" fill="#a46b33" stroke="#6b4f2a" stroke-width="2"/>
+    <ellipse cx="115" cy="120" rx="35" ry="10" fill="#4d2b0e" stroke="#6b4f2a" stroke-width="1.5"/>
+  </g>
+
+  <!-- Clear Glass Bottle of Pure Groundnut Oil -->
+  <g transform="translate(170, 85)">
+    <path d="M15 25 L15 10 L25 10 L25 25 C34 30 40 40 40 55 L40 98 C40 102 36 105 30 105 L10 105 C4 105 0 102 0 98 L0 55 C0 40 6 30 15 25 Z" fill="url(#peanutOil)" stroke="#6b4f2a" stroke-width="2"/>
+    <rect x="13" y="2" width="14" height="9" rx="1" fill="#2f6b3a" stroke="#6b4f2a" stroke-width="1.5"/>
+    <line x1="6" y1="42" x2="6" y2="98" stroke="#fffdf7" stroke-width="1.8" opacity="0.6" stroke-linecap="round"/>
+    
+    <!-- Mini emblem on bottle -->
+    <rect x="8" y="55" width="24" height="30" rx="2" fill="#fffdf7" stroke="#6b4f2a" stroke-width="1"/>
+    <text x="20" y="68" font-family="'Noto Sans Telugu', sans-serif" font-size="6" font-weight="700" fill="#1c4423" text-anchor="middle">పల్లి</text>
+    <text x="20" y="77" font-family="'Poppins', sans-serif" font-size="4.5" font-weight="600" fill="#6b4f2a" text-anchor="middle">OIL</text>
+  </g>
+
+  <!-- Groundnuts in Shell (Peanuts) in foreground -->
+  <g stroke="#6b4f2a" stroke-width="1.8">
+    <!-- Groundnut 1 -->
+    <g transform="translate(55, 160) rotate(-15)">
+      <path d="M5 12 C0 6 8 -2 16 2 C22 -2 30 6 25 14 C30 22 22 30 16 26 C8 30 0 22 5 12 Z" fill="url(#groundnutShell)"/>
+      <ellipse cx="14" cy="7" rx="3" ry="4" stroke="#6b4f2a" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <ellipse cx="14" cy="20" rx="3" ry="4" stroke="#6b4f2a" stroke-width="0.8" fill="none" opacity="0.4"/>
+    </g>
+
+    <!-- Groundnut 2 -->
+    <g transform="translate(95, 168) rotate(20)">
+      <path d="M5 12 C0 6 8 -2 16 2 C22 -2 30 6 25 14 C30 22 22 30 16 26 C8 30 0 22 5 12 Z" fill="url(#groundnutShell)"/>
+      <ellipse cx="14" cy="7" rx="3" ry="4" stroke="#6b4f2a" stroke-width="0.8" fill="none" opacity="0.4"/>
+      <ellipse cx="14" cy="20" rx="3" ry="4" stroke="#6b4f2a" stroke-width="0.8" fill="none" opacity="0.4"/>
+    </g>
+
+    <!-- Red Groundnut Kernel Split -->
+    <ellipse cx="142" cy="180" rx="5" ry="7" transform="rotate(40 142 180)" fill="#c0392b" stroke="#6b4f2a" stroke-width="1.2"/>
+    <ellipse cx="152" cy="182" rx="4.5" ry="6.5" transform="rotate(-30 152 182)" fill="#ffd166" stroke="#6b4f2a" stroke-width="1.2"/>
+  </g>
+</svg>

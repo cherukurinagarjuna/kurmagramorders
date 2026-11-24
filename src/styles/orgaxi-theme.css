@@ -1,0 +1,1965 @@
+/* ==========================================================================
+   ORGAXI ORGANIC FOOD & FARMING THEME
+   Inspired by TheMazine Orgaxi Template (Envato Elements)
+   Tailored for Kurmagram Vedic Village (కూర్మగ్రామ వేదిక్ విలేజ్)
+   Colors: Natural Farm Green, Fresh Leaf Accents, Warm Cream Canvas
+   Typography: Outfit (Headings) + DM Sans (Body) + Telugu (Ramabhadra / Noto Sans)
+   ========================================================================== */
+
+:root {
+  /* Orgaxi Primary Color System */
+  --orgaxi-green-deep: #1B431D;
+  --orgaxi-green-primary: #276329;
+  --orgaxi-green-fresh: #229E28;
+  --orgaxi-green-hover: #1B831F;
+  --orgaxi-green-light: #EBF6EA;
+  --orgaxi-green-badge: #D8EED6;
+
+  --orgaxi-amber-harvest: #E08200;
+  --orgaxi-amber-light: #FEF7E8;
+
+  --orgaxi-cream: #FEFAF5;
+  --orgaxi-surface: #FFFFFF;
+  --orgaxi-surface-subtle: #F7FAF6;
+
+  --orgaxi-border: #E0E7DC;
+  --orgaxi-border-light: #EEF3EA;
+
+  --orgaxi-text: #172418;
+  --orgaxi-text-muted: #526353;
+  --orgaxi-text-light: #778878;
+
+  /* Modern Orgaxi E-Commerce Radii */
+  --orgaxi-radius-sm: 8px;
+  --orgaxi-radius-md: 14px;
+  --orgaxi-radius-lg: 20px;
+  --orgaxi-radius-xl: 32px;
+  --orgaxi-radius-full: 9999px;
+
+  /* Soft Organic Shadows */
+  --orgaxi-shadow-card: 0 4px 20px rgba(27, 67, 29, 0.06);
+  --orgaxi-shadow-hover: 0 12px 30px rgba(27, 67, 29, 0.12);
+  --orgaxi-shadow-btn: 0 4px 14px rgba(34, 158, 40, 0.25);
+
+  /* Typography */
+  --orgaxi-font-title: 'Outfit', 'Ramabhadra', -apple-system, sans-serif;
+  --orgaxi-font-body: 'DM Sans', 'Noto Sans Telugu', -apple-system, sans-serif;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GLOBAL OVERRIDES (Orgaxi Look & Feel)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: var(--orgaxi-font-body);
+  background-color: var(--orgaxi-cream);
+  color: var(--orgaxi-text);
+  background-image: none !important; /* Clean modern cream canvas */
+}
+
+h1, h2, h3, h4, .section-title, .brand-name-te, .brand-name-en {
+  font-family: var(--orgaxi-font-title);
+  letter-spacing: -0.01em;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI TOPBAR & HEADER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.demo-ribbon {
+  background: var(--orgaxi-green-deep) !important;
+  color: #FFFFFF !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  font-size: 0.8rem !important;
+  padding: 6px 0 !important;
+}
+
+.demo-ribbon .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ribbon-trust-items {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #E2EFE1;
+}
+
+.ribbon-fssai-tag {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2px 8px;
+  border-radius: var(--orgaxi-radius-full);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.site-header {
+  background: var(--orgaxi-surface) !important;
+  border-bottom: 1px solid var(--orgaxi-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.brand-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.brand-img-logo {
+  border-radius: var(--orgaxi-radius-full);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.brand-name-te {
+  color: var(--orgaxi-green-deep) !important;
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  display: block;
+  line-height: 1.2;
+}
+
+.brand-name-en {
+  color: var(--orgaxi-amber-harvest) !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em;
+  display: block;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.main-nav .nav-link {
+  color: var(--orgaxi-text) !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  text-decoration: none;
+  padding: 0.4rem 0.2rem;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.main-nav .nav-link:hover,
+.main-nav .nav-link.active {
+  color: var(--orgaxi-green-fresh) !important;
+}
+
+.main-nav .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: var(--orgaxi-green-fresh);
+  border-radius: 2px;
+}
+
+.header-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-btn.lang-btn {
+  background: var(--orgaxi-green-light) !important;
+  color: var(--orgaxi-green-deep) !important;
+  border: 1px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.45rem 1rem !important;
+  font-weight: 700 !important;
+  font-size: 0.85rem !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn.lang-btn:hover {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+}
+
+.nav-btn.cart-toggle-btn {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.5rem 1.2rem !important;
+  font-weight: 700 !important;
+  font-size: 0.9rem !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 0.45rem;
+  box-shadow: var(--orgaxi-shadow-btn) !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn.cart-toggle-btn:hover {
+  background: var(--orgaxi-green-hover) !important;
+  transform: translateY(-1px);
+}
+
+.cart-badge-count {
+  background: #FFFFFF !important;
+  color: var(--orgaxi-green-deep) !important;
+  border-radius: var(--orgaxi-radius-full);
+  padding: 1px 7px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-left: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI HERO BANNER SECTION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.hero-editorial-section {
+  background: radial-gradient(circle at 80% 20%, #F3F9F1 0%, #FEFAF5 65%) !important;
+  padding: 3rem 0 3.5rem 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-editorial-section::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(34, 158, 40, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-broadsheet-bar {
+  display: none !important; /* Hide old monochrome broadsheet bar */
+}
+
+.hero-kicker-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--orgaxi-green-light);
+  color: var(--orgaxi-green-deep);
+  border: 1px solid rgba(39, 99, 41, 0.15);
+  border-radius: var(--orgaxi-radius-full);
+  padding: 0.35rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.hero-brand-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  margin-bottom: 0.85rem !important;
+}
+
+.hero-tagline-giant {
+  color: var(--orgaxi-amber-harvest) !important;
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem) !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+}
+
+.hero-newspaper-rule {
+  display: none !important;
+}
+
+.hero-lead-text p {
+  color: var(--orgaxi-text-muted) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.75 !important;
+  max-width: 540px;
+  margin-bottom: 1.75rem !important;
+}
+
+.hero-cta-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-sharp-primary,
+.btn-add-cart-sharp {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.85rem 1.85rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--orgaxi-shadow-btn) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-sharp-primary:hover,
+.btn-add-cart-sharp:hover {
+  background: var(--orgaxi-green-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(34, 158, 40, 0.35) !important;
+}
+
+.btn-sharp-secondary {
+  background: #FFFFFF !important;
+  color: var(--orgaxi-green-deep) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.85rem 1.65rem !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-sharp-secondary:hover {
+  border-color: var(--orgaxi-green-fresh) !important;
+  color: var(--orgaxi-green-fresh) !important;
+  background: var(--orgaxi-green-light) !important;
+}
+
+/* Hero Right Visual Column */
+.hero-magazine-frame {
+  border: 4px solid #FFFFFF !important;
+  border-radius: var(--orgaxi-radius-xl) !important;
+  box-shadow: 0 16px 40px rgba(27, 67, 29, 0.12) !important;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.hero-magazine-img {
+  border-radius: calc(var(--orgaxi-radius-xl) - 4px);
+  transition: transform 0.4s ease;
+}
+
+.hero-magazine-frame:hover .hero-magazine-img {
+  transform: scale(1.02);
+}
+
+.hero-magazine-caption {
+  background: rgba(27, 67, 29, 0.92) !important;
+  color: #FFFFFF !important;
+  border-top: none !important;
+  padding: 0.85rem 1.25rem !important;
+  backdrop-filter: blur(8px);
+}
+
+.hero-corner-seal {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI 4 CORE PILLARS / BENEFITS BAR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.offer-strip-bar {
+  background: #FFFFFF !important;
+  border-top: 1px solid var(--orgaxi-border) !important;
+  border-bottom: 1px solid var(--orgaxi-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+  padding: 1.5rem 0 !important;
+}
+
+.offer-strip-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.offer-pill-badge {
+  background: var(--orgaxi-surface-subtle) !important;
+  border: 1px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-md) !important;
+  padding: 1rem 1.25rem !important;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.offer-pill-badge:hover {
+  background: #FFFFFF !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  transform: translateY(-2px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI SHOPPING CATALOG & PRODUCT CARDS
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.catalog-ledger-section {
+  background: var(--orgaxi-cream) !important;
+  padding: 4rem 0 !important;
+}
+
+.catalog-ledger-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.ledger-header-meta {
+  display: none !important;
+}
+
+.ledger-masthead-rule {
+  width: 60px;
+  height: 3px;
+  background: var(--orgaxi-green-fresh);
+  border-radius: 2px;
+  margin: 0.75rem auto 0 auto;
+}
+
+.ledger-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-size: clamp(2rem, 3.2vw, 2.8rem) !important;
+  font-weight: 800 !important;
+}
+
+.ledger-sub {
+  color: var(--orgaxi-text-muted) !important;
+  font-size: 1.05rem !important;
+  margin-top: 0.4rem;
+}
+
+/* Shop Toolbar (Search & Category Pills) */
+.shop-toolbar-ledger {
+  background: #FFFFFF !important;
+  border: 1px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  padding: 1rem 1.5rem !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.search-box-ledger {
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  background: var(--orgaxi-surface-subtle) !important;
+  padding: 0.35rem 0.85rem !important;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 360px;
+}
+
+.search-input-ledger {
+  border: none !important;
+  background: transparent !important;
+  font-size: 0.92rem !important;
+  outline: none;
+  width: 100%;
+}
+
+.category-filters-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip-btn {
+  background: var(--orgaxi-surface-subtle) !important;
+  color: var(--orgaxi-text) !important;
+  border: 1px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.45rem 1rem !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip-btn:hover,
+.chip-btn.active {
+  background: var(--orgaxi-green-primary) !important;
+  color: #FFFFFF !important;
+  border-color: var(--orgaxi-green-primary) !important;
+}
+
+.ledger-columns-head {
+  display: none !important; /* Hide old monochrome table ledger header */
+}
+
+/* ── Modern Orgaxi Product Cards Grid ── */
+.catalog-ledger-rows {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+  gap: 1.75rem !important;
+  border: none !important;
+}
+
+.product-ledger-row {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-md) !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  padding: 1.5rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  position: relative !important;
+  transition: all 0.25s ease !important;
+}
+
+.product-ledger-row:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: var(--orgaxi-shadow-hover) !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+}
+
+.ledger-item-col-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.ledger-row-num {
+  display: none !important;
+}
+
+.ledger-row-art {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, var(--orgaxi-green-light) 0%, transparent 70%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  transition: transform 0.3s ease;
+}
+
+.product-ledger-row:hover .ledger-row-art {
+  transform: scale(1.08);
+}
+
+.ledger-row-svg {
+  width: 90px !important;
+  height: 90px !important;
+  object-fit: contain;
+}
+
+.ledger-title-line {
+  flex-direction: column !important;
+  gap: 0.3rem !important;
+  align-items: center !important;
+}
+
+.ledger-name-te {
+  font-size: 1.25rem !important;
+  color: var(--orgaxi-green-deep) !important;
+  font-weight: 800 !important;
+  margin: 0.25rem 0 !important;
+}
+
+.ledger-title-link {
+  color: var(--orgaxi-green-deep) !important;
+  text-decoration: none;
+}
+
+.ledger-tag-stamp {
+  background: var(--orgaxi-green-light) !important;
+  color: var(--orgaxi-green-deep) !important;
+  border: 1px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 2px 10px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+.ledger-offer-stamp {
+  background: var(--orgaxi-amber-light) !important;
+  color: var(--orgaxi-amber-harvest) !important;
+  border: 1px solid rgba(224, 130, 0, 0.2) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 2px 10px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+.ledger-name-en {
+  color: var(--orgaxi-text-light) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+}
+
+.ledger-row-desc {
+  color: var(--orgaxi-text-muted) !important;
+  font-size: 0.86rem !important;
+  line-height: 1.5 !important;
+  margin: 0.5rem 0 !important;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Units selector pills */
+.ledger-item-col-units {
+  margin-bottom: 0.85rem;
+}
+
+.card-units-selector,
+.ledger-units-container {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.4rem !important;
+}
+
+.unit-pill,
+.unit-pill-btn {
+  background: var(--orgaxi-surface-subtle) !important;
+  color: var(--orgaxi-text) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.35rem 0.85rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+.unit-pill:hover,
+.unit-pill.selected,
+.unit-pill.active,
+.unit-pill-btn:hover,
+.unit-pill-btn.active {
+  background: var(--orgaxi-green-light) !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+  color: var(--orgaxi-green-deep) !important;
+  box-shadow: 0 2px 8px rgba(34, 158, 40, 0.18) !important;
+}
+
+/* Rate & Price */
+.ledger-item-col-price {
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.ledger-brass-box,
+.price-display,
+.price-box {
+  background: transparent !important;
+  border: none !important;
+  padding: 0.25rem 0 !important;
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  gap: 0.35rem !important;
+}
+
+.price-val,
+.rate-primary {
+  color: var(--orgaxi-green-deep) !important;
+  font-size: 1.65rem !important;
+  font-weight: 800 !important;
+  font-family: var(--orgaxi-font-title) !important;
+}
+
+.unit-tag {
+  color: var(--orgaxi-text-light) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+.mrp-val {
+  color: #9CA3AF !important;
+  text-decoration: line-through !important;
+  font-size: 0.88rem !important;
+  margin-left: 0.35rem !important;
+}
+
+.discount-badge,
+.ledger-savings-badge {
+  background: var(--orgaxi-amber-light) !important;
+  color: var(--orgaxi-amber-harvest) !important;
+  border: 1px solid rgba(224, 130, 0, 0.25) !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 2px 8px !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+}
+
+/* Action button */
+.ledger-item-col-action {
+  width: 100%;
+}
+
+.btn-add-cart,
+.catalog-link-action,
+.btn-add-cart-sharp {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.8rem 1.5rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  box-shadow: var(--orgaxi-shadow-btn) !important;
+  transition: all 0.25s ease !important;
+  width: 100% !important;
+  cursor: pointer !important;
+}
+
+.btn-add-cart:hover,
+.catalog-link-action:hover,
+.btn-add-cart-sharp:hover {
+  background: var(--orgaxi-green-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(34, 158, 40, 0.35) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI 4 CORE PILLARS / BENEFITS GRID
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.orgaxi-features-section {
+  padding: 3rem 0 2rem 0;
+  background: var(--orgaxi-cream);
+}
+
+.orgaxi-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.orgaxi-feature-card {
+  background: #FFFFFF;
+  border: 1.5px solid var(--orgaxi-border);
+  border-radius: var(--orgaxi-radius-md);
+  padding: 1.35rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--orgaxi-shadow-card);
+  transition: all 0.25s ease;
+}
+
+.orgaxi-feature-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--orgaxi-shadow-hover);
+  border-color: var(--orgaxi-green-fresh);
+}
+
+.feature-icon-bubble {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  background: var(--orgaxi-green-light);
+  border-radius: var(--orgaxi-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.orgaxi-feature-card:hover .feature-icon-bubble {
+  transform: scale(1.1) rotate(6deg);
+  background: var(--orgaxi-green-badge);
+}
+
+.feature-card-title {
+  font-family: var(--orgaxi-font-title);
+  color: var(--orgaxi-green-deep);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.feature-card-desc {
+  color: var(--orgaxi-text-muted);
+  font-size: 0.82rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI 3-STEPS SECTION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.steps-section {
+  background: var(--orgaxi-surface) !important;
+  padding: 4.5rem 0 !important;
+  border-top: 1px solid var(--orgaxi-border);
+}
+
+.steps-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 2rem !important;
+  margin-top: 2.5rem;
+}
+
+.step-card {
+  background: var(--orgaxi-surface-subtle) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  padding: 2.25rem 1.75rem !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  text-align: center;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--orgaxi-shadow-hover) !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+  background: #FFFFFF !important;
+}
+
+.step-number-badge {
+  width: 52px !important;
+  height: 52px !important;
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+  margin: 0 auto 1.25rem auto !important;
+  box-shadow: 0 4px 12px rgba(34, 158, 40, 0.3) !important;
+  border: none !important;
+}
+
+.step-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.65rem !important;
+}
+
+.step-desc {
+  color: var(--orgaxi-text-muted) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI CART DRAWER & CHECKOUT MODAL
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.cart-drawer {
+  background: #FFFFFF !important;
+  border-top-left-radius: 20px !important;
+  border-bottom-left-radius: 20px !important;
+  box-shadow: -10px 0 40px rgba(27, 67, 29, 0.15) !important;
+  border-left: 1px solid var(--orgaxi-border) !important;
+}
+
+.drawer-header {
+  border-bottom: 1px solid var(--orgaxi-border) !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.drawer-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-weight: 800 !important;
+}
+
+.free-shipping-pill {
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.45rem 1rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+}
+
+#cartCheckoutBtn {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.9rem 1.5rem !important;
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  box-shadow: var(--orgaxi-shadow-btn) !important;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+#cartCheckoutBtn:hover {
+  background: var(--orgaxi-green-hover) !important;
+  transform: translateY(-2px);
+}
+
+/* Modal Window */
+#checkoutModal .modal-content {
+  background: #FFFFFF !important;
+  border-radius: 22px !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  box-shadow: 0 24px 60px rgba(27, 67, 29, 0.22) !important;
+  max-width: 640px !important;
+  padding: 2rem !important;
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--orgaxi-border) !important;
+  padding-bottom: 1rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.modal-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+}
+
+.navata-shipping-notice {
+  background: var(--orgaxi-amber-light) !important;
+  border: 1.5px solid #F59E0B !important;
+  border-radius: 12px !important;
+  padding: 1rem 1.15rem !important;
+}
+
+.form-label {
+  color: var(--orgaxi-green-deep) !important;
+  font-weight: 700 !important;
+  font-size: 0.88rem !important;
+  margin-bottom: 0.35rem !important;
+  display: block;
+}
+
+.form-input,
+.form-textarea {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 10px !important;
+  padding: 0.65rem 0.9rem !important;
+  font-family: var(--orgaxi-font-body) !important;
+  font-size: 0.92rem !important;
+  color: var(--orgaxi-text) !important;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--orgaxi-green-fresh) !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 158, 40, 0.15) !important;
+}
+
+.upi-payment-box {
+  background: var(--orgaxi-surface-subtle) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 14px !important;
+  padding: 1.25rem !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.qr-mode-tab {
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.35rem 0.9rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  border: 1px solid var(--orgaxi-border) !important;
+  cursor: pointer;
+}
+
+.qr-mode-tab.active {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+}
+
+#submitOrderWhatsAppBtn {
+  background: #1E7E34 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.9rem 1.5rem !important;
+  font-size: 1.05rem !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 14px rgba(30, 126, 52, 0.35) !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#submitOrderWhatsAppBtn:hover {
+  background: #166028 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(30, 126, 52, 0.45) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI FOOTER
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.site-footer {
+  background: var(--orgaxi-green-deep) !important;
+  color: #E2EFE1 !important;
+  border-top: none !important;
+  padding: 4rem 0 2rem 0 !important;
+}
+
+.footer-top {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+  padding-bottom: 2.5rem !important;
+  margin-bottom: 2rem !important;
+}
+
+.footer-brand .brand-name-te {
+  color: #FFFFFF !important;
+}
+
+.footer-brand .brand-name-en {
+  color: var(--orgaxi-amber-harvest) !important;
+}
+
+.footer-desc {
+  color: #C5DCC3 !important;
+  font-size: 0.92rem !important;
+}
+
+.footer-col-title {
+  color: #FFFFFF !important;
+  font-size: 1.1rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 1.25rem !important;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-col-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--orgaxi-green-fresh);
+}
+
+.footer-links a {
+  color: #C5DCC3 !important;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #FFFFFF !important;
+  padding-left: 4px;
+}
+
+.footer-bottom {
+  color: #9AB898 !important;
+  font-size: 0.82rem !important;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.5rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI STORY & ABOUT SECTION
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.story-section {
+  background: var(--orgaxi-cream) !important;
+  padding: 5rem 0 !important;
+}
+
+.story-stage-viewport .story-frame-outer {
+  border: 4px solid #FFFFFF !important;
+  border-radius: var(--orgaxi-radius-xl) !important;
+  box-shadow: 0 16px 40px rgba(27, 67, 29, 0.12) !important;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.story-stage-photo {
+  border-radius: calc(var(--orgaxi-radius-xl) - 4px) !important;
+}
+
+.story-editorial-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-weight: 800 !important;
+}
+
+.story-chronicle-step,
+.story-chronicle-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  padding: 1.75rem !important;
+  margin-bottom: 1.5rem !important;
+  transition: all 0.25s ease;
+}
+
+.story-chronicle-step:hover,
+.story-chronicle-card:hover {
+  border-color: var(--orgaxi-green-fresh) !important;
+  box-shadow: var(--orgaxi-shadow-hover) !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI ORDER TRACKING PAGE (/track)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.track-order-page {
+  background: var(--orgaxi-cream) !important;
+  min-height: 80vh;
+  padding-bottom: 4rem;
+}
+
+.track-editorial-section {
+  padding: 2.5rem 0 3.5rem 0 !important;
+}
+
+.track-title-te {
+  color: var(--orgaxi-green-deep) !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-weight: 800 !important;
+  font-size: clamp(1.8rem, 3vw, 2.5rem) !important;
+}
+
+.track-search-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  padding: 2.25rem !important;
+  margin: 2rem 0 !important;
+}
+
+.track-input {
+  background: var(--orgaxi-surface-subtle) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.track-input:focus {
+  background: #FFFFFF !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+}
+
+.btn-track-submit {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.9rem 2rem !important;
+  font-weight: 800 !important;
+  box-shadow: var(--orgaxi-shadow-btn) !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-track-submit:hover {
+  background: var(--orgaxi-green-hover) !important;
+  transform: translateY(-2px);
+}
+
+.track-result-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  padding: 2rem !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   ORGAXI ADMIN PORTAL (/admin)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.admin-page-container {
+  background: var(--orgaxi-cream) !important;
+  min-height: 100vh;
+}
+
+.admin-login-wrap {
+  padding: 4rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-login-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 22px !important;
+  box-shadow: 0 20px 50px rgba(27, 67, 29, 0.12) !important;
+  padding: 2.5rem !important;
+  max-width: 440px;
+  width: 100%;
+}
+
+.admin-login-form .admin-form-input {
+  border-radius: 10px !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  padding: 0.75rem 1rem !important;
+}
+
+.btn-login-submit {
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 0.85rem 1.75rem !important;
+  font-weight: 800 !important;
+  width: 100%;
+}
+
+.admin-metric-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+.admin-orders-table {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+}
+
+.admin-orders-table th {
+  background: var(--orgaxi-green-light) !important;
+  color: var(--orgaxi-green-deep) !important;
+  font-weight: 800 !important;
+  border-bottom: 1.5px solid var(--orgaxi-border) !important;
+  padding: 0.85rem 1rem !important;
+}
+
+.admin-orders-table td {
+  border-bottom: 1px solid var(--orgaxi-border) !important;
+  padding: 0.85rem 1rem !important;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   RESPONSIVE DESIGN (360px Mobile & Tablet)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .hero-editorial-section {
+    padding: 2rem 0 !important;
+  }
+
+  .hero-editorial-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  .hero-brand-title {
+    font-size: 2.1rem !important;
+  }
+
+  .catalog-ledger-rows {
+    grid-template-columns: 1fr !important;
+  }
+
+  .orgaxi-features-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .offer-strip-inner {
+    grid-template-columns: 1fr !important;
+  }
+
+  .shop-toolbar-ledger {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .search-box-ledger {
+    max-width: 100% !important;
+  }
+
+  .header-inner {
+    padding: 0.5rem 0 !important;
+  }
+
+  .brand-name-te {
+    font-size: 1.1rem !important;
+  }
+
+  .brand-img-logo {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .nav-btn.cart-toggle-btn {
+    padding: 0.4rem 0.85rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  .nav-btn.lang-btn {
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.78rem !important;
+  }
+}
+
+
+/* ==========================================================================
+   HIGH-SPECIFICITY PRODUCT CARD OVERRIDES (ORGAXI E-COMMERCE GRID)
+   ========================================================================== */
+
+#productsGrid .product-card,
+#productsGrid .product-ledger-row,
+#productsGrid .product-card.product-ledger-row,
+.catalog-ledger-rows .product-card.product-ledger-row,
+.catalog-ledger-rows .product-card,
+.catalog-ledger-rows .product-ledger-row,
+article.product-ledger-row,
+article.product-card {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  background-color: #FFFFFF !important;
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-bottom: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px rgba(27, 67, 29, 0.06) !important;
+  padding: 1.75rem 1.35rem !important;
+  text-align: center !important;
+  position: relative !important;
+  transition: all 0.25s ease !important;
+  margin-bottom: 0 !important;
+}
+
+#productsGrid .product-card:hover,
+#productsGrid .product-ledger-row:hover,
+.catalog-ledger-rows .product-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 14px 32px rgba(27, 67, 29, 0.12) !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+}
+
+/* Hide line numbers and old divider lines */
+#productsGrid .ledger-row-num,
+.ledger-row-num {
+  display: none !important;
+}
+
+/* Image art circle */
+#productsGrid .ledger-row-art,
+.ledger-row-art {
+  width: 120px !important;
+  height: 120px !important;
+  background: var(--orgaxi-green-light) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto 1rem auto !important;
+  transition: transform 0.3s ease !important;
+}
+
+#productsGrid .product-card:hover .ledger-row-art {
+  transform: scale(1.08) !important;
+  background: var(--orgaxi-green-badge) !important;
+}
+
+#productsGrid .ledger-row-svg,
+.ledger-row-svg {
+  width: 72px !important;
+  height: 72px !important;
+  object-fit: contain !important;
+}
+
+/* Product Titles */
+#productsGrid .ledger-title-line,
+.ledger-title-line {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0.35rem !important;
+}
+
+#productsGrid .ledger-name-te,
+.ledger-name-te {
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  color: var(--orgaxi-green-deep) !important;
+  margin: 0.25rem 0 !important;
+}
+
+#productsGrid .ledger-name-en,
+.ledger-name-en {
+  font-family: var(--orgaxi-font-body) !important;
+  font-size: 0.82rem !important;
+  font-weight: 600 !important;
+  color: var(--orgaxi-text-light) !important;
+  display: block !important;
+}
+
+#productsGrid .ledger-row-desc,
+.ledger-row-desc {
+  font-family: var(--orgaxi-font-body) !important;
+  font-size: 0.85rem !important;
+  color: var(--orgaxi-text-muted) !important;
+  line-height: 1.5 !important;
+  margin: 0.5rem 0 1rem 0 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* Unit Selection Pills */
+#productsGrid .ledger-units-container,
+#productsGrid .card-units-selector,
+.ledger-units-container,
+.card-units-selector,
+.unit-pills-wrap {
+  display: flex !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  gap: 0.4rem !important;
+  margin-bottom: 0.85rem !important;
+}
+
+#productsGrid .unit-pill,
+.card-units-selector .unit-pill,
+.ledger-units-container .unit-pill,
+.unit-pill {
+  background-color: var(--orgaxi-surface-subtle) !important;
+  background: var(--orgaxi-surface-subtle) !important;
+  color: var(--orgaxi-text) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: 9999px !important;
+  padding: 0.35rem 0.85rem !important;
+  font-size: 0.82rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: none !important;
+}
+
+#productsGrid .unit-pill.selected,
+#productsGrid .unit-pill.active,
+.card-units-selector .unit-pill.selected,
+.card-units-selector .unit-pill.active,
+.ledger-units-container .unit-pill.selected,
+.ledger-units-container .unit-pill.active,
+.unit-pill.selected,
+.unit-pill.active {
+  background-color: var(--orgaxi-green-light) !important;
+  background: var(--orgaxi-green-light) !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+  color: var(--orgaxi-green-deep) !important;
+  box-shadow: 0 2px 8px rgba(34, 158, 40, 0.2) !important;
+}
+
+/* Price Box */
+#productsGrid .ledger-brass-box,
+#productsGrid .price-display,
+#productsGrid .price-box,
+.ledger-brass-box,
+.price-display,
+.price-box {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.35rem 0 !important;
+  display: flex !important;
+  align-items: baseline !important;
+  justify-content: center !important;
+  gap: 0.35rem !important;
+  margin-bottom: 1.15rem !important;
+}
+
+#productsGrid .price-val,
+.price-val {
+  color: var(--orgaxi-green-deep) !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: 1.65rem !important;
+  font-weight: 800 !important;
+}
+
+#productsGrid .unit-tag,
+.unit-tag {
+  color: var(--orgaxi-text-light) !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+}
+
+#productsGrid .mrp-val,
+.mrp-val {
+  color: #9CA3AF !important;
+  text-decoration: line-through !important;
+  font-size: 0.88rem !important;
+}
+
+/* Full-width Add to Cart Button */
+#productsGrid .btn-add-cart,
+#productsGrid .btn-add-cart.catalog-link-action,
+#productsGrid .catalog-link-action,
+.btn-add-cart.catalog-link-action,
+.catalog-link-action {
+  background-color: var(--orgaxi-green-fresh) !important;
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  border-radius: 9999px !important;
+  padding: 0.8rem 1.5rem !important;
+  font-family: var(--orgaxi-font-body) !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  text-underline-offset: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important;
+  box-shadow: 0 4px 14px rgba(34, 158, 40, 0.25) !important;
+  transition: all 0.25s ease !important;
+  width: 100% !important;
+  cursor: pointer !important;
+}
+
+#productsGrid .btn-add-cart:hover,
+#productsGrid .btn-add-cart.catalog-link-action:hover,
+.btn-add-cart.catalog-link-action:hover {
+  background-color: var(--orgaxi-green-hover) !important;
+  background: var(--orgaxi-green-hover) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 18px rgba(34, 158, 40, 0.35) !important;
+  text-decoration: none !important;
+}
+
+
+/* ==========================================================================
+   ORGAXI MULTI-PHOTO BALANCED STORY CHRONICLE (ZERO EMPTY SPACE)
+   ========================================================================== */
+
+.story-section {
+  background: var(--orgaxi-cream) !important;
+  padding: 4.5rem 0 3.5rem 0 !important;
+}
+
+.story-broadsheet-head {
+  text-align: center;
+  max-width: 750px;
+  margin: 0 auto 3rem auto;
+}
+
+.story-kalamkari-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: var(--orgaxi-green-light);
+  border: 1px solid var(--orgaxi-border);
+  border-radius: var(--orgaxi-radius-full);
+  padding: 0.35rem 1rem;
+  color: var(--orgaxi-green-deep);
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.story-editorial-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: clamp(2rem, 3.2vw, 2.75rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.story-editorial-sub {
+  color: var(--orgaxi-text-muted) !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  margin: 0 auto !important;
+}
+
+.story-milestones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-bottom: 3.5rem;
+}
+
+.story-milestone-row {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 2.5rem !important;
+  align-items: center !important;
+}
+
+.story-milestone-row--reverse {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.story-milestone-row--reverse .milestone-photo-col {
+  order: 2;
+}
+
+.story-milestone-row--reverse .milestone-content-col {
+  order: 1;
+}
+
+/* Photo Frames */
+.milestone-photo-frame {
+  position: relative;
+  border: 5px solid #FFFFFF;
+  border-radius: var(--orgaxi-radius-xl);
+  box-shadow: 0 16px 36px rgba(27, 67, 29, 0.12);
+  overflow: hidden;
+  background: #FFFFFF;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.milestone-photo-frame:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 45px rgba(27, 67, 29, 0.18);
+}
+
+.milestone-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  display: block;
+  border-radius: calc(var(--orgaxi-radius-xl) - 5px);
+  transition: transform 0.4s ease;
+}
+
+.milestone-photo-frame:hover .milestone-img {
+  transform: scale(1.03);
+}
+
+.milestone-badge-pill {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(27, 67, 29, 0.88);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: var(--orgaxi-radius-full);
+  backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+.milestone-caption-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(27, 67, 29, 0.95) 0%, rgba(27, 67, 29, 0.75) 70%, transparent 100%);
+  color: #FFFFFF;
+  padding: 1rem 1.25rem 0.85rem 1.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  z-index: 2;
+}
+
+/* Milestone Cards */
+.story-milestone-card {
+  background: #FFFFFF !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  box-shadow: var(--orgaxi-shadow-card) !important;
+  padding: 2.25rem 2rem !important;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.story-milestone-card:hover {
+  border-color: var(--orgaxi-green-fresh) !important;
+  box-shadow: var(--orgaxi-shadow-hover) !important;
+  transform: translateY(-3px);
+}
+
+.milestone-ledger-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.milestone-step-index {
+  font-family: var(--orgaxi-font-title);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--orgaxi-green-fresh);
+}
+
+.ramabhadra-metric {
+  background: var(--orgaxi-amber-light);
+  color: var(--orgaxi-amber-harvest);
+  font-family: var(--orgaxi-font-title);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: var(--orgaxi-radius-full);
+  border: 1px solid rgba(224, 130, 0, 0.25);
+}
+
+.milestone-motif-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.milestone-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: 1.45rem !important;
+  font-weight: 800 !important;
+  margin: 0 !important;
+}
+
+.milestone-latin-sub {
+  color: var(--orgaxi-text-light);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.85rem;
+}
+
+.milestone-body {
+  color: var(--orgaxi-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 1.25rem;
+}
+
+.milestone-footer-note {
+  background: var(--orgaxi-surface-subtle);
+  border-left: 3px solid var(--orgaxi-green-fresh);
+  border-radius: 4px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.82rem;
+  color: var(--orgaxi-text);
+  line-height: 1.55;
+}
+
+/* Story Bottom CTA */
+.story-broadsheet-footer {
+  background: #FFFFFF;
+  border: 1.5px solid var(--orgaxi-border);
+  border-radius: var(--orgaxi-radius-lg);
+  box-shadow: var(--orgaxi-shadow-card);
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.story-footer-title {
+  color: var(--orgaxi-green-deep);
+  font-family: var(--orgaxi-font-title);
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem 0;
+}
+
+.story-footer-sub {
+  color: var(--orgaxi-text-muted);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.story-footer-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   ORGAXI 3-STEPS ORDERING SECTION REFINEMENTS
+   ========================================================================== */
+
+.steps-section {
+  background: #FFFFFF !important;
+  padding: 4rem 0 !important;
+  border-top: 1px solid var(--orgaxi-border);
+}
+
+.steps-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 2rem !important;
+  margin-top: 2rem !important;
+}
+
+.step-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: var(--orgaxi-cream) !important;
+  border: 1.5px solid var(--orgaxi-border) !important;
+  border-radius: var(--orgaxi-radius-lg) !important;
+  box-shadow: 0 4px 18px rgba(27, 67, 29, 0.05) !important;
+  padding: 2rem 1.75rem !important;
+  text-align: left !important;
+  transition: all 0.25s ease !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+.step-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 12px 28px rgba(27, 67, 29, 0.12) !important;
+  border-color: var(--orgaxi-green-fresh) !important;
+  background: #FFFFFF !important;
+}
+
+.step-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.step-number-badge {
+  width: 44px !important;
+  height: 44px !important;
+  background: var(--orgaxi-green-fresh) !important;
+  color: #FFFFFF !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: 1.35rem !important;
+  font-weight: 800 !important;
+  box-shadow: 0 4px 12px rgba(34, 158, 40, 0.3) !important;
+  border: none !important;
+  margin: 0 !important;
+}
+
+.step-icon-bubble {
+  width: 44px;
+  height: 44px;
+  background: var(--orgaxi-green-light);
+  border-radius: var(--orgaxi-radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step-title {
+  color: var(--orgaxi-green-deep) !important;
+  font-family: var(--orgaxi-font-title) !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 0.65rem !important;
+}
+
+.step-desc {
+  color: var(--orgaxi-text-muted) !important;
+  font-size: 0.92rem !important;
+  line-height: 1.65 !important;
+  margin-bottom: 1.25rem !important;
+}
+
+.step-card-foot {
+  font-size: 0.78rem;
+  color: var(--orgaxi-green-primary);
+  font-weight: 700;
+  border-top: 1px dashed var(--orgaxi-border);
+  padding-top: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .story-milestone-row,
+  .story-milestone-row--reverse {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  .story-milestone-row--reverse .milestone-photo-col {
+    order: 1 !important;
+  }
+  .story-milestone-row--reverse .milestone-content-col {
+    order: 2 !important;
+  }
+  .milestone-img {
+    height: 280px !important;
+  }
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
+/* Sound toggle button in dark green topbar */
+.ribbon-sound-btn,
+#soundToggleBtn {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+  border-radius: var(--orgaxi-radius-full) !important;
+  padding: 3px 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  height: 24px !important;
+  min-width: 28px !important;
+}
+
+.ribbon-sound-btn:hover,
+#soundToggleBtn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+}

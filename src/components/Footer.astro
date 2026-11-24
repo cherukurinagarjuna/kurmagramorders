@@ -1,0 +1,75 @@
+---
+import { CONFIG, SITE } from '../config';
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container" style="position: relative; z-index: 2;">
+    <div class="footer-grid">
+      <!-- Col 1: Mission & Heritage -->
+      <div class="footer-col footer-brand-col">
+        <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1.25rem;">
+          <img src="/assets/images/logo-200.webp" alt="కూర్మగ్రామ లోగో" width="48" height="48" style="border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" />
+          <div>
+            <h3 style="font-family: var(--orgaxi-font-title); font-size: 1.3rem; color: #FFFFFF; font-weight: 800; margin: 0;">{SITE.name}</h3>
+            <span style="font-family: var(--orgaxi-font-title); font-size: 0.72rem; color: var(--orgaxi-amber-harvest); letter-spacing: 0.08em; font-weight: 700;">SRIKAKULAM &bull; ESTD 2018</span>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #C5DCC3; line-height: 1.7; margin-bottom: 1.25rem;">
+          శ్రీకాకుళం జిల్లా కిట్టలపాడు సమీపాన గో-ఆధారిత సహజ వ్యవసాయం, వేదిక్ గురుకులం మరియు ప్రాచీన గ్రామీణ జీవన సంస్కృతిని కాపాడుతున్న పవిత్ర ఆశ్రమ క్షేత్రం.
+        </p>
+        <div style="font-size: 0.85rem; color: var(--orgaxi-amber-harvest); font-weight: 700;">
+          {SITE.tagline}
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links & Dedicated Pages -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">ముఖ్య లింకులు</h4>
+        <ul class="footer-links" style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.65rem;">
+          <li><a href="/">హోమ్‌పేజీ (Home)</a></li>
+          <li><a href="/shop">సహజ ఉత్పత్తుల భాండాగారం (Shop)</a></li>
+          <li><a href="/about">ఆశ్రమ జీవన విధానం (About Us)</a></li>
+          <li><a href="/how-to-order">ఆర్డర్ మరియు చెల్లింపు విధానం (How to Order)</a></li>
+          <li><a href="/track">ఆర్డర్ లైవ్ ట్రాకింగ్ (Track Order)</a></li>
+          <li><a href="/contact">ఆశ్రమ చిరునామా & సహాయం (Contact)</a></li>
+          <li><a href="https://www.navata.com/freight-cal" target="_blank" rel="noopener noreferrer" style="color: #6EE7B7;">నవత ఫ్రైట్ కాలిక్యులేటర్ &nearr;</a></li>
+          <li><a href="/admin" style="color: #9AB898; font-size: 0.82rem;">అడ్మిన్ లాగిన్ (Admin Portal) &rarr;</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Contact & Support -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">ఆశ్రమ చిరునామా</h4>
+        <p style="font-size: 0.9rem; color: #C5DCC3; line-height: 1.65; margin-bottom: 1rem;">
+          {CONFIG.address}
+        </p>
+        <p style="font-size: 0.9rem; color: #E2EFE1; line-height: 1.75; margin: 0;">
+          <strong>WhatsApp:</strong> <a href={`https://wa.me/${CONFIG.whatsapp}`} target="_blank" rel="noopener noreferrer" style="color: #6EE7B7; text-decoration: underline;">+{CONFIG.whatsapp}</a><br />
+          <strong>సహాయం:</strong> {CONFIG.phone2}<br />
+          <strong>ఈమెయిల్:</strong> <a href={`mailto:${CONFIG.email}`} style="color: #6EE7B7;">{CONFIG.email}</a>
+        </p>
+      </div>
+
+      <!-- Col 4: Statutory & Trust Notice -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">భద్రత & పారదర్శకత</h4>
+        <div style="background-color: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.15); border-radius: 14px; padding: 1.15rem; font-size: 0.84rem; color: #E2EFE1;">
+          <p style="margin: 0 0 0.5rem 0;">
+            <strong style="color: #FFFFFF;">డైరెక్ట్ UPI ID:</strong> <span style="color: var(--orgaxi-amber-harvest); font-weight: 700;">{CONFIG.upiId}</span>
+          </p>
+          <p style="margin: 0 0 0.5rem 0; color: #C5DCC3; font-size: 0.8rem;">
+            {CONFIG.fssai}
+          </p>
+          <div style="margin-top: 0.65rem; padding-top: 0.5rem; border-top: 1px solid rgba(255, 255, 255, 0.12); color: #6EE7B7; font-weight: 700; font-size: 0.82rem;">
+            ✓ 100% పీర్-టు-పీర్ చెల్లింపు &bull; 0% గేట్‌వే కమీషన్
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="footer-bottom">
+      &copy; {new Date().getFullYear()} {SITE.legalName}. సర్వహక్కులు రక్షించబడినవి. Orgaxi ఆర్గానిక్ వ్యవసాయ విలేజ్ డిజైన్.
+    </div>
+  </div>
+</footer>

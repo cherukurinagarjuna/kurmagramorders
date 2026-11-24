@@ -1,0 +1,736 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base 
+  title="నవత రవాణా & ప్యాకింగ్ రసీదు స్లిప్ | కూర్మగ్రామ వేదిక్ విలేజ్"
+  description="కూర్మగ్రామ వేదిక్ విలేజ్ నవత రోడ్ ట్రాన్స్‌పోర్ట్ డిస్పాచ్ రసీదు మరియు భక్తుల విభాగ ప్యాకింగ్ స్లిప్."
+>
+  <main class="slip-page-wrapper">
+    <!-- Non-printable top action bar -->
+    <div class="slip-action-bar no-print">
+      <div class="action-bar-left">
+        <a href="/admin" class="btn btn-sharp-secondary btn-sm">&larr; అడ్మిన్ ప్యానెల్‌కు తిరిగి వెళ్లండి</a>
+      </div>
+      <div class="action-bar-right">
+        <button type="button" class="btn btn-sharp-primary btn-sm btn-print" onclick="window.print()">
+          <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="vertical-align: middle; margin-right: 4px;">
+            <path d="M200 80V48a16 16 0 0 0-16-16H72a16 16 0 0 0-16 16v32H40a16 16 0 0 0-16 16v88a16 16 0 0 0 16 16h16v24a16 16 0 0 0 16 16h112a16 16 0 0 0 16-16v-24h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM72 48h112v32H72zm112 160H72v-48h112zm32-40h-16v-24a16 16 0 0 0-16-16H72a16 16 0 0 0-16 16v24H40V96h176v72zm-32-56a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"/>
+          </svg>
+          <span>ప్రింట్ చేయండి (Print Slip)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading / Error states -->
+    <div id="slipLoading" class="slip-state-card no-print">
+      <p>ఆర్డర్ వివరాలు సేకరిస్తున్నాము...</p>
+    </div>
+    <div id="slipError" class="slip-state-card no-print" style="display: none; background: #FEF2F2; color: #991B1B;">
+      <p id="slipErrorMsg">ఆర్డర్ కనుగొనబడలేదు.</p>
+    </div>
+
+    <!-- Official Printable Dispatch Document -->
+    <div id="dispatchSlipDocument" class="dispatch-slip-card" style="display: none;">
+      <!-- Header Bar with Temple Emblem -->
+      <header class="slip-header">
+        <div class="slip-header-brand">
+          <img src="/assets/svg/kalamkari/kurma-mark.svg" alt="కూర్మగ్రామము" width="44" height="44" class="slip-logo" />
+          <div>
+            <span class="slip-trust-tag">శ్రీ నంద గోకులం గో సంరక్షణ & వేదిక్ విలేజ్ ట్రస్ట్</span>
+            <h1 class="slip-main-title">కూర్మగ్రామ వేదిక్ విలేజ్ &bull; డిస్పాచ్ రసీదు</h1>
+            <span class="slip-en-subtitle">KURMAGRAM VEDIC VILLAGE &bull; DISPATCH & PACKING SLIP</span>
+          </div>
+        </div>
+        <div class="slip-header-meta">
+          <div class="meta-field">
+            <span class="meta-label">ఆర్డర్ సంఖ్య (Order No):</span>
+            <strong class="meta-order-no" id="dispOrderNo">—</strong>
+          </div>
+          <div class="meta-field">
+            <span class="meta-label">తేదీ (Booking Date):</span>
+            <span class="meta-value" id="dispOrderDate">—</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Consignor & Consignee 2-Column Split -->
+      <div class="slip-parties-grid">
+        <!-- From: Ashrama Farm Office -->
+        <div class="party-box party-consignor">
+          <span class="party-role-badge">పంపినవారు (CONSIGNOR / FROM):</span>
+          <strong class="party-name">కూర్మగ్రామ వేదిక్ విలేజ్ (గోశాల)</strong>
+          <p class="party-address">
+            కిట్టలపాడు గ్రామం, గార మండలం,<br />
+            శ్రీకాకుళం జిల్లా, ఆంధ్రప్రదేశ్ — 532405.<br />
+            <strong>ఫోన్:</strong> +91 77320 75607 / 8074724717<br />
+            <strong>రవాణా విభాగం:</strong> గో సంరక్షణ & ప్యాకింగ్ శాఖ
+          </p>
+        </div>
+
+        <!-- To: Customer Delivery Address -->
+        <div class="party-box party-consignee">
+          <span class="party-role-badge badge-consignee">చేరవలసినవారు (CONSIGNEE / TO):</span>
+          <h2 class="party-name consignee-name" id="dispCustomerName">—</h2>
+          <div class="consignee-phone-box">
+            <span class="phone-label">మొబైల్ నంబర్ / WhatsApp:</span>
+            <strong class="phone-number" id="dispCustomerPhone">—</strong>
+          </div>
+          <div class="consignee-address-wrap">
+            <span class="address-label">పూర్తి డెలివరీ చిరునామా (Address):</span>
+            <p class="consignee-address" id="dispCustomerAddress">—</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Commodities Table -->
+      <div class="slip-items-section">
+        <h3 class="section-title">ఆర్డర్ చేసిన ఉత్పత్తుల వివరాలు (COMMODITIES & QUANTITY):</h3>
+        <table class="slip-items-table">
+          <thead>
+            <tr>
+              <th style="width: 8%;">క్ర.సం.</th>
+              <th style="width: 52%;">ఉత్పత్తి వివరాలు (Product Description)</th>
+              <th style="width: 20%; text-align: center;">పరిమాణం (Qty & Unit)</th>
+              <th style="width: 20%; text-align: right;">మొత్తం (Amount)</th>
+            </tr>
+          </thead>
+          <tbody id="dispItemsTbody">
+            <!-- Dynamically populated rows -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" style="text-align: right; font-weight: 700;">మొత్తం చెల్లింపు (Total Amount Paid):</td>
+              <td style="text-align: right;"><strong id="dispTotalAmount">₹0</strong></td>
+            </tr>
+            <tr>
+              <td colspan="4" style="font-size: 0.85rem; color: #333;">
+                <span><strong>చెల్లింపు పద్ధతి:</strong> డైరెక్ట్ UPI (kurmagramvv@upi)</span> &bull; 
+                <span><strong>UTR / లావాదేవీ రిఫరెన్స్:</strong> <code id="dispUtrRef">—</code></span> &bull;
+                <span><strong>చెల్లింపు స్థితి:</strong> <strong id="dispPaymentStatus" style="color: #16A34A;">ధ్రువీకరించబడింది (Verified)</strong></span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <!-- Navata Transport Booking Ledger Section -->
+      <div class="slip-transport-ledger">
+        <div class="transport-title-bar">
+          <strong>నవత రోడ్ ట్రాన్స్‌పోర్ట్ బుకింగ్ వివరాలు (NAVATA TRANSPORT PARCEL COUNTER)</strong>
+          <span style="font-size: 0.78rem;">నవత బుకింగ్ కౌంటర్ వద్ద భర్తీ చేయవలసినవి</span>
+        </div>
+        <div class="transport-grid">
+          <div class="trans-cell">
+            <span class="trans-label">నవత బిల్టీ / LR సంఖ్య (Lorry Receipt No):</span>
+            <div class="trans-fill-box" id="dispNavataLr">[  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ]</div>
+          </div>
+          <div class="trans-cell">
+            <span class="trans-label">చేరవలసిన నవత బ్రాంచ్ (Destination Station):</span>
+            <div class="trans-fill-box">[  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  ]</div>
+          </div>
+          <div class="trans-cell">
+            <span class="trans-label">మొత్తం బస్తాల / పార్శిల్స్ సంఖ్య (No. of Bags/Pkts):</span>
+            <div class="trans-fill-box">[  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; బస్తాలు / బాక్సులు  ]</div>
+          </div>
+          <div class="trans-cell">
+            <span class="trans-label">ఫ్రైట్ ఛార్జీల విధానం (Freight Booking Type):</span>
+            <div class="trans-fill-box" style="font-weight: 700;">
+              [ &nbsp; ] PAID (చెల్లించబడింది) &nbsp;&nbsp;&nbsp;&nbsp; [ &nbsp; ] TO-PAY (కస్టమర్ చెల్లింపు)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devotee Department Verification & Signatures -->
+      <footer class="slip-signatures-footer">
+        <div class="sig-col">
+          <span class="sig-title">ప్యాకింగ్ సరిచూసిన భక్తుడు:</span>
+          <div class="sig-line"></div>
+          <span class="sig-sub">(గో సంరక్షణ శాఖ, కూర్మగ్రామం)</span>
+        </div>
+        <div class="sig-col">
+          <span class="sig-title">నవత బండికి అప్పగించిన తేదీ & సమయం:</span>
+          <div class="sig-line"></div>
+          <span class="sig-sub">తేదీ: ______ సమయం: ______</span>
+        </div>
+        <div class="sig-col">
+          <span class="sig-title">నవత బుకింగ్ క్లర్క్ సంతకం & ముద్ర:</span>
+          <div class="sig-line"></div>
+          <span class="sig-sub">(Navata Transport Booking Stamp)</span>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <style is:global>
+    .slip-page-wrapper {
+      background: #F4EAD4;
+      min-height: 100vh;
+      padding: 1.5rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    .slip-action-bar {
+      max-width: 820px;
+      margin: 0 auto 1rem auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1.5px solid #1A1412;
+      box-shadow: 2px 2px 0 #1A1412;
+      padding: 0.6rem 1rem;
+    }
+    .btn-print {
+      background: #2D6A4F !important;
+      color: #FFFFFF !important;
+      border-color: #1B5E20 !important;
+      font-weight: 700;
+    }
+
+    .slip-state-card {
+      max-width: 820px;
+      margin: 2rem auto;
+      background: #FFFFFF;
+      border: 1.5px solid #1A1412;
+      padding: 2rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* ── The Physical Dispatch Slip (Designed for crisp A4 print) ── */
+    .dispatch-slip-card {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      border: 2px solid #000000;
+      box-shadow: 4px 4px 0 #1A1412;
+      padding: 1.5rem;
+      color: #000000;
+    }
+
+    .slip-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 0.85rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .slip-header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .slip-trust-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      color: #7B1113;
+      display: block;
+    }
+    .slip-main-title {
+      font-family: 'Ramabhadra', serif;
+      font-size: 1.25rem !important;
+      color: #000000;
+      margin: 0.15rem 0 0;
+      line-height: 1.3;
+    }
+    .slip-en-subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      color: #555555;
+      display: block;
+    }
+    .slip-header-meta {
+      text-align: right;
+      background: #F8F9FA;
+      border: 1.5px solid #000000;
+      padding: 0.45rem 0.75rem;
+    }
+    .meta-field {
+      margin-bottom: 0.2rem;
+    }
+    .meta-label {
+      font-size: 0.72rem;
+      color: #444444;
+      display: block;
+    }
+    .meta-order-no {
+      font-family: monospace;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #7B1113;
+    }
+    .meta-value {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    /* ── Parties 2-Column Split ── */
+    .slip-parties-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 1rem;
+      border-bottom: 2px solid #000000;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    .party-box {
+      border: 1.5px solid #000000;
+      padding: 0.85rem;
+      background: #FAFAFA;
+    }
+    .party-role-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: #E5E7EB;
+      color: #000000;
+      padding: 2px 6px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+    .badge-consignee {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .party-name {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #000000;
+      margin: 0 0 0.4rem 0;
+      display: block;
+    }
+    .consignee-name {
+      font-family: 'Ramabhadra', serif;
+      font-size: 1.15rem !important;
+      color: #000000;
+      margin: 0 0 0.25rem 0;
+      line-height: 1.3;
+    }
+    .party-address {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin: 0;
+      color: #222222;
+    }
+    .consignee-phone-box {
+      background: #FFFFFF;
+      border: 1.5px solid #000000;
+      padding: 0.35rem 0.6rem;
+      margin: 0.4rem 0;
+    }
+    .phone-label {
+      font-size: 0.72rem;
+      color: #555555;
+      display: block;
+    }
+    .phone-number {
+      font-family: monospace;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #000000;
+      letter-spacing: 0.05em;
+    }
+    .consignee-address-wrap {
+      margin-top: 0.4rem;
+    }
+    .address-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #555555;
+      display: block;
+    }
+    .consignee-address {
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin: 0.15rem 0 0;
+      color: #000000;
+      white-space: pre-wrap;
+    }
+
+    /* ── Commodities Section ── */
+    .slip-items-section {
+      border-bottom: 2px solid #000000;
+      padding-bottom: 1rem;
+      margin-bottom: 1rem;
+    }
+    .section-title,
+    .slip-items-section h3 {
+      font-size: 0.82rem !important;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin: 0 0 0.5rem 0;
+      color: #000000;
+      line-height: 1.4;
+    }
+    .slip-items-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .slip-items-table th {
+      background: #E5E7EB;
+      border: 1px solid #000000;
+      padding: 0.45rem 0.6rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #000000;
+    }
+    .slip-items-table td {
+      border: 1px solid #000000;
+      padding: 0.5rem 0.6rem;
+      vertical-align: middle;
+      color: #000000;
+    }
+    .slip-items-table tfoot td {
+      background: #F9FAFB;
+      border: 1px solid #000000;
+      padding: 0.5rem 0.6rem;
+    }
+
+    /* ── Navata Transport Booking Ledger ── */
+    .slip-transport-ledger {
+      border: 2px solid #000000;
+      margin-bottom: 1rem;
+      background: #FFFFFF;
+    }
+    .transport-title-bar {
+      background: #F3F4F6;
+      border-bottom: 1.5px solid #000000;
+      padding: 0.4rem 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      color: #000000;
+    }
+    .transport-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+    .trans-cell {
+      padding: 0.6rem 0.75rem;
+      border-right: 1px solid #000000;
+      border-bottom: 1px solid #000000;
+    }
+    .trans-cell:nth-child(2n) {
+      border-right: none;
+    }
+    .trans-cell:nth-child(3), .trans-cell:nth-child(4) {
+      border-bottom: none;
+    }
+    .trans-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #444444;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .trans-fill-box {
+      font-size: 0.88rem;
+      color: #000000;
+    }
+
+    /* ── Signatures ── */
+    .slip-signatures-footer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding-top: 0.85rem;
+      text-align: center;
+    }
+    .sig-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .sig-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #444444;
+      margin-bottom: 2rem;
+    }
+    .sig-line {
+      width: 85%;
+      border-bottom: 1.5px dashed #000000;
+      margin-bottom: 0.25rem;
+    }
+    .sig-sub {
+      font-size: 0.68rem;
+      color: #555555;
+    }
+
+    /* ══════════════ PRINT STYLES (Strict 1-Page A4) ══════════════ */
+    @page {
+      size: A4 portrait;
+      margin: 6mm 8mm;
+    }
+
+    @media print {
+      html, body {
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #FFFFFF !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .slip-page-wrapper {
+        background: #FFFFFF !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        min-height: auto !important;
+      }
+      .no-print, header, footer:not(.slip-signatures-footer), .kolam-background-overlay {
+        display: none !important;
+      }
+      .dispatch-slip-card {
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding: 4mm 6mm !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+      }
+
+      /* Compact single-page print proportions */
+      .slip-header {
+        margin-bottom: 0.35rem !important;
+        padding-bottom: 0.3rem !important;
+      }
+      .slip-logo {
+        width: 36px !important;
+        height: 36px !important;
+      }
+      .slip-main-title {
+        font-size: 1.1rem !important;
+        margin: 0.1rem 0 !important;
+      }
+      .slip-trust-tag, .slip-en-subtitle {
+        font-size: 0.65rem !important;
+      }
+      .meta-order-no {
+        font-size: 1.05rem !important;
+      }
+      .meta-label, .meta-value {
+        font-size: 0.72rem !important;
+      }
+      .slip-parties-grid {
+        gap: 0.45rem !important;
+        margin-bottom: 0.45rem !important;
+      }
+      .party-box {
+        padding: 0.4rem 0.65rem !important;
+      }
+      .party-role-badge {
+        font-size: 0.65rem !important;
+        padding: 1px 4px !important;
+        margin-bottom: 2px !important;
+      }
+      .party-name {
+        font-size: 0.88rem !important;
+        margin-bottom: 2px !important;
+      }
+      .consignee-phone-box {
+        padding: 2px 4px !important;
+        margin-bottom: 2px !important;
+      }
+      .phone-label {
+        font-size: 0.65rem !important;
+      }
+      .phone-number {
+        font-size: 0.85rem !important;
+      }
+      .party-address, .consignee-address {
+        font-size: 0.76rem !important;
+        line-height: 1.3 !important;
+      }
+      .slip-items-section {
+        padding-bottom: 0.35rem !important;
+        margin-bottom: 0.35rem !important;
+      }
+      .section-title, .slip-items-section h3 {
+        font-size: 0.72rem !important;
+        margin-bottom: 0.25rem !important;
+      }
+      .slip-items-table th {
+        padding: 3px 6px !important;
+        font-size: 0.7rem !important;
+      }
+      .slip-items-table td {
+        padding: 3px 6px !important;
+        font-size: 0.76rem !important;
+      }
+      .slip-items-table tfoot td {
+        padding: 3px 6px !important;
+        font-size: 0.76rem !important;
+      }
+      .slip-transport-ledger {
+        margin-bottom: 0.35rem !important;
+      }
+      .transport-title-bar {
+        padding: 2px 6px !important;
+        font-size: 0.72rem !important;
+      }
+      .trans-cell {
+        padding: 3px 6px !important;
+      }
+      .trans-label {
+        font-size: 0.65rem !important;
+        margin-bottom: 1px !important;
+      }
+      .trans-fill-box {
+        font-size: 0.78rem !important;
+      }
+      .slip-signatures-footer {
+        padding-top: 0.35rem !important;
+        gap: 1rem !important;
+      }
+      .sig-title {
+        font-size: 0.68rem !important;
+        margin-bottom: 1.15rem !important;
+      }
+      .sig-line {
+        margin-bottom: 2px !important;
+      }
+      .sig-sub {
+        font-size: 0.62rem !important;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderId = urlParams.get('id');
+      const orderCode = urlParams.get('code');
+
+      const slipLoading = document.getElementById('slipLoading');
+      const slipError = document.getElementById('slipError');
+      const slipErrorMsg = document.getElementById('slipErrorMsg');
+      const slipDoc = document.getElementById('dispatchSlipDocument');
+
+      if (!orderId && !orderCode) {
+        slipLoading.style.display = 'none';
+        slipError.style.display = 'block';
+        slipErrorMsg.textContent = 'దయచేసి సరైన ఆర్డర్ ID లేదా కోడ్ అందించండి.';
+        return;
+      }
+
+      try {
+        const keyParam = urlParams.get('key');
+        const adminToken = keyParam || sessionStorage.getItem('kg_admin_token') || localStorage.getItem('kg_admin_token') || '';
+        if (keyParam) {
+          try {
+            sessionStorage.setItem('kg_admin_token', keyParam);
+            localStorage.setItem('kg_admin_token', keyParam);
+          } catch (_) {}
+        }
+        let url = '';
+        let headers = {};
+
+        if (adminToken) {
+          headers['x-admin-password'] = adminToken;
+          headers['Authorization'] = `Bearer ${adminToken}`;
+          url = orderId ? `/api/get-order?id=${encodeURIComponent(orderId)}` : `/api/get-order?code=${encodeURIComponent(orderCode)}`;
+        } else {
+          url = orderCode ? `/api/track-order?code=${encodeURIComponent(orderCode)}` : `/api/track-order?id=${encodeURIComponent(orderId)}`;
+        }
+
+        const res = await fetch(url, { headers });
+        const data = await res.json();
+
+        slipLoading.style.display = 'none';
+
+        const ord = data.order || (data.orders && data.orders[0]);
+        if (!res.ok || !data.ok || !ord) {
+          slipError.style.display = 'block';
+          slipErrorMsg.textContent = data.error || 'ఆర్డర్ కనుగొనబడలేదు.';
+          return;
+        }
+
+        renderSlip(ord);
+      } catch (err) {
+        slipLoading.style.display = 'none';
+        slipError.style.display = 'block';
+        slipErrorMsg.textContent = 'సర్వర్‌తో కమ్యూనికేషన్ లోపం ఏర్పడింది.';
+      }
+
+      function renderSlip(order) {
+        const orderNo = order.order_no || order.order_code || `KG-${order.id || ''}`;
+        const dateStr = order.created_at ? new Date(order.created_at).toLocaleDateString('te-IN', {
+          year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+        }) : new Date().toLocaleDateString('te-IN');
+
+        document.getElementById('dispOrderNo').textContent = orderNo;
+        document.getElementById('dispOrderDate').textContent = dateStr;
+        document.getElementById('dispCustomerName').textContent = order.customer_name || 'గ్రాహకులు';
+        document.getElementById('dispCustomerPhone').textContent = order.customer_phone || '-';
+        document.getElementById('dispCustomerAddress').textContent = order.delivery_address || order.customer_address || '-';
+        const totalVal = order.amount || (order.total_amount ? (order.total_amount / 100) : 0);
+        document.getElementById('dispTotalAmount').textContent = `₹${Number(totalVal).toLocaleString('en-IN')}`;
+        document.getElementById('dispUtrRef').textContent = order.payment_ref || 'Direct UPI Paid';
+
+        if (order.lr_number) {
+          document.getElementById('dispNavataLr').innerHTML = `<strong style="font-size: 1.1rem; color: #7B1113;">${order.lr_number}</strong> (${order.transporter || 'Navata'})`;
+        }
+
+        // Render Commodities table
+        const tbody = document.getElementById('dispItemsTbody');
+        let itemsList = [];
+        if (Array.isArray(order.items) && order.items.length > 0) {
+          itemsList = order.items;
+        } else if (order.product_details) {
+          // Parse string description
+          const parts = order.product_details.split(', ');
+          itemsList = parts.map((desc, idx) => ({
+            name: desc,
+            quantity: 1,
+            unit: 'ప్యాకెట్ / బస్తా',
+            subtotal: order.amount || 0
+          }));
+        }
+
+        tbody.innerHTML = itemsList.map((item, idx) => `
+          <tr>
+            <td style="text-align: center; font-weight: 700;">${idx + 1}</td>
+            <td>
+              <strong>${item.name || 'సహజ సేద్య ఉత్పత్తి'}</strong>
+            </td>
+            <td style="text-align: center;">
+              <strong>${item.quantity || 1}</strong> ${item.unit ? `(${item.unit})` : ''}
+            </td>
+            <td style="text-align: right; font-weight: 700;">
+              ₹${Number(item.subtotal || (item.price * (item.quantity || 1)) || 0).toLocaleString('en-IN')}
+            </td>
+          </tr>
+        `).join('');
+
+        slipDoc.style.display = 'block';
+
+        // If ?autoprint=1 in URL, auto-trigger print dialog
+        if (urlParams.get('autoprint') === '1') {
+          setTimeout(() => {
+            window.print();
+          }, 300);
+        }
+      }
+    });
+  </script>
+</Base>
