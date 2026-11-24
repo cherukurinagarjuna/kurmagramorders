@@ -250,7 +250,21 @@ const canonicalUrl = `${SITE.url}${canonicalPath}`;
             <span id="modalValidationMsg">⚠️ దయచేసి పైన మీ పూర్తి పేరు, 10 అంకెల ఫోన్ నంబర్ మరియు చిరునామా నమోదు చేయండి.</span>
           </div>
 
-          <button type="button" id="submitOrderWhatsAppBtn" class="btn btn-whatsapp" style="width: 100%; font-weight: 800; font-size: 1.05rem; padding: 0.85rem 1.2rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #1B8344; color: #fff; border: 2px solid #0D5C2C;" data-i18n="sendWhatsApp">
+          <!-- Razorpay Instant Online Payment Button -->
+          <button type="button" id="modalRazorpayBtn" class="btn" style="width: 100%; font-weight: 800; font-size: 1.05rem; padding: 0.85rem 1.2rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #229E28; color: #fff; border: 2px solid #1B431D; border-radius: 9999px; box-shadow: 0 4px 12px rgba(34,158,40,0.25); cursor: pointer;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+            <span>🔒 Razorpay తో చెల్లించండి (Pay with Razorpay)</span>
+          </button>
+
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0;">
+            <hr style="flex: 1; border: none; border-top: 1px dashed #D1D5DB;" />
+            <span style="font-size: 0.72rem; font-weight: 700; color: #6B7280;">లేదా డైరెక్ట్ UPI / వాట్సాప్</span>
+            <hr style="flex: 1; border: none; border-top: 1px dashed #D1D5DB;" />
+          </div>
+
+          <button type="button" id="submitOrderWhatsAppBtn" class="btn btn-whatsapp" style="width: 100%; font-weight: 800; font-size: 0.95rem; padding: 0.75rem 1.1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; background: #1B8344; color: #fff; border: 2px solid #0D5C2C;" data-i18n="sendWhatsApp">
             <svg class="ph-icon" style="width: 20px; height: 20px;"><use href="#ph-whatsapp-logo"/></svg>
             <span>WhatsApp (+91 7732075607) లో రసీదు పంపండి &rarr;</span>
           </button>
@@ -268,7 +282,8 @@ const canonicalUrl = `${SITE.url}${canonicalPath}`;
   <!-- Toast Notification Island -->
   <div id="toastNotification" class="toast-notice" role="status" aria-live="polite"></div>
 
-  <!-- Local Vendored Libraries (Zero CDN) -->
+  <!-- Local Vendored Libraries (Zero CDN) & Razorpay Secure Checkout -->
+  <script is:inline src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
   <script is:inline src="/vendor/qrcode.min.js" defer></script>
   <script is:inline src="/vendor/fuse.min.js" defer></script>
   <script is:inline src="/vendor/lenis.min.js" defer></script>

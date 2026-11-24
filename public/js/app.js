@@ -1158,6 +1158,291 @@
       }
     }
 
+    async handleRazorpaySubmission() {
+      const nameInput = document.getElementById('custName');
+      const phoneInput = document.getElementById('custPhone');
+      const addressInput = document.getElementById('custAddress');
+      const landmarkInput = document.getElementById('custLandmark');
+      const pincodeInput = document.getElementById('custPincode');
+      const notesInput = document.getElementById('custNotes');
+      const rzpBtn = document.getElementById('modalRazorpayBtn');
+      const submitBtn = document.getElementById('submitOrderWhatsAppBtn');
+      const errorBox = document.getElementById('modalValidationError');
+      const errorMsg = document.getElementById('modalValidationMsg');
+      const successBox = document.getElementById('modalOrderSuccessCard');
+      const disclaimer = document.getElementById('modalSubmitDisclaimer');
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const phone = phoneInput ? phoneInput.value.trim() : '';
+      const address = addressInput ? addressInput.value.trim() : '';
+      const landmark = landmarkInput ? landmarkInput.value.trim() : '';
+      const pincode = pincodeInput ? pincodeInput.value.trim() : '';
+      const notes = notesInput ? notesInput.value.trim() : '';
+
+      // Reset previous error visual states
+      [nameInput, phoneInput, addressInput, pincodeInput].forEach((inp) => {
+        if (inp) {
+          inp.style.borderColor = '';
+          inp.style.backgroundColor = '';
+        }
+      });
+      if (errorBox) errorBox.style.display = 'none';
+
+      // Inline validation
+      let firstInvalid = null;
+      let validationText = '';
+
+      if (!name || name.length < 2) {
+        firstInvalid = nameInput;
+        validationText = this.lang === 'te' 
+          ? 'దయచేసి పైన మీ పూర్తి పేరు నమోదు చేయండి.' 
+          : 'Please enter your Full Name above.';
+      } else if (!phone || phone.replace(/\D/g, '').length < 10) {
+        firstInvalid = phoneInput;
+        validationText = this.lang === 'te' 
+          ? 'దయచేసి పైన సరైన 10 అంకెల మొబైల్ నంబర్ నమోదు చేయండి.' 
+          : 'Please enter a valid 10-digit Phone Number above.';
+      } else if (!address || address.length < 5) {
+        firstInvalid = addressInput;
+        validationText = this.lang === 'te' 
+          ? 'దయచేసి పైన మీ పూర్తి డెలివరీ చిరునామా నమోదు చేయండి.' 
+          : 'Please enter your complete Delivery Address above.';
+      } else if (!pincode || pincode.length !== 6 || !/^\d{6}$/.test(pincode)) {
+        firstInvalid = pincodeInput;
+        validationText = this.lang === 'te' 
+          ? 'దయచేసి పైన సరైన 6 అంకెల పిన్‌కోడ్ (Pincode) నమోదు చేయండి.' 
+          : 'Please enter a valid 6-digit Pincode above.';
+      }
+
+      if (firstInvalid) {
+        if (errorBox && errorMsg) {
+          errorMsg.textContent = validationText;
+          errorBox.style.display = 'block';
+          errorBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        firstInvalid.style.borderColor = '#DC2626';
+        firstInvalid.style.backgroundColor = '#FEF2F2';
+        firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        firstInvalid.focus();
+        return;
+      }
+
+      if (typeof window.Razorpay === 'undefined') {
+        alert(this.lang === 'te' ? 'Razorpay గేట్‌వే లోడ్ అవుతోంది... దయచేసి 2 సెకన్ల తర్వాత మళ్లీ ప్రయత్నించండి.' : 'Razorpay is loading... Please retry in a moment.');
+        return;
+      }
+
+      const total = this.getCartTotal();
+      const officialOrderCode = this.currentOrderId;
+      const fullFormattedAddress = `${address}${landmark ? ` (ల్యాండ్‌మార్క్: ${landmark})` : ''}, PIN: ${pincode}`;
+
+      const orderItems = this.cart.map((item) => {
+        const prod = PRODUCTS.find((p) => p.id === item.productId);
+        const unit = prod ? (prod.units[item.unitIndex] || prod.units[0]) : { label: '', price: 0 };
+        return {
+          id: prod ? prod.id : item.productId,
+          nameTe: prod ? prod.te : '',
+          nameEn: prod ? prod.en : '',
+          unit: unit.label,
+          price: unit.price,
+          qty: item.qty,
+          lineTotal: unit.price * item.qty
+        };
+      });
+
+      if (rzpBtn) {
+        rzpBtn.disabled = true;
+        rzpBtn.innerHTML = `<span>⏳ Razorpay ఆర్డర్ సిద్ధమవుతోంది...</span>`;
+      }
+
+      try {
+        const createRes = await fetch('/api/razorpay-create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            order_code: officialOrderCode,
+            name,
+            phone,
+            address: fullFormattedAddress,
+            amount: total,
+            items: orderItems.map(i => ({
+              name: `${i.nameTe} (${i.nameEn})`,
+              quantity: i.qty,
+              price: i.price,
+              unit: i.unit,
+              subtotal: i.lineTotal
+            }))
+          })
+        });
+
+        const createData = await createRes.json();
+        if (!createRes.ok || !createData.ok) {
+          throw new Error(createData.error || 'Razorpay ఆర్డర్ సృష్టించడం విఫలమైంది.');
+        }
+
+        const self = this;
+        const options = {
+          key: createData.key_id,
+          amount: createData.amount,
+          currency: 'INR',
+          name: 'కూర్మగ్రామ వేదిక్ విలేజ్',
+          description: `సహజ ఉత్పత్తుల ఆర్డర్ ${officialOrderCode}`,
+          image: '/assets/kurmagram-logo.png',
+          order_id: createData.razorpay_order_id,
+          prefill: {
+            name: name,
+            contact: phone
+          },
+          notes: {
+            order_code: officialOrderCode,
+            address: fullFormattedAddress
+          },
+          theme: {
+            color: '#1B431D'
+          },
+          modal: {
+            ondismiss: function() {
+              if (rzpBtn) {
+                rzpBtn.disabled = false;
+                rzpBtn.innerHTML = `
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+                  </svg>
+                  <span>🔒 Razorpay తో చెల్లించండి (Pay with Razorpay)</span>
+                `;
+              }
+            }
+          },
+          handler: async function (response) {
+            try {
+              const verifyRes = await fetch('/api/razorpay-verify-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  order_code: officialOrderCode,
+                  name,
+                  phone,
+                  address: fullFormattedAddress,
+                  amount: total,
+                  items: orderItems.map(i => ({
+                    name: `${i.nameTe} (${i.nameEn})`,
+                    quantity: i.qty,
+                    price: i.price,
+                    unit: i.unit,
+                    subtotal: i.lineTotal
+                  }))
+                })
+              });
+
+              const verifyData = await verifyRes.json();
+              if (!verifyRes.ok || !verifyData.ok) {
+                alert('చెల్లింపు ధ్రువీకరణ విఫలమైంది. దయచేసి మీ పేమెంట్ ID తో మా WhatsApp (+91 7732075607) ని సంప్రదించండి.');
+                return;
+              }
+
+              const finalCode = verifyData.order_code || officialOrderCode;
+              const waLink = verifyData.customer_wa_link;
+
+              // Save order
+              self.orders.unshift({
+                orderId: finalCode,
+                date: new Date().toISOString(),
+                customer: { name, phone, address: fullFormattedAddress, landmark, pincode, notes },
+                utr: response.razorpay_payment_id,
+                items: orderItems,
+                totalAmount: total,
+                payment_status: 'paid',
+                status: 'Paid'
+              });
+              self.saveOrders();
+
+              if (window.soundManager) {
+                window.soundManager.playBell('order');
+              }
+              self.fireConfetti();
+
+              if (rzpBtn) rzpBtn.style.display = 'none';
+              if (submitBtn) submitBtn.style.display = 'none';
+              if (disclaimer) disclaimer.style.display = 'none';
+
+              if (successBox) {
+                successBox.innerHTML = `
+                  <div style="background: #ECFDF5; border: 2px solid #059669; padding: 1.25rem 1.4rem; box-shadow: 4px 4px 0 #064E3B; text-align: left;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                      <span style="font-size: 1.8rem;">🙏</span>
+                      <div>
+                        <h3 style="margin: 0; color: #065F46; font-size: 1.15rem; font-family: 'Ramabhadra', serif;">
+                          ధన్యవాదాలు ${name} గారు! చెల్లింపు ధ్రువీకరించబడింది!
+                        </h3>
+                        <span style="font-size: 0.75rem; color: #047857; font-weight: 800; letter-spacing: 0.05em;">
+                          100% VERIFIED PAYMENT &bull; ఆర్డర్ No: ${finalCode}
+                        </span>
+                      </div>
+                    </div>
+                    <div style="background: #FFFFFF; border: 1px solid #A7F3D0; padding: 0.6rem 0.8rem; margin: 0.6rem 0; font-size: 0.85rem; color: #064E3B;">
+                      <div><strong>మొత్తం చెల్లింపు:</strong> ₹${total} (PAID via Razorpay)</div>
+                      <div><strong>Razorpay Payment ID:</strong> <code>${response.razorpay_payment_id}</code></div>
+                      <div><strong>రవాణా:</strong> నవత రోడ్ ట్రాన్స్‌పోర్ట్ (రవాణా ఛార్జీలు అదనం)</div>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem;">
+                      <a href="${waLink}" target="_blank" rel="noopener noreferrer" 
+                         class="btn btn-whatsapp" 
+                         style="text-align: center; font-weight: 800; font-size: 1rem; padding: 0.85rem; background: #1B8344 !important; color: #fff !important; text-decoration: none; border: 2px solid #0D5C2C; box-shadow: 2px 2px 0 #000; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 256 256" fill="currentColor">
+                          <path d="M187.58 144.84l-32-16a8 8 0 0 0-8 .5l-14.69 9.8a40.55 40.55 0 0 1-16-16l9.8-14.69a8 8 0 0 0 .5-8l-16-32A8 8 0 0 0 104 64a40 40 0 0 0-40 40 88.1 88.1 0 0 0 88 88 40 40 0 0 0 40-40 8 8 0 0 0-4.42-7.16zM152 176a72.08 72.08 0 0 1-72-72 24 24 0 0 1 19.29-23.51l11.4 22.8-8.1 12.16a8 8 0 0 0-.76 7.42 56.49 56.49 0 0 0 28.3 28.3 8 8 0 0 0 7.42-.76l12.16-8.1 22.8 11.4A24 24 0 0 1 152 176z"/>
+                        </svg>
+                        <span>WhatsApp (+91 7732075607) లో ధ్రువీకరించబడిన రసీదు &rarr;</span>
+                      </a>
+                      <a href="/track?code=${encodeURIComponent(finalCode)}" class="btn btn-sharp-secondary" style="text-align: center; text-decoration: none; font-size: 0.88rem; padding: 0.6rem;">
+                        లైవ్ ఆర్డర్ ట్రాక్ చేయండి &rarr;
+                      </a>
+                    </div>
+                  </div>
+                `;
+                successBox.style.display = 'block';
+                successBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+
+              self.clearCart();
+            } catch (err) {
+              console.error('Razorpay verification error:', err);
+              alert('ధ్రువీకరణ లోపం: ' + err.message);
+            }
+          }
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.on('payment.failed', function (resp) {
+          alert('చెల్లింపు విఫలమైంది: ' + (resp.error?.description || 'దయచేసి మళ్లీ ప్రయత్నించండి.'));
+          if (rzpBtn) {
+            rzpBtn.disabled = false;
+            rzpBtn.innerHTML = `
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+              </svg>
+              <span>🔒 Razorpay తో చెల్లించండి (Pay with Razorpay)</span>
+            `;
+          }
+        });
+        rzp.open();
+      } catch (err) {
+        console.error('[Razorpay Checkout Error]', err);
+        alert('Razorpay గేట్‌వే లోపం: ' + err.message);
+        if (rzpBtn) {
+          rzpBtn.disabled = false;
+          rzpBtn.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+            <span>🔒 Razorpay తో చెల్లించండి (Pay with Razorpay)</span>
+          `;
+        }
+      }
+    }
+
     formatWhatsAppMessage(order) {
       const itemsList = order.items
         .map((i, idx) => `${idx + 1}. ${i.nameTe} (${i.nameEn}) [${i.unit}] x ${i.qty} = ₹${i.lineTotal}`)
@@ -1384,6 +1669,11 @@
           }, 180);
         });
       }
+
+      // Checkout Razorpay submission button
+      document.getElementById('modalRazorpayBtn')?.addEventListener('click', () => {
+        this.handleRazorpaySubmission();
+      });
 
       // Checkout WhatsApp submission button
       document.getElementById('submitOrderWhatsAppBtn')?.addEventListener('click', () => {
