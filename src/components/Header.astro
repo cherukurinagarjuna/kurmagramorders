@@ -75,7 +75,9 @@ const { activeNav = 'home' } = Astro.props;
 
       <!-- Cart Drawer Toggle Button -->
       <button type="button" id="headerCartBtn" class="nav-btn cart-toggle-btn" aria-label="మీ బుట్ట తెరవండి">
-        <svg class="ph-icon"><use href="#ph-shopping-bag"/></svg>
+        <svg class="ph-icon" width="18" height="18" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+          <path d="M216 40H40a16 16 0 0 0-16 16v144a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V56a16 16 0 0 0-16-16zm0 160H40V56h176v144zM176 88a48 48 0 0 1-96 0 8 8 0 0 1 16 0 32 32 0 0 0 64 0 8 8 0 0 1 16 0z"/>
+        </svg>
         <span data-i18n="cartTitle">మీ బుట్ట</span>
         <span id="cartCountBadge" class="cart-badge-count" style="display: none;">0</span>
       </button>
